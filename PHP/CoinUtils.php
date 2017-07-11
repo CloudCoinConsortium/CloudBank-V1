@@ -1,3 +1,4 @@
+<?php include("CloudCoin.php") ?>
 <?php
 class CoinUtils
 {

@@ -13,7 +13,7 @@ class DetectionAgent
         $this->readTimeout = $readTimeout;
     }
 
-    function echo($raidaID)
+    function echo()
     {
         $echoResponse = new Response();
         $echoResponse->set_fullRequest($this->fullUrl . "echo?b=t");
