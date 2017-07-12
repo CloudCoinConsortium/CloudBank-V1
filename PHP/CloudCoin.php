@@ -1,5 +1,5 @@
 <?php
-    class CloudCoin {
+    class CloudCoin implements JsonSerializable {
         var $nn;
         var $sn;
         var $an = array();
@@ -85,6 +85,15 @@
         function set_nn($new_aoid)
         {
             $this->aoid = $new_aoid;
+        }
+
+        function jsonSerialize()
+        {
+            $json = array();
+            foreach($this as $key => $value) {
+                $json[$key] = $value;
+            }
+            return $json;
         }
 
 
