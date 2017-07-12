@@ -50,12 +50,12 @@ Or Response if Failed
 }
 
 ##################
-Service Change Account:
+Service Change_Owner Account:
 ##################
 Requests that a CloudCoin note change ownership from one account to another.
 
 CHANGE REQUEST STRING
-https://cloudcoin.global/bank/change.php?sn=15489521&newid=273C9DFA8061407AB8102C0A4E872CA3
+https://cloudcoin.global/bank/change_owner.php?sn=15489521&newid=273C9DFA8061407AB8102C0A4E872CA3
 
 
 CHANGE RESPONSE STRING
@@ -143,7 +143,7 @@ Tells the Bank to break a CloudCoin note into several smaller notes.
 Note that there are many (but a finte) way of making chage for each denomination. Each denomination will have a list (or matrix) of possible breaks with an id for Method for each possible method. 
  
 CHANGE_MAKER REQUEST STRING
-https://cloudcoin.global/bank/change.php?sn=88772322&method=1
+https://cloudcoin.global/bank/make_change.php?sn=88772322&method=100D
 if good:
 CHANGE_MAKER RESPONSE STRING
 {
@@ -161,6 +161,7 @@ if bad:
 	"message": "CloudCoin note was broken into smaller units.",
 	"time": "2016-40-21 10:40:PM"
 }
+
 
 
 Make Change
@@ -194,4 +195,6 @@ Method 250D: 100D,100D,25D,25D (Max)
 
 
 END OF API
+
+
 
