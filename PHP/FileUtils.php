@@ -125,7 +125,7 @@ class FileUtils
                 $alreadyExists = false;
                 return $alreadyExists;
             } else {
-                # $cu->fileName.".stack"." already exists in the folder ".$folder
+                echo $cu->fileName.".stack"." already exists in the folder ".$folder
                 return $alreadyExists;
             }
         }
