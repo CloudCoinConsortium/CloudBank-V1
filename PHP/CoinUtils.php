@@ -28,6 +28,15 @@ class CoinUtils
         $this->jpeg = null;
     }
 
+    function get_fileName()
+    {
+        return $this->fileName;
+    }
+    function set_fileName($new)
+    {
+        $this->fileName = $new;
+    }
+
     function getPastStatus($raida_id)
     {
         $returnString = "";

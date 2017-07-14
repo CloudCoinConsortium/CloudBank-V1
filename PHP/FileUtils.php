@@ -103,16 +103,17 @@ class FileUtils
     function writeTo($folder, $cc)
     {
         $cu = new CoinUtils($cc);
+        
         $json = json_encode($cc);
         $alreadyExists = true;
         $wholeJson = "{"
         $wholeJson .= " \"cloudcoin\":[\n";
             $wholeJson .= $json;
             $wholeJson .= "\n ]\n}";
-        if(file_exists($folder.$cu->fileName.".stack") === false)
+        if(file_exists($folder.$cu->get_fileName()."stack") === false)
         {
             
-            file_put_contents($folder.$cu->fileName.".stack", $wholeJson);
+            file_put_contents($folder.$cu->get_fileName()."stack", $wholeJson);
         } else {
             if(strpos($folder,"Counterfeit") !== false || strpos($folder,"Trash") !== false)
             {
@@ -121,11 +122,45 @@ class FileUtils
             } else if(strpos($folder,"Imported") !== false)
             {
 
-                file_put_contents($folder.$cu->fileName.".stack", $wholeJson);
+                file_put_contents($folder.$cu->get_fileName()."stack", $wholeJson);
                 $alreadyExists = false;
                 return $alreadyExists;
             } else {
-                echo $cu->fileName.".stack"." already exists in the folder ".$folder
+                echo $cu->get_fileName()."stack"." already exists in the folder ".$folder
+                return $alreadyExists;
+            }
+        }
+        $alreadyExists = false;
+        return $alreadyExists;
+    }
+
+    function importTo($folder, $cc, $id)
+    {
+        $cu = new CoinUtils($cc);
+        $cu->set_fileName($cu->getDenomination().".".$cc->get_sn().".cloudcoin.".$id.".");
+        $json = json_encode($cc);
+        $alreadyExists = true;
+        $wholeJson = "{"
+        $wholeJson .= " \"cloudcoin\":[\n";
+            $wholeJson .= $json;
+            $wholeJson .= "\n ]\n}";
+        if(file_exists($folder.$cu->get_fileName()."stack") === false)
+        {
+            
+            file_put_contents($folder.$cu->get_fileName()."stack", $wholeJson);
+        } else {
+            if(strpos($folder,"Counterfeit") !== false || strpos($folder,"Trash") !== false)
+            {
+                $alreadyExists = false;
+                return $alreadyExists;
+            } else if(strpos($folder,"Imported") !== false)
+            {
+
+                file_put_contents($folder.$cu->get_fileName()."stack", $wholeJson);
+                $alreadyExists = false;
+                return $alreadyExists;
+            } else {
+                echo $cu->get_fileName()."stack"." already exists in the folder ".$folder
                 return $alreadyExists;
             }
         }
@@ -142,7 +177,7 @@ class FileUtils
         $wholeJson .= " \"cloudcoin\":[\n";
         $wholeJson .= $json;
         $wholeJson .= "\n ]\n}";
-        file_put_contents($folder.$cu->fileName.".stack", $wholeJson);
+        file_put_contents($folder.$cu->get_fileName()."stack", $wholeJson);
     }
 }
 
