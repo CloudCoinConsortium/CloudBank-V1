@@ -7,7 +7,7 @@ without needing to detect counterfeits everytime with the RAIDA.
 
 
 # ###################
-## Service Import
+## Import Service 
 # ##################
 To send CloudCoins to the bank, your program must first put the CloudCoin stack file in the import folder. Then it must call the Bank's import service to import.
 
@@ -65,7 +65,7 @@ Or Response if Failed
 }
 ```
 # ##################
-## Service Change_Owner Account:
+## Change_Owner Account Service :
 # ##################
 Requests that a CloudCoin note change ownership from one account to another.
 
@@ -95,7 +95,7 @@ if fail
 }
 ```
 # ##################
-# Service Export
+# Export Service
 # ##################
 Exports the coins from the bank folder to the export folder/email so they can be downloaded or emailed.
 
@@ -169,7 +169,7 @@ if bad:
 
 
 # ##################
-## Service Change_Maker
+## Change_Maker Service 
 # ##################
 Tells the Bank to break a CloudCoin note into several smaller notes.
 Note that there are many (but a finte) way of making chage for each denomination. Each denomination will have a list (or matrix) of possible breaks with an id for Method for each possible method. 
@@ -235,7 +235,7 @@ Denomination 250
 
 
 # ##################
-## Service Issue Reference
+## Issue Reference Service 
 # ##################
 The Issue Reference service issues a "check" that refers to a real cloudcoin in the bank. 
 The purpose is to allow CloudCoins to circulate amoung the bank customers without having 
@@ -250,7 +250,7 @@ he size of the file small.
 
 Example of a CloudCoin check embedded in a file name:
 
-```javascript
+```
 250.CloudCoin.1.16777216.cb5e46ce270545b39b5efa9d9e199d93.www.myBank.com.2017.05.17.13.45.Any user memo here less 
 than 155 characters.check
 ```
@@ -297,7 +297,7 @@ if bad:
 ```
 
 # ##################
-## Service Deposit Reference
+## Deposit Reference Service 
 # ##################
 
 *DEPOSIT_REFERENCE REQUEST STRING*
@@ -329,16 +329,16 @@ if bad:
 ## Service Detect Reference
 # ##################
 
-https://RAIDA20.cloudcoin.global/bank/detect_reference?nn=1&sn=1&an=1836843d928347fb22c2142b49d772b5&pan=1836843d928347fb22c2142b49d772b5
+https://RAIDA20.cloudcoin.global/bank/detect_reference?nn=1&sn=16777216&an=1836843d928347fb22c2142b49d772b5&pan=1836843d928347fb22c2142b49d772b5
 
 *Detection Response Example If Passed:*
 ```javascript
 {
   "server":"www.myBank.com",
   "status":"pass",
-  "sn":"1",
+  "sn":"16777216",
   "nn":"1",
-  "message":"Authentic:1 is an authentic 1-unit. Your Proposed Authenticity Number is now the new Authenticate Number. Update your file.",
+  "message":"Authentic:16777216 is an authentic 1-unit. Your Proposed Authenticity Number is now the new Authenticate Number. Update your file.",
   "time":"2016-44-19 7:44:PM"
 }
 ```
@@ -349,7 +349,7 @@ Note that the 1 after the word Authentic: is the serial number of the unit that 
 {
   "server":"www.myBank.com",
   "status":"fail",
-  "sn":"1",
+  "sn":"16777216",
   "nn":"1",
   "message":"Counterfeit: The unit failed to authenticate on this server. You may need to fix it on other servers.",
   "time":"20
