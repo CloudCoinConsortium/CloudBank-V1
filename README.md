@@ -352,7 +352,7 @@ Note that the 1 after the word Authentic: is the serial number of the unit that 
   "sn":"16777216",
   "nn":"1",
   "message":"Counterfeit: The unit failed to authenticate on this server. You may need to fix it on other servers.",
-  "time":"20
+  "time":"20"
 }
 ```
 
