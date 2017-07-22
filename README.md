@@ -4,9 +4,9 @@ This code allows your server or application to pown CloudCoins and track those o
 PROPOSED CLOUDCOIN BANK API
 7/10/2017
 
-###################
-Service:Import
-##################
+# ###################
+# Service:Import
+# ##################
 To send CloudCoins to the bank the program must first put the CloudCoin stack file in the import folder. Then it must call the Bank to import.
 
 There is a naming convention for programs to use to put the coins in the import folder:
@@ -50,12 +50,12 @@ Or Response if Failed
 	"time": "2016-40-21 10:40:PM"
 }
 
-##################
-Service Change_Owner Account:
-##################
+# ##################
+# Service Change_Owner Account:
+# ##################
 Requests that a CloudCoin note change ownership from one account to another.
 
-CHANGE REQUEST STRING
+# CHANGE REQUEST STRING
 https://cloudcoin.global/bank/change_owner.php?nn=1&sn=15489521&newid=273C9DFA8061407AB8102C0A4E872CA3
 
 
@@ -75,9 +75,9 @@ if fail
 	"time": "2016-40-21 10:40:PM"
 }
 
-##################
-Service Export
-##################
+# ##################
+# Service Export
+# ##################
 Exports the coins from the bank to the export folder/email so they can be downloaded or emailed.
 
 EXPORT REQUEST STRING
@@ -102,11 +102,11 @@ Response if bad:
 
 
 
-##################
-Service ShowCoins
-##################
+# ##################
+# Service ShowCoins
+# ##################
 Lets the program know how many coins the user has in the bank. Or how many coins are in the bank total.
-SHOWCOINS REQUEST STRING
+# SHOWCOINS REQUEST STRING
 https://cloudcoin.global/bank/showcoins.php?id=all
 (Shows all the coins that belong to account id 273C9DFA8061407AB8102C0A4E872CA3)
 
@@ -114,7 +114,7 @@ https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
 (Shows all the coins in the bank)
 
 
-SHOWCOINS RESPONSE STRING
+# SHOWCOINS RESPONSE STRING
 if good:
 {
 	"server": "www.myBank.com",
@@ -137,13 +137,13 @@ if bad:
 
 
 
-##################
-Service Change_Maker
-##################
+# ##################
+# Service Change_Maker
+# ##################
 Tells the Bank to break a CloudCoin note into several smaller notes.
 Note that there are many (but a finte) way of making chage for each denomination. Each denomination will have a list (or matrix) of possible breaks with an id for Method for each possible method. 
  
-CHANGE_MAKER REQUEST STRING
+# CHANGE_MAKER REQUEST STRING
 https://cloudcoin.global/bank/make_change.php?nn=1sn=88772322&method=100D
 if good:
 CHANGE_MAKER RESPONSE STRING
@@ -168,7 +168,7 @@ if bad:
 
 
 Make Change
-METHODS:
+# METHODS:
 
 Denominaton 1
 1 (Cannot break)
@@ -197,9 +197,9 @@ Method 250D: 100D,100D,25D,25D (Max)
 
 
 
-##################
-Service Issue Reference
-##################
+# ##################
+# Service Issue Reference
+# ##################
 The Issue Reference service issues a "check" that refers to a real cloudcoin in the bank. 
 The purpose is to allow CloudCoins to circulate amoung the bank customers without having 
 to authenticate with the RAIDA everytime they change hands instead they will authenticate 
@@ -230,10 +230,10 @@ Memo:
 Inside you can place a memo too. 
 
 
-ISSUE_REFERENCE REQUEST STRING
+# ISSUE_REFERENCE REQUEST STRING
 https://cloudcoin.global/bank/issue_reference.php?nn=1&sn=88772322&method=1
 
-ISSUE_REFERENCE RESPONSE STRING
+# ISSUE_REFERENCE RESPONSE STRING
 {
 	"server": "www.myBank.com",
 	"status": "success",
@@ -251,13 +251,13 @@ if bad:
 }
 
 
-##################
-Service Deposit Reference
-##################
+# ##################
+# Service Deposit Reference
+# ##################
 DEPOSIT_REFERENCE REQUEST STRING
 https://cloudcoin.global/bank/deposit_reference.php?an=cb5e46ce270545b39b5efa9d9e199d93
 
-DEPOSIT_REFERENCE RESPONSE STRING
+# DEPOSIT_REFERENCE RESPONSE STRING
 {
 	"server": "www.myBank.com",
 	"status": "success",
@@ -275,9 +275,9 @@ if bad:
 }
 
 
-##################
-Service Detect Reference
-##################
+# ##################
+# Service Detect Reference
+# ##################
 
 https://RAIDA20.cloudcoin.global/bank/detect_reference?nn=1&sn=1&an=1836843d928347fb22c2142b49d772b5&pan=1836843d928347fb22c2142b49d772b5
 
