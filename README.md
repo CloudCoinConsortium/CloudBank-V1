@@ -27,7 +27,7 @@ https://cloudcoin.global/bank/import.php?id=273C9DFA8061407AB8102C0A4E872CA3
 IMPORT RESPONSE STRING
 Response if success:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "import",
 	"cloudcoins": [{
 		"sn": "152485046",
@@ -43,7 +43,7 @@ Response if success:
 }
 Or Response if Failed
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "empty",
 	"cloudcoins": [],
 	"message": "The Import folder was empty",
@@ -62,14 +62,14 @@ https://cloudcoin.global/bank/change_owner.php?nn=1&sn=15489521&newid=273C9DFA80
 CHANGE RESPONSE STRING
 if success
 {
-    "server": "Bank1",
+    "server": "www.myBank.com",
 	"status": "change",
 	"message": "Change Complete",
 	"time": "2016-40-21 10:40:PM"
 }
 if fail
 {
-    "server": "Bank1",
+    "server": "www.myBank.com",
 	"status": "fail",
 	"message": "Change Failed, No such account",
 	"time": "2016-40-21 10:40:PM"
@@ -86,7 +86,7 @@ https://cloudcoin.global/bank/export.php?sn=15489521&tag=273C9DFA8061407AB8102C0
 EXPORT RESPONSE STRING
 Response if good:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "export",
 	"message": "Export Complete",
 	"time": "2016-40-21 10:40:PM"
@@ -94,7 +94,7 @@ Response if good:
 
 Response if bad:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "fail",
 	"message": "Coin did not exist",
 	"time": "2016-40-21 10:40:PM"
@@ -117,7 +117,7 @@ https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
 SHOWCOINS RESPONSE STRING
 if good:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "showcoins",
 	"sn":["5111558","9665542","1569855"],
 	"total":"1242",
@@ -126,7 +126,7 @@ if good:
 }
 if bad:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "fail",
 	"sn":["5111558","9665542","1569855"],
 	"total":"0",
@@ -148,7 +148,7 @@ https://cloudcoin.global/bank/make_change.php?nn=1sn=88772322&method=100D
 if good:
 CHANGE_MAKER RESPONSE STRING
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "success",
 	"nn":["1","1","1"],
 	"sn":["5111558","9665542","1569855"],
@@ -157,7 +157,7 @@ CHANGE_MAKER RESPONSE STRING
 }
 if bad:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "fail",
 	"nn":["1","1","1"],
 	"sn":["5111558","9665542","1569855"],
@@ -195,35 +195,47 @@ Method 250B: 100A,100A,25A,25B
 Method 250C: 100B,100B,25B,25C
 Method 250D: 100D,100D,25D,25D (Max)
 
+
+
 ##################
 Service Issue Reference
 ##################
 The Issue Reference service issues a "check" that refers to a real cloudcoin in the bank. 
-The purpose is to allow CloudCoins to ciruclate amoung the bank customers without having 
-to authenticate with the RAIDA everytime. Instead they will authenticate with the bank.
+The purpose is to allow CloudCoins to circulate amoung the bank customers without having 
+to authenticate with the RAIDA everytime they change hands instead they will authenticate 
+with the bank.
 
 CloudCoin check format:
 Any file can store a CloudCoin check because the CloudCoin check is stored in the file name.
-However, it is best to have a txt (text) file with a .check extension. The text file keep the size of the file small.
+However, it is best to have a txt (text) file with a .check extension. The text file keep
+he size of the file small.
 
 Example of a CloudCoin check embedded in a file name:
-250.CloudCoin.1.16777216.cb5e46ce270545b39b5efa9d9e199d93.www.myBank.com.Any user memo here less than 155 characters.check
+250.CloudCoin.1.16777216.cb5e46ce270545b39b5efa9d9e199d93.www.myBank.com.2017.05.17.13.45.Any user memo here less 
+than 155 characters.check
 
 Denomination: For human reading.
 CloudCoin: Litteral string for human reading
 SN: Serial Number
 NN: Network Number
 AN: Single authenticity number (GUID with no hyphens) 
-Bank Server URL: A DNS name or IP address of an application that can can turn the check into a real CloudCoin
+Bank Server URL: A DNS name or IP address of an application that can can turn the check into a 
+real CloudCoin
+Year:Year
+Month
+Day
+Hour
+Minute
 Memo: 
 Inside you can place a memo too. 
+
 
 ISSUE_REFERENCE REQUEST STRING
 https://cloudcoin.global/bank/issue_reference.php?nn=1&sn=88772322&method=1
 
 ISSUE_REFERENCE RESPONSE STRING
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "success",
 	"name":"250.CloudCoin.1.16777216.cb5e46ce270545b39b5efa9d9e199d93.www.myBank.com",
 	"message": "CloudCoin note issued as reference.",
@@ -231,19 +243,23 @@ ISSUE_REFERENCE RESPONSE STRING
 }
 if bad:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "fail",
 	"name":"",
 	"message": "CloudCoin not found. No reference can be made.",
 	"time": "2016-40-21 10:40:PM"
 }
 
+
+##################
+Service Deposit Reference
+##################
 DEPOSIT_REFERENCE REQUEST STRING
 https://cloudcoin.global/bank/deposit_reference.php?an=cb5e46ce270545b39b5efa9d9e199d93
 
 DEPOSIT_REFERENCE RESPONSE STRING
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "success",
 	"name":"250.CloudCoin.1.16777216.cb5e46ce270545b39b5efa9d9e199d93.www.myBank.com",
 	"message": "CloudCoin note issued as reference.",
@@ -251,7 +267,7 @@ DEPOSIT_REFERENCE RESPONSE STRING
 }
 if bad:
 {
-	"server": "Bank1",
+	"server": "www.myBank.com",
 	"status": "fail",
 	"name":"",
 	"message": "CloudCoin not found. No reference can be made.",
@@ -259,7 +275,33 @@ if bad:
 }
 
 
+##################
+Service Detect Reference
+##################
 
+https://RAIDA20.cloudcoin.global/bank/detect_reference?nn=1&sn=1&an=1836843d928347fb22c2142b49d772b5&pan=1836843d928347fb22c2142b49d772b5
+
+Detection Response Example If Passed:
+{
+  "server":"www.myBank.com",
+  "status":"pass",
+  "sn":"1",
+  "nn":"1",
+  "message":"Authentic:1 is an authentic 1-unit. Your Proposed Authenticity Number is now the new Authenticate Number. Update your file.",
+  "time":"2016-44-19 7:44:PM"
+}
+ 
+Note that the 1 after the word Authentic: is the serial number of the unit that was tested.
+ 
+Detection Response Example If failed to authenticate:
+{
+  "server":"www.myBank.com",
+  "status":"fail",
+  "sn":"1",
+  "nn":"1",
+  "message":"Counterfeit: The unit failed to authenticate on this server. You may need to fix it on other servers.",
+  "time":"20
+}
 
 
 
