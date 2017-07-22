@@ -100,6 +100,7 @@ Response if good:
 }
 ```
 Response if bad:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "fail",
