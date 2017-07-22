@@ -20,7 +20,7 @@ https://cloudcoin.global/bank/print_welcome.php
 *PRINT_WELECOME RESPONSE STRING*
 
 Response if success:
-```javascript
+```
 {
 	"server": "www.myBank.com",
 	"status": "welcome",
@@ -71,6 +71,10 @@ https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
 
 (Shows all the coins that belong to account id 273C9DFA8061407AB8102C0A4E872CA3)
 
+https://cloudcoin.global/bank/showcoins.php?id=all
+
+(Shows all the coins in the bank and fracked)
+
 *SHOWCOINS RESPONSE STRING*
 There are two arrays with six indexes each. The first index (zero) is a sum of the coins the account has. Then:
 + 0 Sum of all coins in that catagory. 
@@ -93,6 +97,21 @@ if good:
 	"time": "2016-40-21 10:40:PM"
 }
 ```
+
+if good all:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "showcoins",
+	"bank_totals":["13180","5","15","0","3","50"],
+	"fracked_totals":["285","0","1","1","0","1"],
+	"aoid":"all",
+	"total":"13465",
+	"message": "Total in bank is 13465 CloudCoins",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+
 if bad:
 ```javascript
 {
@@ -111,7 +130,7 @@ if bad:
 *SHOWCOINS REQUEST STRING*
 
 
-https://cloudcoin.global/bank/showcoins.php?count=t&id=273C9DFA8061407AB8102C0A4E872CA3
+https://cloudcoin.global/bank/showcoins.php?id=all
 
 (Count all the coins in the bank for the ID)
 
@@ -168,7 +187,7 @@ if All:
 # ###################
 ## Import Service 
 # ##################
-To send CloudCoins to the bank, your program must first put the CloudCoin stack file in the import folder. Then it must call the Bank's import service to import.
+To send CloudCoins to the bank, your program must first put the CloudCoin stack file in the import folder. Then it must call the Bank's import service to import. The import service places the coins in the suspect folder. Then it creates report files for each coin to be imported in the ImportReports folder, and automatically starts the detect their authenticity. 
 
 There is a naming convention for programs to use to put the coins in the import folder:
 File Name Format:
@@ -193,23 +212,19 @@ To pown all the files in the import folder that belong to one account:
 https://cloudcoin.global/bank/import.php?id=273C9DFA8061407AB8102C0A4E872CA3
 
 
+
 *IMPORT RESPONSE STRING*
 
 Response if success:
 ```javascript
 {
 	"server": "www.myBank.com",
-	"status": "import",
-	"cloudcoins": [{
-		"sn": "152485046",
-		"nn": "1",
-		"results": "counterfeit"
-	}, {
-		"sn": "152485045",
-		"nn": "1",
-		"results": "authentic"
-	}],
-	"message": "Import Complete",
+	"status": "imported",
+	"nn": [ 1, 1, 1, 1, 1],
+	"sn":[ 16777212, 16777213, 16777214, 16777215, 16777216, ],
+	"report_id":"20170614243654524",
+	"report":["suspect","suspect","suspect","suspect","suspect"]
+	"message": "Coins have been moved to the suspect folder and detection will begin.",
 	"time": "2016-40-21 10:40:PM"
 }
 ```
@@ -217,12 +232,79 @@ Or Response if Failed
 ```javascript
 {
 	"server": "www.myBank.com",
-	"status": "empty",
+	"status": "fail",
 	"cloudcoins": [],
-	"message": "The Import folder was empty",
+	"message": "The Import folder was empty of the coins from that ID.",
 	"time": "2016-40-21 10:40:PM"
 }
 ```
+
+Algorith:
+
+Program seperates all CloudCoins into individual files and puts them in the suspect folder. Then creats a report file in the
+DetectionReports Folder. The detction report may look like this to begin with
+
+
+
+# ###################
+## Detection Report Service
+# ##################
+
+*DETECTION_REPORT REQUEST STRING*
+
+To find out how a detection attempt went. 
+
+https://cloudcoin.global/bank/detection_report.php?report_id=20170614243654524
+
+
+*DETECTION_REPORT RESPONSE STRING*
+
+Response if success:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "detected",
+	"cloudcoins": [{
+		"sn": "152485046",
+		"nn": "1",
+		"results": "counterfeit"
+	}, {
+		"sn": "152485045",
+		"nn": "1",
+		"results": "duplicate already exists"
+	}, {
+		"sn": "152485045",
+		"nn": "1",
+		"results": "NonJSON file moved to trash"
+	}, {
+		"sn": "152485045",
+		"nn": "1",
+		"results": "authentic"
+	}],
+	"totals":[25,1,56,24],
+	"message": "Import Complete",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+Totals:
+
++ 0 Total imported to bank
++ 1 Total Counterfeit
++ 2 Total imported to fracked
++ 3 Total kept in suspect folder
+
+Or Response if Failed
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "empty",
+	"cloudcoins": [],
+	"message": "The Import Report folder did not have that report",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+
+
 # ##################
 ## Change_Owner Account Service :
 # ##################
