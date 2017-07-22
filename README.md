@@ -1,23 +1,32 @@
-# Bank
-This code allows your server or application to pown CloudCoins and track those owned by your users. 
+# Server Side CloudCoin Banking Software
+This code allows your server or application to pown (password own) CloudCoins and track those CloudCoins owned by your users.
+You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
+without needing to detect counterfeits everytime with the RAIDA. 
 
 PROPOSED CLOUDCOIN BANK API
 7/10/2017
 
 # ###################
-# Service Import
+## Service Import
 # ##################
-To send CloudCoins to the bank the program must first put the CloudCoin stack file in the import folder. Then it must call the Bank to import.
+To send CloudCoins to the bank, your program must first put the CloudCoin stack file in the import folder. Then it must call the Bank's import service to import.
 
 There is a naming convention for programs to use to put the coins in the import folder:
 File Name Format:
+```javascript
 1.12720.cloudcoin.273C9DFA8061407AB8102C0A4E872CA3.stack
+```
 Where 1 is the network number
-Where 12720 = Total amount of CloudCoins in the stack file. 
+
+Where 12720 = Total amount of CloudCoins in the stack file.
+
 Where 273C9DFA8061407AB8102C0A4E872CA3 = Account ID of the user or entity that the CloudCoins belong to. 
 
+
 IMPORT REQUEST STRING
+
 To pown all the files in the mort folder
+
 https://cloudcoin.global/bank/import.php?id=all
 
 To pown all the files in the import folder that belong to one account:
@@ -54,15 +63,15 @@ Or Response if Failed
 }
 ```
 # ##################
-# Service Change_Owner Account:
+## Service Change_Owner Account:
 # ##################
 Requests that a CloudCoin note change ownership from one account to another.
 
-# CHANGE REQUEST STRING
+*CHANGE REQUEST STRING*
 https://cloudcoin.global/bank/change_owner.php?nn=1&sn=15489521&newid=273C9DFA8061407AB8102C0A4E872CA3
 
 
-CHANGE RESPONSE STRING
+*CHANGE RESPONSE STRING*
 if success
 ```javascript
 {
@@ -84,12 +93,12 @@ if fail
 # ##################
 # Service Export
 # ##################
-Exports the coins from the bank to the export folder/email so they can be downloaded or emailed.
+Exports the coins from the bank folder to the export folder/email so they can be downloaded or emailed.
 
-EXPORT REQUEST STRING
+*EXPORT REQUEST STRING*
 https://cloudcoin.global/bank/export.php?sn=15489521&tag=273C9DFA8061407AB8102C0A4E872CA3
 
-EXPORT RESPONSE STRING
+*EXPORT RESPONSE STRING*
 Response if good:
 ```javascript
 {
@@ -111,18 +120,21 @@ Response if bad:
 
 
 # ##################
-# Service ShowCoins
+## Service ShowCoins
 # ##################
 Lets the program know how many coins the user has in the bank. Or how many coins are in the bank total.
-# SHOWCOINS REQUEST STRING
+
+*SHOWCOINS REQUEST STRING*
+
 https://cloudcoin.global/bank/showcoins.php?id=all
+
 (Shows all the coins that belong to account id 273C9DFA8061407AB8102C0A4E872CA3)
 
 https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
 (Shows all the coins in the bank)
 
 
-# SHOWCOINS RESPONSE STRING
+*SHOWCOINS RESPONSE STRING*
 if good:
 ```javascript
 {
@@ -149,15 +161,18 @@ if bad:
 
 
 # ##################
-# Service Change_Maker
+## Service Change_Maker
 # ##################
 Tells the Bank to break a CloudCoin note into several smaller notes.
 Note that there are many (but a finte) way of making chage for each denomination. Each denomination will have a list (or matrix) of possible breaks with an id for Method for each possible method. 
  
-# CHANGE_MAKER REQUEST STRING
+*CHANGE_MAKER REQUEST STRING*
+
 https://cloudcoin.global/bank/make_change.php?nn=1sn=88772322&method=100D
+
 if good:
-CHANGE_MAKER RESPONSE STRING
+
+*CHANGE_MAKER RESPONSE STRING*
 ```javascript
 {
 	"server": "www.myBank.com",
@@ -182,7 +197,7 @@ if bad:
 ```
 
 Make Change
-# METHODS:
+*CHANGE_MAKER METHODS:*
 
 Denominaton 1
 1 (Cannot break)
@@ -212,7 +227,7 @@ Method 250D: 100D,100D,25D,25D (Max)
 
 
 # ##################
-# Service Issue Reference
+## Service Issue Reference
 # ##################
 The Issue Reference service issues a "check" that refers to a real cloudcoin in the bank. 
 The purpose is to allow CloudCoins to circulate amoung the bank customers without having 
@@ -225,8 +240,10 @@ However, it is best to have a txt (text) file with a .check extension. The text 
 he size of the file small.
 
 Example of a CloudCoin check embedded in a file name:
+```javascript
 250.CloudCoin.1.16777216.cb5e46ce270545b39b5efa9d9e199d93.www.myBank.com.2017.05.17.13.45.Any user memo here less 
 than 155 characters.check
+```
 
 Denomination: For human reading.
 CloudCoin: Litteral string for human reading
@@ -244,10 +261,10 @@ Memo:
 Inside you can place a memo too. 
 
 
-# ISSUE_REFERENCE REQUEST STRING
+*ISSUE_REFERENCE REQUEST STRING*
 https://cloudcoin.global/bank/issue_reference.php?nn=1&sn=88772322&method=1
 
-# ISSUE_REFERENCE RESPONSE STRING
+*ISSUE_REFERENCE RESPONSE STRING*
 ```javascript
 {
 	"server": "www.myBank.com",
@@ -269,12 +286,13 @@ if bad:
 ```
 
 # ##################
-# Service Deposit Reference
+## Service Deposit Reference
 # ##################
-DEPOSIT_REFERENCE REQUEST STRING
+
+*DEPOSIT_REFERENCE REQUEST STRING*
 https://cloudcoin.global/bank/deposit_reference.php?an=cb5e46ce270545b39b5efa9d9e199d93
 
-# DEPOSIT_REFERENCE RESPONSE STRING
+*DEPOSIT_REFERENCE RESPONSE STRING*
 ```javascript
 {
 	"server": "www.myBank.com",
@@ -296,12 +314,12 @@ if bad:
 ```
 
 # ##################
-# Service Detect Reference
+## Service Detect Reference
 # ##################
 
 https://RAIDA20.cloudcoin.global/bank/detect_reference?nn=1&sn=1&an=1836843d928347fb22c2142b49d772b5&pan=1836843d928347fb22c2142b49d772b5
 
-Detection Response Example If Passed:
+*Detection Response Example If Passed:*
 ```javascript
 {
   "server":"www.myBank.com",
@@ -314,7 +332,7 @@ Detection Response Example If Passed:
 ```
 Note that the 1 after the word Authentic: is the serial number of the unit that was tested.
  
-Detection Response Example If failed to authenticate:
+*Detection Response Example If failed to authenticate:*
 ```javascript
 {
   "server":"www.myBank.com",
