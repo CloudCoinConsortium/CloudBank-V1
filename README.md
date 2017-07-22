@@ -1,10 +1,10 @@
 # Server Side CloudCoin Banking Software
+*PROPOSED CLOUDCOIN BANK API 7/10/2017*
+
 This code allows your server or application to pown (password own) CloudCoins and track those CloudCoins owned by your users.
 You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
 without needing to detect counterfeits everytime with the RAIDA. 
 
-PROPOSED CLOUDCOIN BANK API
-7/10/2017
 
 # ###################
 ## Service Import
@@ -13,7 +13,7 @@ To send CloudCoins to the bank, your program must first put the CloudCoin stack 
 
 There is a naming convention for programs to use to put the coins in the import folder:
 File Name Format:
-```javascript
+```
 1.12720.cloudcoin.273C9DFA8061407AB8102C0A4E872CA3.stack
 ```
 Where 1 is the network number
@@ -23,17 +23,19 @@ Where 12720 = Total amount of CloudCoins in the stack file.
 Where 273C9DFA8061407AB8102C0A4E872CA3 = Account ID of the user or entity that the CloudCoins belong to. 
 
 
-IMPORT REQUEST STRING
+*IMPORT REQUEST STRING*
 
 To pown all the files in the mort folder
 
 https://cloudcoin.global/bank/import.php?id=all
 
 To pown all the files in the import folder that belong to one account:
+
 https://cloudcoin.global/bank/import.php?id=273C9DFA8061407AB8102C0A4E872CA3
 
 
-IMPORT RESPONSE STRING
+*IMPORT RESPONSE STRING*
+
 Response if success:
 ```javascript
 {
@@ -68,10 +70,12 @@ Or Response if Failed
 Requests that a CloudCoin note change ownership from one account to another.
 
 *CHANGE REQUEST STRING*
+
 https://cloudcoin.global/bank/change_owner.php?nn=1&sn=15489521&newid=273C9DFA8061407AB8102C0A4E872CA3
 
 
 *CHANGE RESPONSE STRING*
+
 if success
 ```javascript
 {
@@ -96,9 +100,11 @@ if fail
 Exports the coins from the bank folder to the export folder/email so they can be downloaded or emailed.
 
 *EXPORT REQUEST STRING*
+
 https://cloudcoin.global/bank/export.php?sn=15489521&tag=273C9DFA8061407AB8102C0A4E872CA3
 
 *EXPORT RESPONSE STRING*
+
 Response if good:
 ```javascript
 {
@@ -135,6 +141,7 @@ https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
 
 
 *SHOWCOINS RESPONSE STRING*
+
 if good:
 ```javascript
 {
@@ -235,11 +242,13 @@ to authenticate with the RAIDA everytime they change hands instead they will aut
 with the bank.
 
 CloudCoin check format:
+
 Any file can store a CloudCoin check because the CloudCoin check is stored in the file name.
 However, it is best to have a txt (text) file with a .check extension. The text file keep
 he size of the file small.
 
 Example of a CloudCoin check embedded in a file name:
+
 ```javascript
 250.CloudCoin.1.16777216.cb5e46ce270545b39b5efa9d9e199d93.www.myBank.com.2017.05.17.13.45.Any user memo here less 
 than 155 characters.check
@@ -262,6 +271,7 @@ Inside you can place a memo too.
 
 
 *ISSUE_REFERENCE REQUEST STRING*
+
 https://cloudcoin.global/bank/issue_reference.php?nn=1&sn=88772322&method=1
 
 *ISSUE_REFERENCE RESPONSE STRING*
@@ -290,6 +300,7 @@ if bad:
 # ##################
 
 *DEPOSIT_REFERENCE REQUEST STRING*
+
 https://cloudcoin.global/bank/deposit_reference.php?an=cb5e46ce270545b39b5efa9d9e199d93
 
 *DEPOSIT_REFERENCE RESPONSE STRING*
