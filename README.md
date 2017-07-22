@@ -5,7 +5,7 @@ PROPOSED CLOUDCOIN BANK API
 7/10/2017
 
 # ###################
-# Service:Import
+# Service Import
 # ##################
 To send CloudCoins to the bank the program must first put the CloudCoin stack file in the import folder. Then it must call the Bank to import.
 
@@ -26,6 +26,7 @@ https://cloudcoin.global/bank/import.php?id=273C9DFA8061407AB8102C0A4E872CA3
 
 IMPORT RESPONSE STRING
 Response if success:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "import",
@@ -41,7 +42,9 @@ Response if success:
 	"message": "Import Complete",
 	"time": "2016-40-21 10:40:PM"
 }
+```
 Or Response if Failed
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "empty",
@@ -49,7 +52,7 @@ Or Response if Failed
 	"message": "The Import folder was empty",
 	"time": "2016-40-21 10:40:PM"
 }
-
+```
 # ##################
 # Service Change_Owner Account:
 # ##################
@@ -61,20 +64,23 @@ https://cloudcoin.global/bank/change_owner.php?nn=1&sn=15489521&newid=273C9DFA80
 
 CHANGE RESPONSE STRING
 if success
+```javascript
 {
     "server": "www.myBank.com",
 	"status": "change",
 	"message": "Change Complete",
 	"time": "2016-40-21 10:40:PM"
 }
+```
 if fail
+```javascript
 {
     "server": "www.myBank.com",
 	"status": "fail",
 	"message": "Change Failed, No such account",
 	"time": "2016-40-21 10:40:PM"
 }
-
+```
 # ##################
 # Service Export
 # ##################
@@ -85,13 +91,14 @@ https://cloudcoin.global/bank/export.php?sn=15489521&tag=273C9DFA8061407AB8102C0
 
 EXPORT RESPONSE STRING
 Response if good:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "export",
 	"message": "Export Complete",
 	"time": "2016-40-21 10:40:PM"
 }
-
+```
 Response if bad:
 {
 	"server": "www.myBank.com",
@@ -99,7 +106,7 @@ Response if bad:
 	"message": "Coin did not exist",
 	"time": "2016-40-21 10:40:PM"
 }
-
+```
 
 
 # ##################
@@ -116,6 +123,7 @@ https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
 
 # SHOWCOINS RESPONSE STRING
 if good:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "showcoins",
@@ -124,7 +132,9 @@ if good:
 	"message": "273C9DFA8061407AB8102C0A4E872CA3 has 1242 CloudCoins",
 	"time": "2016-40-21 10:40:PM"
 }
+```
 if bad:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "fail",
@@ -134,7 +144,7 @@ if bad:
 	"time": "2016-40-21 10:40:PM"
 }
 
-
+```
 
 
 # ##################
@@ -147,6 +157,7 @@ Note that there are many (but a finte) way of making chage for each denomination
 https://cloudcoin.global/bank/make_change.php?nn=1sn=88772322&method=100D
 if good:
 CHANGE_MAKER RESPONSE STRING
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "success",
@@ -155,7 +166,9 @@ CHANGE_MAKER RESPONSE STRING
 	"message": "CloudCoin note was broken into smaller units.",
 	"time": "2016-40-21 10:40:PM"
 }
+```
 if bad:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "fail",
@@ -165,7 +178,7 @@ if bad:
 	"time": "2016-40-21 10:40:PM"
 }
 
-
+```
 
 Make Change
 # METHODS:
@@ -234,6 +247,7 @@ Inside you can place a memo too.
 https://cloudcoin.global/bank/issue_reference.php?nn=1&sn=88772322&method=1
 
 # ISSUE_REFERENCE RESPONSE STRING
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "success",
@@ -241,7 +255,9 @@ https://cloudcoin.global/bank/issue_reference.php?nn=1&sn=88772322&method=1
 	"message": "CloudCoin note issued as reference.",
 	"time": "2016-40-21 10:40:PM"
 }
+```
 if bad:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "fail",
@@ -249,7 +265,7 @@ if bad:
 	"message": "CloudCoin not found. No reference can be made.",
 	"time": "2016-40-21 10:40:PM"
 }
-
+```
 
 # ##################
 # Service Deposit Reference
@@ -258,6 +274,7 @@ DEPOSIT_REFERENCE REQUEST STRING
 https://cloudcoin.global/bank/deposit_reference.php?an=cb5e46ce270545b39b5efa9d9e199d93
 
 # DEPOSIT_REFERENCE RESPONSE STRING
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "success",
@@ -265,7 +282,9 @@ https://cloudcoin.global/bank/deposit_reference.php?an=cb5e46ce270545b39b5efa9d9
 	"message": "CloudCoin note issued as reference.",
 	"time": "2016-40-21 10:40:PM"
 }
+```
 if bad:
+```javascript
 {
 	"server": "www.myBank.com",
 	"status": "fail",
@@ -273,7 +292,7 @@ if bad:
 	"message": "CloudCoin not found. No reference can be made.",
 	"time": "2016-40-21 10:40:PM"
 }
-
+```
 
 # ##################
 # Service Detect Reference
@@ -282,6 +301,7 @@ if bad:
 https://RAIDA20.cloudcoin.global/bank/detect_reference?nn=1&sn=1&an=1836843d928347fb22c2142b49d772b5&pan=1836843d928347fb22c2142b49d772b5
 
 Detection Response Example If Passed:
+```javascript
 {
   "server":"www.myBank.com",
   "status":"pass",
@@ -290,10 +310,11 @@ Detection Response Example If Passed:
   "message":"Authentic:1 is an authentic 1-unit. Your Proposed Authenticity Number is now the new Authenticate Number. Update your file.",
   "time":"2016-44-19 7:44:PM"
 }
- 
+```
 Note that the 1 after the word Authentic: is the serial number of the unit that was tested.
  
 Detection Response Example If failed to authenticate:
+```javascript
 {
   "server":"www.myBank.com",
   "status":"fail",
@@ -302,7 +323,7 @@ Detection Response Example If failed to authenticate:
   "message":"Counterfeit: The unit failed to authenticate on this server. You may need to fix it on other servers.",
   "time":"20
 }
-
+```
 
 
 
