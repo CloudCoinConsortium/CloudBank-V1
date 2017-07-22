@@ -1,9 +1,168 @@
 # Server Side CloudCoin Banking Software
-*PROPOSED CLOUDCOIN BANK API 7/10/2017*
+*PROPOSED CLOUDCOIN BANK API 7/22/2017*
 
 This code allows your server or application to pown (password own) CloudCoins and track those CloudCoins owned by your users.
 You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
 without needing to detect counterfeits everytime with the RAIDA. 
+
+
+# ###################
+## Print Welcome Service 
+# ##################
+
+*PRINT_WELECOME REQUEST STRING*
+
+Get's the bank's welcome information
+
+https://cloudcoin.global/bank/print_welcome.php
+
+
+*PRINT_WELECOME RESPONSE STRING*
+
+Response if success:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "welcome",
+	"version":"4.07.17",
+	"message": "CloudCoin Bank. Used to Authenticate, Store and Payout CloudCoins. 
+	This Software is provided as is with all faults, defects and errors, and without warranty of any kind.  
+	Free from the CloudCoin Consortium.",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+
+# ###################
+## Echo RAIDA Service 
+# ##################
+
+*ECHO REQUEST STRING*
+
+Ask the bank to echo the RAIDA to make sure it is there. 
+
+https://cloudcoin.global/bank/echo_raida.php
+
+
+*ECHO RESPONSE STRING*
+
+Response if success:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "echo",
+	"raida_status": ["ready", "notready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", 
+	"ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready"],
+	"raida_ms": [526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 
+	526, 526, 526, 526, 526, 526],
+	"message": "Echo Completed",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+
+
+# ##################
+## Service ShowCoins
+# ##################
+Lets the program know how many coins the user has in the bank. Or how many coins are in the bank total.
+
+*SHOWCOINS REQUEST STRING*
+
+https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
+
+(Shows all the coins that belong to account id 273C9DFA8061407AB8102C0A4E872CA3)
+
+*SHOWCOINS RESPONSE STRING*
+There are two arrays with six indexes each. The first index (zero) is a sum of the coins the account has. Then:
++ 0 Sum of all coins in that catagory. 
++ 1 1s
++ 2 5s
++ 3 25s
++ 4 100s
++ 5 250s
+
+if good:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "showcoins",
+	"bank_totals":["13180","5","15","0","3","50"],
+	"fracked_totals":["285","0","1","1","0","1"],
+	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
+	"total":"13465",
+	"message": "273C9DFA8061407AB8102C0A4E872CA3 has 13465 CloudCoins",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+if bad:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "fail",
+	"bank_totals":["0","0","0","0","0","0"],
+	"fracked_totals":["0","0","0","0","0","0"],
+	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
+	"total":"0",
+	"message": "Account did not exist",
+	"time": "2016-40-21 10:40:PM"
+}
+
+```
+
+*SHOWCOINS REQUEST STRING*
+
+
+https://cloudcoin.global/bank/showcoins.php?count=t&id=273C9DFA8061407AB8102C0A4E872CA3
+
+(Count all the coins in the bank for the ID)
+
+
+*SHOWCOINS RESPONSE STRING*
+
+if good:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "showcoins",
+	"nn":["1","1","1"],
+	"sn":["5111558","9665542","1569855"],
+	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
+	"total":"1242",
+	"message": "273C9DFA8061407AB8102C0A4E872CA3 has 1242 CloudCoins",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+if bad:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "fail",
+	"nn":["1","1","1"],
+	"sn":["5111558","9665542","1569855"],
+	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
+	"total":"0",
+	"message": "Account did not exist",
+	"time": "2016-40-21 10:40:PM"
+}
+
+```
+
+if All:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "totals",
+	"nn":["1","1","1"],
+	"sn":["5111558","9665542","1569855"],
+	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
+	"total":"0",
+	"message": "Account did not exist",
+	"time": "2016-40-21 10:40:PM"
+}
+
+```
+
+
+
 
 
 # ###################
@@ -109,7 +268,8 @@ Response if good:
 ```javascript
 {
 	"server": "www.myBank.com",
-	"status": "export",
+	"status": "exported",
+	"url":"www.myBank.com/export/2017-05-12-15-45-0f74aa51",
 	"message": "Export Complete",
 	"time": "2016-40-21 10:40:PM"
 }
@@ -119,52 +279,10 @@ Response if bad:
 {
 	"server": "www.myBank.com",
 	"status": "fail",
+	"url":"",
 	"message": "Coin did not exist",
 	"time": "2016-40-21 10:40:PM"
 }
-```
-
-
-# ##################
-## Service ShowCoins
-# ##################
-Lets the program know how many coins the user has in the bank. Or how many coins are in the bank total.
-
-*SHOWCOINS REQUEST STRING*
-
-https://cloudcoin.global/bank/showcoins.php?id=all
-
-(Shows all the coins that belong to account id 273C9DFA8061407AB8102C0A4E872CA3)
-
-https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
-
-(Shows all the coins in the bank)
-
-
-*SHOWCOINS RESPONSE STRING*
-
-if good:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "showcoins",
-	"sn":["5111558","9665542","1569855"],
-	"total":"1242",
-	"message": "273C9DFA8061407AB8102C0A4E872CA3 has 1242 CloudCoins",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-if bad:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "fail",
-	"sn":["5111558","9665542","1569855"],
-	"total":"0",
-	"message": "Account did not exist",
-	"time": "2016-40-21 10:40:PM"
-}
-
 ```
 
 
