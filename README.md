@@ -207,29 +207,29 @@ Make Change
 *CHANGE_MAKER METHODS:*
 
 Denominaton 1
-1 (Cannot break)
++1 (Cannot break)
 
 Denaomination 5
-Method 5A: 1,1,1,1,1
++Method 5A: 1,1,1,1,1
 
 Denomination 25
-Method 25A: 5,5,5,5,5 (Min)
-Method 25B: 5,5,5,5,5A
-Method 25C: 5,5,5A,5A,5A
-Method 25D: 5A,5A,5A,5A  (Max)
++Method 25A: 5,5,5,5,5 (Min)
++Method 25B: 5,5,5,5,5A
++Method 25C: 5,5,5A,5A,5A
++Method 25D: 5A,5A,5A,5A  (Max)
 
 Denomination 100
-Method 100A: 25,25,25,25 (min)
-Method 100B: 25,25,25,25A
-Method 100C: 25,25,25A,25B
-Method 100D: 25D,25D,25D,25D (Max)
++Method 100A: 25,25,25,25 (min)
++Method 100B: 25,25,25,25A
++Method 100C: 25,25,25A,25B
++Method 100D: 25D,25D,25D,25D (Max)
 
 
 Denomination 250
-Method 250A: 100,100,25,25 (Min)
-Method 250B: 100A,100A,25A,25B
-Method 250C: 100B,100B,25B,25C
-Method 250D: 100D,100D,25D,25D (Max)
++Method 250A: 100,100,25,25 (Min)
++Method 250B: 100A,100A,25A,25B
++Method 250C: 100B,100B,25B,25C
++Method 250D: 100D,100D,25D,25D (Max)
 
 
 
