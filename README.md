@@ -187,17 +187,13 @@ if All:
 # ###################
 ## Import Service 
 # ##################
-To send CloudCoins to the bank, your program must first put the CloudCoin stack file in the import folder. Then it must call the Bank's import service to import. The import service places the coins in the suspect folder. Then it creates report files for each coin to be imported in the ImportReports folder, and automatically starts the detect their authenticity. 
+To send CloudCoins to the bank, your program must first put the CloudCoin stack and jpeg files in the import folder. All files that are placed in the import folder must have a .stack or .jpg extention. The program will first need to create a subfolder that has the same name as the account number that the CloudCoin is to be imported to. Then it must call the Bank's import service to import. The import service places the coins in the suspect folder in the owners subfolder. Then it creates report files for each coin to be imported in the ImportReports folder, and automatically starts the detect their authenticity. 
 
 There is a naming convention for programs to use to put the coins in the import folder:
 File Name Format:
 ```
-1.12720.cloudcoin.273C9DFA8061407AB8102C0A4E872CA3.stack
+import/273C9DFA8061407AB8102C0A4E872CA3/700.CloudCoins.ForSean.stack
 ```
-Where 1 is the network number
-
-Where 12720 = Total amount of CloudCoins in the stack file.
-
 Where 273C9DFA8061407AB8102C0A4E872CA3 = Account ID of the user or entity that the CloudCoins belong to. 
 
 
