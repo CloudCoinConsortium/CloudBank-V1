@@ -1,5 +1,5 @@
 # Server Side CloudCoin Banking Software
-*PROPOSED CLOUDCOIN BANK API 7/22/2017*
+*PROPOSED CLOUDCOIN BANK API 8/18/2017*
 
 This code allows your server or application to pown (password own) CloudCoins and track those CloudCoins owned by your users.
 You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
