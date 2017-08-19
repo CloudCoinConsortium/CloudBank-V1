@@ -9,6 +9,7 @@ NOTE: To Stop Replay attacks and other sercurity concenrs, HTTPS is required.
 
 
 Folder Structure
+<pre>
 Bank
 -Bank
 --[lots of folders. one for each account]
@@ -31,7 +32,7 @@ Bank
 -Templates
 -Trash
 -Waiting
-
+</pre>
 # ###################
 ## Create Account Service
 # ##################
