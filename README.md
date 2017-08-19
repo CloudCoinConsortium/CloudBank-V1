@@ -5,6 +5,87 @@ This code allows your server or application to pown (password own) CloudCoins an
 You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
 without needing to detect counterfeits everytime with the RAIDA. 
 
+NOTE: To Stop Replay attacks and other sercurity concenrs, HTTPS is required. 
+
+
+Folder Structure
+Bank
+-Bank
+--[lots of folders. one for each account]
+-Broke
+-Counterfeit
+--[lots of folders. one for each account]
+-Directory
+-Export
+--[lots of folders. one for each account]
+-Fracked
+--[lots of folders. one for each account]
+-Import
+--[lots of folders. one for each account]
+-Imported
+--[lots of folders. one for each account]
+-Logs
+-Lost
+-Suspect
+--[lots of folders. one for each account]
+-Templates
+-Trash
+-Waiting
+
+# ###################
+## Create Account Service
+# ##################
+
+*CREATE ACCOUNT REQUEST STRING*
+
+Create an account for a new user. This will create a subfolder in the following folders:
+
+-Bank
+-Counterfeit
+-Export
+-Fracked
+-Import
+-Imported
+-Suspect
+
+**rules for user account names**
+Your users must have a unique identifier that allows your system to identify the accounts within the CloudBank. We call this unique identifer the "Account ID." This number will become the name of folders within the CloudBank. This folder could be a number (like a customer number) or a GUID or any thing that you use to uniquly identify your users in your system. 
+However, there are some rules: 
+Your Account ID must work as folder names for both Windows and Linux Operating sytems.
+Account IDs cannot contain any of the following characters:
+```
+    \ / : * ? " ' < > | 
+```
+Your CloudBank may treat your Account identifiers as either case sensitive or case insensitive. This depends on if your CloudBank is hosted on a Linux (PHP) or Windows (C#) System. 
+
+POST:
+https://cloudcoin.global/bank/add_account.php?
+uid=e24b3a755916472f8768e4e9992827a0
+vd=9436db9632ee40978612caa8dae81d74
+
+uid = Unique Identifier
+vd= Verifiation data (Your secret key)
+
+Note: If the account has already been created it just says success. 
+Response if success:
+```
+{
+	"server": "www.myBank.com",
+	"status": "added",
+	"message": "Account was created for user e24b3a755916472f8768e4e9992827a0.",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+
+Response if fail:
+```
+{
+	"server": "www.myBank.com",
+	"status": "notadded",
+	"message": "Account was not created for user e24b3a755916472f8768e4e9992827a0.",
+	"time": "2016-40-21 10:40:PM"
+}
+```
 
 # ###################
 ## Print Welcome Service 
