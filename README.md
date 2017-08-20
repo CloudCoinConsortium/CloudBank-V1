@@ -1,10 +1,92 @@
 # Server Side CloudCoin Banking Software
-*PROPOSED CLOUDCOIN BANK API 7/22/2017*
+*PROPOSED CLOUDCOIN BANK API 8/18/2017*
 
 This code allows your server or application to pown (password own) CloudCoins and track those CloudCoins owned by your users.
 You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
 without needing to detect counterfeits everytime with the RAIDA. 
 
+NOTE: To Stop Replay attacks and other sercurity concenrs, HTTPS is required. 
+
+
+Folder Structure
+<pre>
+Bank
+-Bank
+--[lots of folders. one for each account]
+-Broke
+-Counterfeit
+--[lots of folders. one for each account]
+-Directory
+-Export
+--[lots of folders. one for each account]
+-Fracked
+--[lots of folders. one for each account]
+-Import
+--[lots of folders. one for each account]
+-Imported
+--[lots of folders. one for each account]
+-Logs
+-Lost
+-Suspect
+--[lots of folders. one for each account]
+-Templates
+-Trash
+-Waiting
+</pre>
+# ###################
+## Create Account Service
+# ##################
+
+*CREATE ACCOUNT REQUEST STRING*
+
+Create an account for a new user. This will create a subfolder in the following folders:
+
+-Bank
+-Counterfeit
+-Export
+-Fracked
+-Import
+-Imported
+-Suspect
+
+**rules for user account names**
+Your users must have a unique identifier that allows your system to identify the accounts within the CloudBank. We call this unique identifer the "Account ID." This number will become the name of folders within the CloudBank. This folder could be a number (like a customer number) or a GUID or any thing that you use to uniquly identify your users in your system. 
+However, there are some rules: 
+Your Account ID must work as folder names for both Windows and Linux Operating sytems.
+Account IDs cannot contain any of the following characters:
+```
+    \ / : * ? " ' < > | 
+```
+Your CloudBank may treat your Account identifiers as either case sensitive or case insensitive. This depends on if your CloudBank is hosted on a Linux (PHP) or Windows (C#) System. 
+
+POST:
+https://cloudcoin.global/bank/add_account.php?
+uid=e24b3a755916472f8768e4e9992827a0
+vd=9436db9632ee40978612caa8dae81d74
+
+uid = Unique Identifier
+vd= Verifiation data (Your secret key)
+
+Note: If the account has already been created it just says success. 
+Response if success:
+```
+{
+	"server": "www.myBank.com",
+	"status": "added",
+	"message": "Account was created for user e24b3a755916472f8768e4e9992827a0.",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+
+Response if fail:
+```
+{
+	"server": "www.myBank.com",
+	"status": "notadded",
+	"message": "Account was not created for user e24b3a755916472f8768e4e9992827a0.",
+	"time": "2016-40-21 10:40:PM"
+}
+```
 
 # ###################
 ## Print Welcome Service 
@@ -187,17 +269,13 @@ if All:
 # ###################
 ## Import Service 
 # ##################
-To send CloudCoins to the bank, your program must first put the CloudCoin stack file in the import folder. Then it must call the Bank's import service to import. The import service places the coins in the suspect folder. Then it creates report files for each coin to be imported in the ImportReports folder, and automatically starts the detect their authenticity. 
+To send CloudCoins to the bank, your program must first put the CloudCoin stack and jpeg files in the import folder. All files that are placed in the import folder must have a .stack or .jpg extention. The program will first need to create a subfolder that has the same name as the account number that the CloudCoin is to be imported to. Then it must call the Bank's import service to import. The import service places the coins in the suspect folder in the owners subfolder. Then it creates report files for each coin to be imported in the ImportReports folder, and automatically starts the detect their authenticity. 
 
 There is a naming convention for programs to use to put the coins in the import folder:
 File Name Format:
 ```
-1.12720.cloudcoin.273C9DFA8061407AB8102C0A4E872CA3.stack
+import/273C9DFA8061407AB8102C0A4E872CA3/700.CloudCoins.ForSean.stack
 ```
-Where 1 is the network number
-
-Where 12720 = Total amount of CloudCoins in the stack file.
-
 Where 273C9DFA8061407AB8102C0A4E872CA3 = Account ID of the user or entity that the CloudCoins belong to. 
 
 
