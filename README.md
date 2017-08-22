@@ -10,25 +10,17 @@ NOTE: To Stop Replay attacks and other sercurity concenrs, HTTPS is required.
 
 Folder Structure
 <pre>
-Bank
+UserAccounID
 -Bank
---[lots of folders. one for each account]
 -Broke
 -Counterfeit
---[lots of folders. one for each account]
--Directory
 -Export
---[lots of folders. one for each account]
 -Fracked
---[lots of folders. one for each account]
 -Import
---[lots of folders. one for each account]
 -Imported
---[lots of folders. one for each account]
 -Logs
 -Lost
 -Suspect
---[lots of folders. one for each account]
 -Templates
 -Trash
 -Waiting
@@ -39,15 +31,21 @@ Bank
 
 *CREATE ACCOUNT REQUEST STRING*
 
-Create an account for a new user. This will create a subfolder in the following folders:
+Create an account for a new user. This will create a folder names after the account and populate it with the following subfolders:
 
--Bank
--Counterfeit
--Export
--Fracked
--Import
--Imported
--Suspect
+* Bank
+* Broke
+* Counterfeit
+* Export
+* Fracked
+* Import
+* Imported
+* Logs
+* Lost
+* Suspect
+* Templates
+* Trash
+* Waiting
 
 **rules for user account names**
 Your users must have a unique identifier that allows your system to identify the accounts within the CloudBank. We call this unique identifer the "Account ID." This number will become the name of folders within the CloudBank. This folder could be a number (like a customer number) or a GUID or any thing that you use to uniquly identify your users in your system. 
@@ -62,12 +60,11 @@ Your CloudBank may treat your Account identifiers as either case sensitive or ca
 POST:
 https://cloudcoin.global/bank/add_account.php?
 uid=e24b3a755916472f8768e4e9992827a0
-vd=9436db9632ee40978612caa8dae81d74
 
 uid = Unique Identifier
-vd= Verifiation data (Your secret key)
 
-Note: If the account has already been created it just says success. 
+
+Note: If the account has already been created the API just says success. 
 Response if success:
 ```
 {
@@ -134,7 +131,7 @@ Response if success:
 	"status": "echo",
 	"raida_status": ["ready", "notready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", 
 	"ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready"],
-	"raida_ms": [526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 
+	"raida_ms": [226, 526, 510, 326, 1226, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 
 	526, 526, 526, 526, 526, 526],
 	"message": "Echo Completed",
 	"time": "2016-40-21 10:40:PM"
