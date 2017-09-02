@@ -1,5 +1,11 @@
 <?php
- 
+/**
+ * Example of using the ServiceServer class
+ *
+ * Returns welcome service message
+ *
+ * @author Prakash
+ */
 // require the autoloader that composer created
 require_once 'vendor/autoload.php';
  
@@ -52,7 +58,7 @@ class userAuth {
 	  return JWT::encode($payload, $this->key);
 	}
 	// sends signed token in email to user if the user exists
-	public function mailUser($email, $password) {
+	public function getToken($email, $password) {
 	  // check if the user exists
 	  if ($this->validUser($email, $password)) {
 	    // generate JSON web token and store as variable
@@ -60,28 +66,12 @@ class userAuth {
 	    // create email
 	    echo $message = 'http://localhost/bankservice/index.php?token='.$token;
 	    } 
-	    /*
-	    $mail = mail($this->email,"Authentication From localhost",$message);
+		
+	  else {
 	    
-	    // if the email is successful, send feedback to user
-	    
-	    if ($mail) {
-	      
-	      return 'We Just Sent You An Email With Your Login Link';
-	    } else {
-	      
-	      return 'An Error Occurred While Sending The Email';
-	    }
-	  } 
-	  */
-	  //else {
-	    
-	    //return 'We Couldn\'t Find You In Our Database. Maybe Wrong Email/Password Combination';
-	  //}
-
-
-
-	  
+	    return 'Wrong Email/Password Combination';
+	  }
+  
 	}
 	// Validates a given JWT from the user email
 	  private function validJWT($token) {
@@ -100,16 +90,15 @@ class userAuth {
 	  }
 	 
 	 
-	  public function validMail($token) {
+	  public function validToken($token) {
 	    // checks if an email is valid
 	    $tokenVal = $this->validJWT($token);
-	 
 	    // check if the first array value is true
 	    if ($tokenVal['0']) {
 	      // create user session and all that good stuff
-	      return "Everything went well, time to serve you what you need.";
+	      return true;
 	    } else {
-	      return "There was an error validating your email. Send another link";
+	      return false;
 	    }
 	  }
 
