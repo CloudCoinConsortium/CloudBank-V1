@@ -1,5 +1,176 @@
+#CLOUDBANK VERSION 9-22-2017
+
+The purpose is to allow software to pown coins.
+
+To do this, four services are available:
+# Echo
+# Show Coins
+# Import One Stack
+# Export One Stack
+
+For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
+
+
+------------------------------------------------------------------
+Config file:
+The following will be needed in app configurations:
+Server Name =  https://CloudCoin.co/ (Use the name of the local host)
+
+----------------------------------------------------------------
+
+
+##Services
+
+
+###Echo Service
+Sample GET Request:
+```
+https://CloudCoin.co/bank/echo.aspx
+```
+
+Echo Response for good
+```
+{
+    "server":"CloudCoin.co",
+    "status":"ready",
+	"message":"The RAIDA is ready for counterfeit detection.",
+    "reciept":"640322f6d30c45328914b441ac0f4e5b",
+    "time":"2016-49-21 7:49:PM"
+}
+```
+
+
+Echo Response for bad
+```
+{
+    "server":"CloudCoin.co",
+    "status":"fail",
+	"message":"Not enough RAIDA servers can be contacted to import new coins.",
+    "reciept":"640322f6d30c45328914b441ac0f4e5b",
+    "time":"2016-49-21 7:49:PM"
+}
+```
+Not enough RAIDA servers can be contacted to import new coins.
+
+
+##IMPORT ONE STACK 
+import_one_stack.aspx
+The program must put a stack file in a folder that is accessible via the web to cors on the CloudBank Server. 
+
+
+Sample POST Request:
+```
+https://CloudCoin.co/bank/import_one_stack.aspx?
+stack=
+{
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"1112240", 
+		"an": ["f5a52ee881daaae548c24a8eaff7176c", "415c2375a6fa48c4661f5af8d7c95541", "73e067b7b47c1556deebdca33f9a09fb", "9b90d265d102a565a702813fa2211f54", "e3e191ca987c8010a3adc49c6fc18417",
+			"baa7578e207b7cfaa0b8336d7ed4a4f8", "6d8a5c66a589532fe9e5dc3932650cfa", "1170b354e097f2d90132869631409bd3", "b7bc83e8ee7529ff9f874866b901cf15", "a37f6c4af8fbcfbc4d77880fc29ddfbc",
+			"277668208e9bafd9393aebd36945a2c3", "ef50088c8218afe53ce2ecd655c2c786", "b7bbb01fbe6c3a830a17bd9a842b46c0", "737360e18596d74d784f563ca729aaea", "e054a34f2790fd3353ea26e5d92d9d2f",
+			"7051afef36dc388e65e982bc853be417", "ea22cbae0394f6c6918691f2e2f2e267", "95d1278f54b5daca5898c62f267b6364", "b98560e11b7142d1addf5b9cf32898da", "e325f615f93ed682c7aadf6b2d77c17a",
+			"3e8f9d74290fe31d416b90db3a0d2ab1", "c92d1656ded0a4f68e5171c8331e0aea", "7a9cee66544934965bca0c0cb582ba73", "7a55437fa98c1b10d7f47d84f9accdf0", "c3577cced2d428f205355522bc1119b6"],
+		"ed":"7-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+}
+```
+
+
+Sample Response if good:
+```
+{
+ "server":"CloudCoin.co",
+ "status":"importing",
+ "message":"The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your reciept.",
+ "reciept":"640322f6d30c45328914b441ac0f4e5b",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+Sample Response if bad file bad:
+```
+{
+ "server":"CloudCoin.co",
+ "status":"Error",
+ "message":"JSON: Your stack file was corrupted. Please check JSON validation.",
+ "reciept":"640322f6d30c45328914b441ac0f4e5b",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+Sample Response if nothing attached :
+```
+{
+ "server":"CloudCoin.co",
+ "status":"Error",
+ "message":"LoadFile: The stack file was empty.",
+ "reciept":"640322f6d30c45328914b441ac0f4e5b",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+
+##Service show_coins
+
+Sample GET Request:
+
+```
+https://CloudCoin.co/bank/show_coins.aspx
+```
+Sample Response:
+```
+{
+ "server":"CloudCoin.co",
+ "status":"coins_shown",
+ "ones":205,
+ "fives":10,
+ "twentyfives":105,
+ "hundreds":1050,
+ "twohundredfifties":98,
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+#Service export
+
+Sample GET Request:
+
+```
+https://CloudCoin.co/bank/export_one_stack.aspx
+```
+sample response if good
+
+```
+{
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"1112240", 
+		"an": ["f5a52ee881daaae548c24a8eaff7176c", "415c2375a6fa48c4661f5af8d7c95541", "73e067b7b47c1556deebdca33f9a09fb", "9b90d265d102a565a702813fa2211f54", "e3e191ca987c8010a3adc49c6fc18417",
+			"baa7578e207b7cfaa0b8336d7ed4a4f8", "6d8a5c66a589532fe9e5dc3932650cfa", "1170b354e097f2d90132869631409bd3", "b7bc83e8ee7529ff9f874866b901cf15", "a37f6c4af8fbcfbc4d77880fc29ddfbc",
+			"277668208e9bafd9393aebd36945a2c3", "ef50088c8218afe53ce2ecd655c2c786", "b7bbb01fbe6c3a830a17bd9a842b46c0", "737360e18596d74d784f563ca729aaea", "e054a34f2790fd3353ea26e5d92d9d2f",
+			"7051afef36dc388e65e982bc853be417", "ea22cbae0394f6c6918691f2e2f2e267", "95d1278f54b5daca5898c62f267b6364", "b98560e11b7142d1addf5b9cf32898da", "e325f615f93ed682c7aadf6b2d77c17a",
+			"3e8f9d74290fe31d416b90db3a0d2ab1", "c92d1656ded0a4f68e5171c8331e0aea", "7a9cee66544934965bca0c0cb582ba73", "7a55437fa98c1b10d7f47d84f9accdf0", "c3577cced2d428f205355522bc1119b6"],
+		"ed":"7-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+}
+```
+
+#END OF CLOUDBANK VERSION 1
+
+
+
 # Server Side CloudCoin Banking Software
-*PROPOSED CLOUDCOIN BANK API 9/19/2017*
+*WORK in Progress CLOUDCOIN BANK API 9/19/2017*
 
 This code allows your server or application to pown (password own) CloudCoins and track those CloudCoins owned by your users.
 You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
@@ -639,6 +810,8 @@ Note that the 1 after the word Authentic: is the serial number of the unit that 
 
 
 END OF API
+
+
 
 
 
