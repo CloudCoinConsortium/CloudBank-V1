@@ -3,10 +3,10 @@
 The purpose is to allow software to pown coins.
 
 To do this, four services are available:
-*Echo
-*Show Coins
-*Import One Stack
-*Export One Stack
+1. Echo
+2. Show Coins
+3. Import One Stack
+4. Export One Stack
 
 For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
 
@@ -33,8 +33,7 @@ Echo Response for good
 {
     "server":"CloudCoin.co",
     "status":"ready",
-	"message":"The RAIDA is ready for counterfeit detection.",
-    "reciept":"640322f6d30c45328914b441ac0f4e5b",
+    "message":"The RAIDA is ready for counterfeit detection.",
     "time":"2016-49-21 7:49:PM"
 }
 ```
@@ -45,16 +44,15 @@ Echo Response for bad
 {
     "server":"CloudCoin.co",
     "status":"fail",
-	"message":"Not enough RAIDA servers can be contacted to import new coins.",
-    "reciept":"640322f6d30c45328914b441ac0f4e5b",
+    "message":"Not enough RAIDA servers can be contacted to import new coins.",
     "time":"2016-49-21 7:49:PM"
 }
 ```
 Not enough RAIDA servers can be contacted to import new coins.
 
 
-##IMPORT ONE STACK 
-import_one_stack.aspx
+### IMPORT ONE STACK 
+
 The program must put a stack file in a folder that is accessible via the web to cors on the CloudBank Server. 
 
 
@@ -166,6 +164,13 @@ sample response if good
 ```
 
 # END OF CLOUDBANK VERSION 1
+
+
+
+
+
+
+
 
 
 
