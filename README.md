@@ -21,6 +21,30 @@ Server Name =  https://CloudCoin.co/ (Use the name of the local host)
 
 # Services
 
+## Print Welcome Service 
+# ##################
+
+*PRINT_WELECOME REQUEST STRING*
+
+Get's the bank's welcome information
+
+https://cloudcoin.global/bank/print_welcome.php
+
+
+*PRINT_WELECOME RESPONSE STRING*
+
+Response if success:
+```
+{
+	"server": "www.myBank.com",
+	"status": "welcome",
+	"version":"4.07.17",
+	"message": "CloudCoin Bank. Used to Authenticate, Store and Payout CloudCoins. 
+	This Software is provided as is with all faults, defects and errors, and without warranty of any kind.  
+	Free from the CloudCoin Consortium.",
+	"time": "2016-40-21 10:40:PM"
+}
+```
 
 ### Echo Service
 Sample GET Request:
