@@ -1,12 +1,12 @@
-#CLOUDBANK VERSION 9-22-2017
+# CLOUDBANK VERSION 9-22-2017
 
 The purpose is to allow software to pown coins.
 
 To do this, four services are available:
-# Echo
-# Show Coins
-# Import One Stack
-# Export One Stack
+*Echo
+*Show Coins
+*Import One Stack
+*Export One Stack
 
 For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
 
@@ -19,10 +19,10 @@ Server Name =  https://CloudCoin.co/ (Use the name of the local host)
 ----------------------------------------------------------------
 
 
-##Services
+# Services
 
 
-###Echo Service
+### Echo Service
 Sample GET Request:
 ```
 https://CloudCoin.co/bank/echo.aspx
@@ -115,7 +115,7 @@ Sample Response if nothing attached :
 ```
 
 
-##Service show_coins
+## Service show_coins
 
 Sample GET Request:
 
@@ -136,7 +136,7 @@ Sample Response:
 }
 ```
 
-#Service export
+## Service export
 
 Sample GET Request:
 
@@ -165,7 +165,7 @@ sample response if good
 }
 ```
 
-#END OF CLOUDBANK VERSION 1
+# END OF CLOUDBANK VERSION 1
 
 
 
