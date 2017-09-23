@@ -142,7 +142,7 @@ If powning process has not been started
 	"total_fracked": 7,
 	"total_counterfeit": 1,
 	"total_lost": 0,
-	"coins_recieved": [{
+	"reciept_detail": [{
 			"nn.sn": "1.16777216",
 			"status": "suspect",
 			"pown": "uuuuuuuuuuuuuuuuuuuuuuuuu",
@@ -189,7 +189,7 @@ If powning process is complete:
 	"total_fracked": 7,
 	"total_counterfeit": 1,
 	"total_lost": 0,
-	"coins_recieved": [{
+	"reciept_detail": [{
 			"nn.sn": "1.16777216",
 			"status": "authentic",
 			"pown": "ppppppppepppppppppppeppp",
