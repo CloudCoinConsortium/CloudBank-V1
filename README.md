@@ -128,8 +128,55 @@ Sample Response if nothing attached :
 }
 ```
 
-# Sample Reciept
+# Sample Reciepts
+If powning process has not been started
+```
+{
+	"reciept_id": "e054a34f2790fd3353ea26e5d92d9d2f",
+	"time": "2016-49-21 7:49:PM",
+	"timezone": "UTC-7",
+	"server": "bank.CloudCoin.Global",
+	"total_authencit": 5,
+	"total_fracked": 7,
+	"total_counterfeit": 1,
+	"total_lost": 0,
+	"coins_recieved": [{
+			"nn.sn": "1.16777216",
+			"status": "suspect",
+			"pown": "uuuuuuuuuuuuuuuuuuuuuuuuu",
+			"note": "Waiting"
+		},
+		{
+			"nn.sn": "1:1425632",
+			"status": "suspect",
+			"pown": "uuuuuuuuuuuuuuuuuuuuuuuuu",
+			"note": "Waiting"
+		},
+		{
+			"nn.sn": "1.956258",
+			"status": "suspect",
+			"pown": "uuuuuuuuuuuuuuuuuuuuuuuuu",
+			"note": "Waiting"
+		},
+		{
+			"nn.sn": "1.15666214",
+			"status": "suspect",
+			"pown": "uuuuuuuuuuuuuuuuuuuuuuuuu",
+			"note": "Waiting"
+		},
+		{
+			"nn.sn": "1.15265894",
+			"status": "suspect",
+			"pown": "uuuuuuuuuuuuuuuuuuuuuuuuu",
+			"note": "Waiting"
+		}
 
+	]
+
+}
+```
+
+If powning process is complete:
 ```
 {
         "reciept_id":"e054a34f2790fd3353ea26e5d92d9d2f",
