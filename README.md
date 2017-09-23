@@ -39,7 +39,7 @@ Response if success:
 }
 ```
 
-## Echo Service
+## Echo RAIDA Service
 Sample GET Request:
 ```
 https://CloudCoin.co/bank/echo.aspx
@@ -128,7 +128,52 @@ Sample Response if nothing attached :
 }
 ```
 
+# Sample Reciept
 
+```{
+    "reciept_id":"e054a34f2790fd3353ea26e5d92d9d2f",
+	"time": "2016-49-21 7:49:PM",
+	"timezone": "UTC-7",
+	"server": "bank.CloudCoin.Global",
+	"total_authencit": 5,
+	"total_fracked": 7,
+	"total_counterfeit": 1,
+	"total_lost": 0,
+	"coins_recieved": [{
+			"nn.sn": "1.16777216",
+			"status": "authentic",
+			"pown": "ppppppppepppppppppppeppp",
+			"note": "Moved to Bank"
+		},
+		{
+			"nn.sn": "1:1425632",
+			"status": "counterfeit",
+			"pown": "fffffffffpfffffffffffffff",
+			"note": "Sent to trash"
+		},
+		{
+			"nn.sn": "1.956258",
+			"status": "authentic",
+			"pown": "ppppppppppppppppppppppppf",
+			"note": "Moved to Fracked"
+		},
+		{
+			"nn.sn": "1.15666214",
+			"status": "lost",
+			"pown": "pfpfpfpfpfpfpfpfpfpfpfpfp",
+			"note": "Moved to Lost"
+		},
+		{
+			"nn.sn": "1.15265894",
+			"status": "lost",
+			"pown": "ppppffpeepfpppfpfffpfffpf",
+			"note": "STRINGS ATTACHED!"
+		}
+
+	]
+
+}
+```
 ## Service show_coins
 
 Sample GET Request:
