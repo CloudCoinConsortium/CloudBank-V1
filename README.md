@@ -130,8 +130,9 @@ Sample Response if nothing attached :
 
 # Sample Reciept
 
-```{
-    "reciept_id":"e054a34f2790fd3353ea26e5d92d9d2f",
+```
+{
+        "reciept_id":"e054a34f2790fd3353ea26e5d92d9d2f",
 	"time": "2016-49-21 7:49:PM",
 	"timezone": "UTC-7",
 	"server": "bank.CloudCoin.Global",
