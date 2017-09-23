@@ -3,36 +3,29 @@
 The purpose is to allow software to pown coins.
 
 To do this, four services are available:
-1. Echo
-2. Show Coins
-3. Import One Stack
-4. Export One Stack
-
-For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
-
+1. Print Welcome
+2. Echo
+3. Show Coins
+4. Import One Stack
+5. Export One Stack
 
 ------------------------------------------------------------------
 Config file:
 The following will be needed in app configurations:
+
 Server Name =  https://CloudCoin.co/ (Use the name of the local host)
 
+For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
 ----------------------------------------------------------------
-
-
 # Services
-
+------------------------
 ## Print Welcome Service 
-# ##################
-
-*PRINT_WELECOME REQUEST STRING*
-
 Get's the bank's welcome information
 
+Sample request
+```
 https://cloudcoin.global/bank/print_welcome.php
-
-
-*PRINT_WELECOME RESPONSE STRING*
-
+```
 Response if success:
 ```
 {
@@ -46,7 +39,7 @@ Response if success:
 }
 ```
 
-### Echo Service
+## Echo Service
 Sample GET Request:
 ```
 https://CloudCoin.co/bank/echo.aspx
@@ -61,7 +54,6 @@ Echo Response for good
     "time":"2016-49-21 7:49:PM"
 }
 ```
-
 
 Echo Response for bad
 ```
