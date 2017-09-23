@@ -8,12 +8,14 @@ To do this, four services are available:
 3. Show Coins
 4. Import One Stack
 5. Export One Stack
+6. Get Receipt
 
 ------------------------------------------------------------------
 Config file:
 The following will be needed in app configurations:
 
-Server Name =  https://CloudCoin.co/ (Use the name of the local host)
+bank_server =  https://CloudCoin.co/ (Use the name of the local host)
+timezone = UTC-7 (use the customer's  timezone)
 
 For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
 ----------------------------------------------------------------
@@ -29,7 +31,7 @@ https://cloudcoin.global/bank/print_welcome.php
 Response if success:
 ```
 {
-	"server": "www.myBank.com",
+	"bank_server": "www.myBank.com",
 	"status": "welcome",
 	"version":"4.07.17",
 	"message": "CloudCoin Bank. Used to Authenticate, Store and Payout CloudCoins. 
@@ -48,7 +50,7 @@ https://CloudCoin.co/bank/echo.aspx
 Echo Response for good
 ```
 {
-    "server":"CloudCoin.co",
+    "bank_server":"CloudCoin.co",
     "status":"ready",
     "message":"The RAIDA is ready for counterfeit detection.",
     "time":"2016-49-21 7:49:PM"
@@ -58,7 +60,7 @@ Echo Response for good
 Echo Response for bad
 ```
 {
-    "server":"CloudCoin.co",
+    "bank_server":"CloudCoin.co",
     "status":"fail",
     "message":"Not enough RAIDA servers can be contacted to import new coins.",
     "time":"2016-49-21 7:49:PM"
@@ -99,7 +101,7 @@ stack=
 Sample Response if good:
 ```
 {
- "server":"CloudCoin.co",
+ "bank_server":"CloudCoin.co",
  "status":"importing",
  "message":"The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your reciept.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
@@ -110,7 +112,7 @@ Sample Response if good:
 Sample Response if bad file bad:
 ```
 {
- "server":"CloudCoin.co",
+ "bank_server":"CloudCoin.co",
  "status":"Error",
  "message":"JSON: Your stack file was corrupted. Please check JSON validation.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
@@ -120,7 +122,7 @@ Sample Response if bad file bad:
 Sample Response if nothing attached :
 ```
 {
- "server":"CloudCoin.co",
+ "bank_server":"CloudCoin.co",
  "status":"Error",
  "message":"LoadFile: The stack file was empty.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
@@ -135,8 +137,8 @@ If powning process has not been started
 	"reciept_id": "e054a34f2790fd3353ea26e5d92d9d2f",
 	"time": "2016-49-21 7:49:PM",
 	"timezone": "UTC-7",
-	"server": "bank.CloudCoin.Global",
-	"total_authencit": 5,
+	"bank_server": "bank.CloudCoin.Global",
+	"total_authentic": 5,
 	"total_fracked": 7,
 	"total_counterfeit": 1,
 	"total_lost": 0,
@@ -182,8 +184,8 @@ If powning process is complete:
         "reciept_id":"e054a34f2790fd3353ea26e5d92d9d2f",
 	"time": "2016-49-21 7:49:PM",
 	"timezone": "UTC-7",
-	"server": "bank.CloudCoin.Global",
-	"total_authencit": 5,
+	"bank_server": "bank.CloudCoin.Global",
+	"total_authentic": 5,
 	"total_fracked": 7,
 	"total_counterfeit": 1,
 	"total_lost": 0,
@@ -232,7 +234,7 @@ https://CloudCoin.co/bank/show_coins.aspx
 Sample Response:
 ```
 {
- "server":"CloudCoin.co",
+ "bank_server":"CloudCoin.co",
  "status":"coins_shown",
  "ones":205,
  "fives":10,
