@@ -3,6 +3,7 @@
 <%@ Import namespace="System" %>
 <%@ Import namespace="System.Data.SqlClient" %>
 <%@ Import namespace="System.Web.Configuration" %>
+<%@ Import namespace="Founders" %>
 
 <script language="c#" runat="server">
     /*
@@ -25,7 +26,7 @@
         public string pan;
         public int reportedDenomination;
         public int realDenomination;
-
+        
         //Constructors
         public MoneyUnit(int sn, string an, string pan, int reportedDenomination)
         {
