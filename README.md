@@ -250,7 +250,7 @@ Sample Response:
 Sample GET Request:
 
 ```
-https://CloudCoin.co/bank/export_one_stack.aspx
+https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254
 ```
 sample response if good
 
