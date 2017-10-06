@@ -250,7 +250,13 @@ Sample Response:
 Sample GET Request:
 
 ```
-https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254
+https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=download
+
+phase 2: https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=email
+
+phase 2: https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=url
+
+
 ```
 sample response if good
 
