@@ -1,130 +1,94 @@
-
-<%@ Page Language="C#" Debug="true"  %>
+<%@ Page Language="C#" Debug="true"  Async="true"%>
 <%@ Import namespace="System.Web.Configuration" %>
 <%@ Import namespace="System" %>
 <%@ Import namespace="System.Data.SqlClient" %>
 <%@ Import namespace="System.Web.Configuration" %>
+<%@ Import namespace="Founders" %>
 <%@ Import namespace="System.Web.Script.Serialization" %>
+<%@ Import Namespace="System.Security.Cryptography" %>
+<%@ Import Namespace="System.Threading.Tasks" %>
+
 
 <script language="c#" runat="server">
-    /*
-      import_one_stack.aspx
-      Version 10/5/2017
-      Created by Sean Worthington
-      Powns one stackfile
-      Usage: https://cloudcoin.global/bank/import_one_stack.aspx
-      This software is for use by CloudCoin Consortium Clients only. 
-      All rights reserved.  
-
-
-        Sample Response if good:
-
-        {
-         "bank_server":"CloudCoin.co",
-         "status":"importing",
-         "message":"The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your reciept.",
-         "reciept":"640322f6d30c45328914b441ac0f4e5b",
-         "time":"2016-49-21 7:49:PM"
-        }
-
-        Sample Response if bad file bad:
-
-        {
-         "bank_server":"CloudCoin.co",
-         "status":"Error",
-         "message":"JSON: Your stack file was corrupted. Please check JSON validation.",
-         "reciept":"640322f6d30c45328914b441ac0f4e5b",
-         "time":"2016-49-21 7:49:PM"
-        }
-
-        Sample Response if nothing attached :
-
-        {
-         "bank_server":"CloudCoin.co",
-         "status":"Error",
-         "message":"LoadFile: The stack file was empty.",
-         "reciept":"640322f6d30c45328914b441ac0f4e5b",
-         "time":"2016-49-21 7:49:PM"
-        }
-
-        Sample Response if No RAIDA Connectivity :
-        {
-         "bank_server":"CloudCoin.co",
-         "status":"Error",
-         "message":"You do not have enought RAIDA to perform an import operation.",
-         "reciept":"640322f6d30c45328914b441ac0f4e5b",
-         "time":"2016-49-21 7:49:PM"
-        }
-
-
-      */
 
     public class ServiceResponse
     {
         public string server;
         public string status;
-        public string version;
+        public string receipt;
         public string message;
         public string time;
+    }//End Service Response class
 
-    }
+    static FileUtils fileUtils = FileUtils.GetInstance(AppDomain.CurrentDomain.BaseDirectory);
 
     public void Page_Load(object sender, EventArgs e)
     {
-        //Usage: http://192.168.1.4/service/echo.aspx
-        //Response.Write("here");
-        ServiceResponse response = new ServiceResponse();
-        response.server = WebConfigurationManager.AppSettings["thisServerName"];
-        response.status = "importing";
-        response.time = DateTime.Now.ToString("yyyy-mm-dd h:mm:tt");
-        response.version = "1.0";
-
-        string stack = c.Request["stack"];
-
-        //Check RAIDA Status
-        int totalRAIDABad = 0;
-        for (int i = 0; i < 25; i++)
-        {
-            if (RAIDA_Status.failsEcho[i])
-            {
-                totalRAIDABad += 1;
-            }
-        }
-        if (totalRAIDABad > 8)
-        {
-            response.status = "importing;
-                response.message="You do not have enought RAIDA to perform an import operation.");
-            return;
-        }
-
-        //CHECK TO SEE IF THERE ARE UN DETECTED COINS IN THE SUSPECT FOLDER
-        String[] suspectFileNames = new DirectoryInfo(fileUtils.suspectFolder).GetFiles().Select(o => o.Name).ToArray();//Get all files in suspect folder
-        if (suspectFileNames.Length > 0)
-        {
-            multidetect(stack);
-        } //end if there are files in the suspect folder that need to be imported
-
-
-        //Import the new stack
+        string stack = Request.Form["stack"];
         Importer importer = new Importer(fileUtils);
-        if (!importer.importAll(stack))//Moves all CloudCoins from the Import folder into the Suspect folder. 
+        bool import = false;
+        if (stack != null)
+            import = importer.importJson(stack);
+        if (!import)//Moves all CloudCoins from the Import folder into the Suspect folder. 
         {
-            // No coins in import folder.");// "No coins in import folder.");
+            ServiceResponse response = new ServiceResponse();
+            response.server = WebConfigurationManager.AppSettings["thisServerName"];
+            response.status = "Error";
+            response.message = "The CloudCoin stack was either empty or the JSON was not valid.";
+            response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
+            response.receipt = "";
+            var json = new JavaScriptSerializer().Serialize(response);
+            Response.Write(json);
+            Response.End();
+
         }
         else
         {
-            multidetect(stack);
-            Grader myGrader = mew Grader();
-            myGrader.gradeAll();
+            RegisterAsyncTask(new PageAsyncTask(detect));
 
         }//end if coins to import
 
-        //Send client the response
+        
+    }//End Page Load
+
+    private async Task detect()
+    {
+        string receiptFileName = await multi_detect();
+        ServiceResponse response = new ServiceResponse();
+        response.server = WebConfigurationManager.AppSettings["thisServerName"];
+        response.receipt = receiptFileName;
+        response.status = "importing";
+        response.message = "The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your reciept.";
+        response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
+        Grader grader = new Grader(fileUtils);
+        int[] detectionResults = grader.gradeAll(5000, 2000, receiptFileName);
         var json = new JavaScriptSerializer().Serialize(response);
         Response.Write(json);
         Response.End();
+    }
 
-    }//End Page Load
+    public static async Task<string> multi_detect() {
 
+        MultiDetect multi_detector = new MultiDetect(fileUtils);
+        string receiptFileName;
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            byte[] cryptoRandomBuffer = new byte[16];
+            rng.GetBytes(cryptoRandomBuffer);
+
+            Guid pan = new Guid(cryptoRandomBuffer);
+            receiptFileName = pan.ToString("N");
+        }
+
+        //Calculate timeout
+        int detectTime = 20000;
+        if (RAIDA_Status.getLowest21() > detectTime)
+        {
+            detectTime = RAIDA_Status.getLowest21() + 200;
+        }//Slow connection
+
+        await multi_detector.detectMulti(detectTime, receiptFileName);
+        return receiptFileName;
+    }//end multi detect
 
 </script>

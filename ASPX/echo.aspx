@@ -1,10 +1,11 @@
-﻿<%@ Page Language="C#" Debug="false"  %>
+﻿<%@ Page Language="C#" Debug="true"  Async="true"%>
 <%@ Import namespace="System.Web.Configuration" %>
 <%@ Import namespace="System" %>
 <%@ Import namespace="System.Data.SqlClient" %>
 <%@ Import namespace="System.Web.Configuration" %>
 <%@ Import namespace="Founders" %>
 <%@ Import namespace="System.Web.Script.Serialization" %>
+<%@ Import Namespace="System.Threading.Tasks" %>
 
 <script language="c#" runat="server">
     /*
@@ -46,48 +47,63 @@
     {
         //Usage: http://192.168.1.4/service/echo.aspx
         //Response.Write("here");
+
+
+        RegisterAsyncTask(new PageAsyncTask(echoStatus));
+        //VALIDATE INPUT VARIABLES
+
+    }//End Page Load
+
+    public async Task echoStatus()
+    {
         ServiceResponse response = new ServiceResponse();
         response.server = WebConfigurationManager.AppSettings["thisServerName"];
         response.status = "ready";
-        response.time = DateTime.Now.ToString("yyyy-mm-dd h:mm:tt");
+        response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
         response.version = "1.0";
 
-  
-        if ( echoRaida() )
+        bool echo = await echoRaida();
+        if (echo)
+        {
             response.status = "ready";
             response.message = "The RAIDA is ready for counterfeit detection.";
+        }
         else
+        {
             response.status = "fail";
             response.message = "Not enough RAIDA servers can be contacted to import new coins.";
-        //VALIDATE INPUT VARIABLES
+        }
+
         var json = new JavaScriptSerializer().Serialize(response);
         Response.Write(json);
         Response.End();
-    }//End Page Load
+    }
 
-    
-    public  bool echoRaida()
-    { 
+
+    public async Task<bool> echoRaida()
+    {
         RAIDA_Status.resetEcho();
-        
-        RAIDA raida1 = new RAIDA(5000);
-        
-        Response[] results = raida1.echoAll(5000);
-        
+
+        RAIDA raida1 = new RAIDA();
+
+        await raida1.echoAll(5000);
+
         int totalReady = 0;
 
         for (int i = 0; i < 25; i++)
         {
             if (RAIDA_Status.failsEcho[i])
             {
-                 //Not ready. Do not add
+                //Not ready. Do not add
+
             }
             else
             {
                 totalReady++;
+
             }
         }//end for
-       
+
         //Check if enough are good 
         if (totalReady < 16)//
         {
