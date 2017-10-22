@@ -6,15 +6,17 @@ To do this, four services are available:
 1. Print Welcome
 2. Echo
 3. Show Coins
-4. Import One Stack
-5. Export One Stack
-6. Get Receipt
+4. Deposit
+5. Import One Stack
+6. Export One Stack
+7. Get Receipt
 
 ------------------------------------------------------------------
 Config file:
 The following will be needed in app configurations:
 
 bank_server =  https://CloudCoin.co/ (Use the name of the local host)
+
 timezone = UTC-7 (use the customer's  timezone)
 
 For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
@@ -68,8 +70,34 @@ Echo Response for bad
 ```
 Not enough RAIDA servers can be contacted to import new coins.
 
+## DEPOSITE SERVICE 
 
-### IMPORT ONE STACK 
+The Deposite Service does exactly the same thing as the IMPORT ONE STACK service except it allows the caller to specify the receipt number that is to be used. This requires the POST request to use an rn (receipt number) parameter in the url. The receipt number must be a random GUID. There is an additional error that could happen. The caller could request the use of  a GUID that has already used. 
+
+Sample POST Request:
+```
+https://CloudCoin.co/bank/import_one_stack.aspx?rn=640322f6d30c45328914b441ac0f4e5b
+stack=
+{
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"1112240", 
+		"an": ["f5a52ee881daaae548c24a8eaff7176c", "415c2375a6fa48c4661f5af8d7c95541", "73e067b7b47c1556deebdca33f9a09fb", "9b90d265d102a565a702813fa2211f54", "e3e191ca987c8010a3adc49c6fc18417",
+			"baa7578e207b7cfaa0b8336d7ed4a4f8", "6d8a5c66a589532fe9e5dc3932650cfa", "1170b354e097f2d90132869631409bd3", "b7bc83e8ee7529ff9f874866b901cf15", "a37f6c4af8fbcfbc4d77880fc29ddfbc",
+			"277668208e9bafd9393aebd36945a2c3", "ef50088c8218afe53ce2ecd655c2c786", "b7bbb01fbe6c3a830a17bd9a842b46c0", "737360e18596d74d784f563ca729aaea", "e054a34f2790fd3353ea26e5d92d9d2f",
+			"7051afef36dc388e65e982bc853be417", "ea22cbae0394f6c6918691f2e2f2e267", "95d1278f54b5daca5898c62f267b6364", "b98560e11b7142d1addf5b9cf32898da", "e325f615f93ed682c7aadf6b2d77c17a",
+			"3e8f9d74290fe31d416b90db3a0d2ab1", "c92d1656ded0a4f68e5171c8331e0aea", "7a9cee66544934965bca0c0cb582ba73", "7a55437fa98c1b10d7f47d84f9accdf0", "c3577cced2d428f205355522bc1119b6"],
+		"ed":"7-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+}
+```
+
+## IMPORT ONE STACK SERVICE
 
 The program must put a stack file in a folder that is accessible via the web to cors on the CloudBank Server. 
 
@@ -130,11 +158,16 @@ Sample Response if nothing attached :
 }
 ```
 
+## GET RECEIPT SERVICE
+
+The get receipt service returns a receipt based on the receipt id. 
+
+
 # Sample Reciepts
 If powning process has not been started
 ```
 {
-	"reciept_id": "e054a34f2790fd3353ea26e5d92d9d2f",
+	"receipt_id": "e054a34f2790fd3353ea26e5d92d9d2f",
 	"time": "2016-49-21 7:49:PM",
 	"timezone": "UTC-7",
 	"bank_server": "bank.CloudCoin.Global",
@@ -142,7 +175,7 @@ If powning process has not been started
 	"total_fracked": 7,
 	"total_counterfeit": 1,
 	"total_lost": 0,
-	"reciept_detail": [{
+	"receipt_detail": [{
 			"nn.sn": "1.16777216",
 			"status": "suspect",
 			"pown": "uuuuuuuuuuuuuuuuuuuuuuuuu",
@@ -181,7 +214,7 @@ If powning process has not been started
 If powning process is complete:
 ```
 {
-        "reciept_id":"e054a34f2790fd3353ea26e5d92d9d2f",
+        "receipt_id":"e054a34f2790fd3353ea26e5d92d9d2f",
 	"time": "2016-49-21 7:49:PM",
 	"timezone": "UTC-7",
 	"bank_server": "bank.CloudCoin.Global",
@@ -189,7 +222,7 @@ If powning process is complete:
 	"total_fracked": 7,
 	"total_counterfeit": 1,
 	"total_lost": 0,
-	"reciept_detail": [{
+	"receipt_detail": [{
 			"nn.sn": "1.16777216",
 			"status": "authentic",
 			"pown": "ppppppppepppppppppppeppp",
@@ -224,7 +257,9 @@ If powning process is complete:
 
 }
 ```
-## Service show_coins
+## SHOW COINS SERVICE 
+
+Gets the totals of CloudCoins in the bank
 
 Sample GET Request:
 
@@ -245,7 +280,7 @@ Sample Response:
 }
 ```
 
-## Service export
+## EXPORT SERVICE
 
 Sample GET Request:
 
