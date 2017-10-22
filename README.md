@@ -1,6 +1,8 @@
-# CLOUDBANK VERSION 9-22-2017
+# CLOUDBANK VERSION 10-22-2017
 
-The purpose is to allow software to pown coins.
+The purpose is to allow software to pown coins. 
+
+NOTE: To Stop Replay attacks and other sercurity concenrs, HTTPS is required. 
 
 To do this, four services are available:
 1. Print Welcome
@@ -23,7 +25,8 @@ For security, the system admin must setup SSL and limit the servers that can con
 ----------------------------------------------------------------
 # Services
 ------------------------
-## Print Welcome Service 
+## PRINT WELCOME SERVICE
+
 Get's the bank's welcome information
 
 Sample request
@@ -43,7 +46,8 @@ Response if success:
 }
 ```
 
-## Echo RAIDA Service
+## ECHO RAIDA SERVICE
+
 Sample GET Request:
 ```
 https://CloudCoin.co/bank/echo.aspx
@@ -70,7 +74,7 @@ Echo Response for bad
 ```
 Not enough RAIDA servers can be contacted to import new coins.
 
-## DEPOSITE SERVICE 
+## DEPOSIT SERVICE 
 
 The Deposite Service does exactly the same thing as the IMPORT ONE STACK service except it allows the caller to specify the receipt number that is to be used. This requires the POST request to use an rn (receipt number) parameter in the url. The receipt number must be a random GUID. There is an additional error that could happen. The caller could request the use of  a GUID that has already used. 
 
@@ -163,7 +167,7 @@ Sample Response if nothing attached :
 The get receipt service returns a receipt based on the receipt id. 
 
 
-# Sample Reciepts
+### Sample Reciepts
 If powning process has not been started
 ```
 {
@@ -320,20 +324,15 @@ sample response if good
 
 
 
+# ADVANCED SERVICE THAT ARE PROPOSED
 
 
 
 
 
+# FOLDER STRUCTURE
 
-# Server Side CloudCoin Banking Software
-*WORK in Progress CLOUDCOIN BANK API 9/19/2017*
 
-This code allows your server or application to pown (password own) CloudCoins and track those CloudCoins owned by your users.
-You can also issue "checks" that refer to your CloudCoins so that users/customers who use your bank can trade amoung themselves
-without needing to detect counterfeits everytime with the RAIDA. 
-
-NOTE: To Stop Replay attacks and other sercurity concenrs, HTTPS is required. 
 
 
 Folder Structure
@@ -353,6 +352,7 @@ UserAccounID
 -Trash
 -Waiting
 </pre>
+
 # ###################
 ## Create Account Service
 # ##################
@@ -413,299 +413,7 @@ Response if fail:
 }
 ```
 
-# ###################
-## Print Welcome Service 
-# ##################
 
-*PRINT_WELECOME REQUEST STRING*
-
-Get's the bank's welcome information
-
-https://cloudcoin.global/bank/print_welcome.php
-
-
-*PRINT_WELECOME RESPONSE STRING*
-
-Response if success:
-```
-{
-	"server": "www.myBank.com",
-	"status": "welcome",
-	"version":"4.07.17",
-	"message": "CloudCoin Bank. Used to Authenticate, Store and Payout CloudCoins. 
-	This Software is provided as is with all faults, defects and errors, and without warranty of any kind.  
-	Free from the CloudCoin Consortium.",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-
-# ###################
-## Echo RAIDA Service 
-# ##################
-
-*ECHO REQUEST STRING*
-
-Ask the bank to echo the RAIDA to make sure it is there. 
-
-https://cloudcoin.global/bank/echo_raida.php
-
-
-*ECHO RESPONSE STRING*
-
-Response if success:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "echo",
-	"raida_status": ["ready", "notready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", 
-	"ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready", "ready"],
-	"raida_ms": [226, 526, 510, 326, 1226, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 526, 
-	526, 526, 526, 526, 526, 526],
-	"message": "Echo Completed",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-
-
-# ##################
-## Service ShowCoins
-# ##################
-Lets the program know how many coins the user has in the bank. Or how many coins are in the bank total.
-
-*SHOWCOINS REQUEST STRING*
-
-https://cloudcoin.global/bank/showcoins.php?id=273C9DFA8061407AB8102C0A4E872CA3
-
-(Shows all the coins that belong to account id 273C9DFA8061407AB8102C0A4E872CA3)
-
-https://cloudcoin.global/bank/showcoins.php?id=all
-
-(Shows all the coins in the bank and fracked)
-
-*SHOWCOINS RESPONSE STRING*
-There are two arrays with six indexes each. The first index (zero) is a sum of the coins the account has. Then:
-+ 0 Sum of all coins in that catagory. 
-+ 1 1s
-+ 2 5s
-+ 3 25s
-+ 4 100s
-+ 5 250s
-
-if good:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "showcoins",
-	"bank_totals":["13180","5","15","0","3","50"],
-	"fracked_totals":["285","0","1","1","0","1"],
-	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
-	"total":"13465",
-	"message": "273C9DFA8061407AB8102C0A4E872CA3 has 13465 CloudCoins",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-
-if good all:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "showcoins",
-	"bank_totals":["13180","5","15","0","3","50"],
-	"fracked_totals":["285","0","1","1","0","1"],
-	"aoid":"all",
-	"total":"13465",
-	"message": "Total in bank is 13465 CloudCoins",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-
-if bad:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "fail",
-	"bank_totals":["0","0","0","0","0","0"],
-	"fracked_totals":["0","0","0","0","0","0"],
-	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
-	"total":"0",
-	"message": "Account did not exist",
-	"time": "2016-40-21 10:40:PM"
-}
-
-```
-
-*SHOWCOINS REQUEST STRING*
-
-
-https://cloudcoin.global/bank/showcoins.php?id=all
-
-(Count all the coins in the bank for the ID)
-
-
-*SHOWCOINS RESPONSE STRING*
-
-if good:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "showcoins",
-	"nn":["1","1","1"],
-	"sn":["5111558","9665542","1569855"],
-	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
-	"total":"1242",
-	"message": "273C9DFA8061407AB8102C0A4E872CA3 has 1242 CloudCoins",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-if bad:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "fail",
-	"nn":["1","1","1"],
-	"sn":["5111558","9665542","1569855"],
-	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
-	"total":"0",
-	"message": "Account did not exist",
-	"time": "2016-40-21 10:40:PM"
-}
-
-```
-
-if All:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "totals",
-	"nn":["1","1","1"],
-	"sn":["5111558","9665542","1569855"],
-	"aoid":"273C9DFA8061407AB8102C0A4E872CA3",
-	"total":"0",
-	"message": "Account did not exist",
-	"time": "2016-40-21 10:40:PM"
-}
-
-```
-
-
-
-
-
-# ###################
-## Import Service 
-# ##################
-To send CloudCoins to the bank, your program must first put the CloudCoin stack and jpeg files in the import folder. All files that are placed in the import folder must have a .stack or .jpg extention. The program will first need to create a subfolder that has the same name as the account number that the CloudCoin is to be imported to. Then it must call the Bank's import service to import. The import service places the coins in the suspect folder in the owners subfolder. Then it creates report files for each coin to be imported in the ImportReports folder, and automatically starts the detect their authenticity. 
-
-There is a naming convention for programs to use to put the coins in the import folder:
-File Name Format:
-```
-import/273C9DFA8061407AB8102C0A4E872CA3/700.CloudCoins.ForSean.stack
-```
-Where 273C9DFA8061407AB8102C0A4E872CA3 = Account ID of the user or entity that the CloudCoins belong to. 
-
-
-*IMPORT REQUEST STRING*
-
-To pown all the files in the mort folder
-
-https://cloudcoin.global/bank/import.php?id=all
-
-To pown all the files in the import folder that belong to one account:
-
-https://cloudcoin.global/bank/import.php?id=273C9DFA8061407AB8102C0A4E872CA3
-
-
-
-*IMPORT RESPONSE STRING*
-
-Response if success:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "imported",
-	"nn": [ 1, 1, 1, 1, 1],
-	"sn":[ 16777212, 16777213, 16777214, 16777215, 16777216, ],
-	"report_id":"20170614243654524",
-	"report":["suspect","suspect","suspect","suspect","suspect"]
-	"message": "Coins have been moved to the suspect folder and detection will begin.",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-Or Response if Failed
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "fail",
-	"cloudcoins": [],
-	"message": "The Import folder was empty of the coins from that ID.",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-
-Algorith:
-
-Program seperates all CloudCoins into individual files and puts them in the suspect folder. Then creats a report file in the
-DetectionReports Folder. The detction report may look like this to begin with
-
-
-
-# ###################
-## Detection Report Service
-# ##################
-
-*DETECTION_REPORT REQUEST STRING*
-
-To find out how a detection attempt went. 
-
-https://cloudcoin.global/bank/detection_report.php?report_id=20170614243654524
-
-
-*DETECTION_REPORT RESPONSE STRING*
-
-Response if success:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "detected",
-	"cloudcoins": [{
-		"sn": "152485046",
-		"nn": "1",
-		"results": "counterfeit"
-	}, {
-		"sn": "152485045",
-		"nn": "1",
-		"results": "duplicate already exists"
-	}, {
-		"sn": "152485045",
-		"nn": "1",
-		"results": "NonJSON file moved to trash"
-	}, {
-		"sn": "152485045",
-		"nn": "1",
-		"results": "authentic"
-	}],
-	"totals":[25,1,56,24],
-	"message": "Import Complete",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-Totals:
-
-+ 0 Total imported to bank
-+ 1 Total Counterfeit
-+ 2 Total imported to fracked
-+ 3 Total kept in suspect folder
-
-Or Response if Failed
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "empty",
-	"cloudcoins": [],
-	"message": "The Import Report folder did not have that report",
-	"time": "2016-40-21 10:40:PM"
-}
-```
 
 
 # ##################
@@ -738,39 +446,7 @@ if fail
 	"time": "2016-40-21 10:40:PM"
 }
 ```
-# ##################
-# Export Service
-# ##################
-Exports the coins from the bank folder to the export folder/email so they can be downloaded or emailed.
 
-*EXPORT REQUEST STRING*
-
-https://cloudcoin.global/bank/export.php?sn=15489521&tag=273C9DFA8061407AB8102C0A4E872CA3&action=email&destination=Sean@Wortington.net
-
-action will be either email, download or some other transfer method. 
-
-*EXPORT RESPONSE STRING*
-
-Response if good:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "exported",
-	"url":"www.myBank.com/export/2017-05-12-15-45-0f74aa51",
-	"message": "Export Complete",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-Response if bad:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "fail",
-	"url":"",
-	"message": "Coin did not exist",
-	"time": "2016-40-21 10:40:PM"
-}
-```
 
 
 # ##################
