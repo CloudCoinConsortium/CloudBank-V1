@@ -13,6 +13,12 @@ To do this, four services are available:
 6. Export One Stack
 7. Get Receipt
 
+There are also standards for how the transactions will go:
+1. Merchant / Buyer Collaboration
+2. Buyer Initiated
+3. Merchant Dominates
+
+
 ------------------------------------------------------------------
 Config file:
 The following will be needed in app configurations:
@@ -145,7 +151,7 @@ Sample Response if bad file bad:
 ```
 {
  "bank_server":"CloudCoin.co",
- "status":"Error",
+ "status":"error",
  "message":"JSON: Your stack file was corrupted. Please check JSON validation.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
  "time":"2016-49-21 7:49:PM"
@@ -155,7 +161,7 @@ Sample Response if nothing attached :
 ```
 {
  "bank_server":"CloudCoin.co",
- "status":"Error",
+ "status":"error",
  "message":"LoadFile: The stack file was empty.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
  "time":"2016-49-21 7:49:PM"
@@ -318,6 +324,39 @@ sample response if good
 	]
 }
 ```
+
+
+# TRANSACTION METHODS
+
+## Merchant / Buyer Collaboration
+
+1. Merchant Creates receipt
+
+   The Merchant totals the amount due and generates a random receipt number. Then the Merchant creates a URL and gives it to the Buyer. 
+   
+   Sample URL Sent to Buyer from Merchant: https://bank.mydomain.com/pay/deposite?rn=ea22cbae0394f6c6918691f2e2f2e267
+   
+2. Buyer Deposites in bank
+
+   Buyer Uses URL and attaches stack file: https://bank.mydomain.com/pay/deposite?rn=ea22cbae0394f6c6918691f2e2f2e267
+
+3. Buyer shows Merchant Proof of Purchase
+
+4. Merchant Confirms Purchase with CloudBank.
+
+Sample: https://bank.mydomain.com/pay/get_receipt?rn=ea22cbae0394f6c6918691f2e2f2e267
+
+## Buyer Initiated
+1. Buyer Estimates Receipt
+2. Buyer Deposites in bank
+3. Buyer shows Merchant Proof of Purchase
+4. Merchant Confirms Purchase with CloudBank.
+
+## Merchant Dominates
+1. Merchant Creates receipt
+2. Buyer give Merchant CloudCoins
+3. Merchant Deposits CC in CloudBank
+4. Merchant Confirms Purchase with CloudBank.
 
 # END OF CLOUDBANK VERSION 1
 
