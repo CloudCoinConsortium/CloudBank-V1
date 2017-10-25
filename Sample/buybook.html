@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn About CloudCoins</title>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css' />
+    <style>
+    h1, h2, h3, h4, h5, h6 {
+    font-family: &#39;Roboto&#39;, sans-serif;
+
+    color: #338FFF;
+}
+.button{
+
+background-color:#338FFF;
+}
+a{
+color:#5FCAF5;
+font-family: 'Roboto', sans-serif;
+font-weight:  bold;
+}
+
+
+
+#cloud {
+
+    position: relative;
+
+    animation-name: example;
+    animation-duration: 100s;
+    animation-iteration-count: infinite;    
+}
+
+@keyframes example {
+    0%   {color: white; left:0px; top:0px;}
+    20%  {color: #338FFF; left:50px; top:30px;}
+    40%  {color: white; left:100px; top:-25px;}
+    60%  {color: #338FFF; left:150px; top:-10px;}
+    80%  {color: white; left:100px; top:-25px;}
+    100% {color: #338FFF; left:50px; top:10px;}
+}
+body
+{
+background: url(img/bg.jpg) no-repeat;
+background-size: 100%;
+}
+    
+</style>
+  </head>
+  <body>
+  <div class="top-bar"
+  style=" font-family: &#39;Roboto&#39;, sans-serif; font-size: 1.6vw; font-weight: bold; text-size-adjust:800;">
+
+    <div class="row">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu="" style=" font-family: &#39;Roboto&#39;, sans-serif; background-color:white;">
+          <li class="menu-text">
+<a href="index.html">
+<img src="img/cloudcointop.png" alt="CloudCoin logo" width="200">
+</a>
+</li>
+           <li>
+            Learn
+          </li>          
+          <li>
+            <a href="use.html">Use</a>
+          </li>
+          <li>
+            <a href="https://cloudcoinconsortium.com/buy.php">Buy</a>
+          </li>
+           <li>
+            <a href="/news/">News</a>
+          </li>
+<!--
+            <li>
+            <a href="buy.php">Buy</a>
+          </li>
+          <li class="has-submenu">
+            <a href="overview.html">Learn</a>
+            <ul class="submenu menu vertical" data-submenu=""
+            style=" font-family: &#39;Roboto&#39;, sans-serif; font-size: 1.2vw; font-weight: bold; text-size-adjust:1005; text-shadow: 1px 1px 2px #000000;">
+
+              <li>
+                <a href="overview.html">Just an overview</a>
+              </li>
+              <li>
+                <a href="indepth.html">In Depth</a>
+              </li>
+              <li>
+                <a href="everydetail.html">Every Detail</a>
+              </li>
+            </ul>
+          </li>
+-->
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu" style=" font-family: &#39;Roboto&#39;, sans-serif; background-color:white;">
+          <li>
+       
+            
+            <form action="//www.findberry.com/search/" method="get" id="sr_newpage"  style="display:inline">
+  <input type="hidden" name="wid" value="5222" />
+  <input id="sr_searchbox" type="text" name="query" value="" size="35" style="display:inline"/>
+
+
+            
+          </li>
+          <li>
+             <input id="sr_searchbutton" type="submit" class="button" value="Search" />
+
+</form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br />
+
+ 
+ 
+
+  <div class="row">
+    <div class="large-12 columns">
+        <br>
+        <br>
+        <h3 class="white text-center" style="color:black;">This is the first website in human history to accept CloudCoins as payment</h3>
+      <p>Since October 16, 2017</p>
+    
+    <form method="POST" enctype="multipart/form-data" action="purchase_results.php">
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Price in CloudCoin</th>
+                <th>Each</th>
+                <th>Total CloudCoins</th>
+            </tr>
+             <tr>
+                <td><img src="img/beyond_bitcoin.jpg"></td>
+                <td>You get a PDF version of Beyond Bitcoin: The Future of Digital Currency. You also get CloudCoin Consumer Edition with advanced Multi-Detect. If your CloudCoin is good, the book's download will begin shortly. </td>
+                <td>250 CloudCoins</td>
+                <td><input type="number" id="each" placeholder="1" min="0" max="1" onchange="changeEach()" ></td>
+                <td id="total" >0</td>
+            </tr>
+                         <tr>
+                <td colspan="1">Click "Choose File" to attach your CloudCoin stack file (use exact amount)</td>
+                <td colspan="3">
+                <input type="file" name="stack" accept=".stack" value="upload Stack"> 
+                </td>
+                <td colspan="1">
+                <input type="submit" value="Pay with CloudCoin">
+                
+                </td>
+    
+            </tr>
+        </table>
+       
+    </form>
+    
+    
+    </div>
+  </div>
+
+<script>
+    
+    function changeEach(){
+        
+        total.innerHTML = each.value * 250;
+    }
+    
+    
+</script>
+
+
+
+       <div class="row">
+         <div class="large-3 columns" >
+             CloudCoin Consortium &copy; 2017 
+         </div>
+         <div class="large-3 columns" >
+           <a href="mailto:CloudCoin@Protonmail.com?Subject=CloudCoinConsortium.com" target="_top">CloudCoin@Protonmail.com</a>
+         </div>
+        <div class="large-2 columns" >
+            1 (530)591-7028
+         </div>
+         <div class="large-4 columns" >
+            <b>Privacy Policy:</b><br> We do not collect user data.
+         </div>
+       </div>
+
+  <script src="js/vendor/jquery.js"></script> 
+  <script src="js/vendor/what-input.js"></script> 
+  <script src="js/vendor/foundation.js"></script> 
+  <script src="js/app.js"></script></body>
+</html>
