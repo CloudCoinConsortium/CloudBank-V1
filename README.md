@@ -1,10 +1,24 @@
-# CLOUDBANK VERSION 10-22-2017 MIT LICENCE
+# CLOUDCOIN CONSORTIUM'S CLOUDBANK VERSION 10-22-2017 MIT LICENCE
 
-The purpose is to allow software to pown coins. So you may have a website and you would like to be able to sell Cloudcoins. With this web service, you can have that website send CloudCoins to be authenticated. You may have a video game an you want to accept CloudCoins. Your game can send (via http or https) CloudCoins to the CloudBank web service and you and take ownership of those coins. 
+This Software is provided as is with all faults, defects 
+and errors, and without warranty of any kind.
+Free from the CloudCoin Consortium.
+                                                 
+
+The purpose is to allow software to pown coins. 
+Some examples of use:
+
+You sell products from your website and want to accept CloudCoins as payment. 
+
+You want to sell virtule goods in your minecraft server without worrying about charge backs.
+
+You create an accounting system and want to recieve and export CloudCoins.
+
+
 
 NOTES: To Stop Replay attacks and other sercurity concenrs, HTTPS.
 
-For receiving CloudCoins, you may only need a few services. The others may be shut down to reduce the security surface. Services that are neccessary include: Echo, (Deposite or Import One Stack), Get Receipt. The Print Welcome, Show Coins, Expot One Stack services can be shut off if you will collect your CloudCoins from the harddrive of the web server that runs CloudBank. 
+For receiving CloudCoins, you may only need a few services. The other services may be shut down to reduce the security surface. Services that are neccessary include: Echo, (Deposite or Import One Stack), Get Receipt. The Print Welcome, Show Coins, Expot One Stack services can be shut off if you will collect your CloudCoins from the harddrive of the web server that runs CloudBank. 
 
 Note that this fist phaze service uses file-based storage and not a database. 
 
