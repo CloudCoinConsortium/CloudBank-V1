@@ -10,7 +10,7 @@
 <script language="c#" runat="server">
     public void Page_Load(object sender, EventArgs e)
     {
-        string id = Request["id"];
+        string id = Request["rn"];
         string path = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "Reciepts"+ Path.DirectorySeparatorChar + id + ".json";
         if(id == null)
         {
