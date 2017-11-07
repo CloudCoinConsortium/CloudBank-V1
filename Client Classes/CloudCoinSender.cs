@@ -58,7 +58,7 @@ namespace CloudCoinSender
             }else{
                 //tell the client how many coins were uploaded how many counterfeit, etc.
                 var deserialReceipt = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawReceipt);
-
+                interpretation = "total authentic: " + deserialReceipt["total_authentic"] + ", total fracked: " + deserialReceipt["total_fracked"] + " total counterfeit: " + deserialReceipt["total_counterfeit"];
 
 
          }//end if error
