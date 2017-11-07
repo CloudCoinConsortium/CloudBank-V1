@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Founders;
 
 namespace CloudCoinSender
 {
@@ -34,7 +35,7 @@ namespace CloudCoinSender
             rawStack = File.ReadAllText(filename);
         }
 
-        public async Task sendStackToCloudBank( )
+        public async void sendStackToCloudBank( )
         {
           string CloudBankFeedback = "";
             var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("stack", rawStack) });
@@ -43,7 +44,7 @@ namespace CloudCoinSender
             var cbf = JsonConvert.DeserializeObject<Dictionary<string, string>>(CloudBankFeedback);
             if (cbf["status"] == "importing")
             {
-                var result_receipt = await cli.GetAsync(cloudBankURL+"/get_receipt.aspx?id=" + cbf["receipt"]);
+                var result_receipt = await cli.GetAsync(cloudBankURL+"/get_receipt.aspx?rn=" + cbf["receipt"]);
                 rawReceipt = await result_receipt.Content.ReadAsStringAsync();
             }
           //rawReceipt = POST(cloudBankURL, rawStack);
@@ -57,8 +58,8 @@ namespace CloudCoinSender
                 interpretation = rawReceipt;
             }else{
                 //tell the client how many coins were uploaded how many counterfeit, etc.
-                var deserialReceipt = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawReceipt);
-                interpretation = "total authentic: " + deserialReceipt["total_authentic"] + ", total fracked: " + deserialReceipt["total_fracked"] + " total counterfeit: " + deserialReceipt["total_counterfeit"];
+                var deserialReceipt = JsonConvert.DeserializeObject<Receipt>(rawReceipt);
+                interpretation = "total authentic: " + deserialReceipt.total_authentic + ", total fracked: " + deserialReceipt.total_fracked + " total counterfeit: " + deserialReceipt.total_counterfeit;
 
 
          }//end if error
