@@ -28,10 +28,9 @@ Four services are available:
 1. Print Welcome
 2. Echo
 3. Show Coins
-4. Deposit
-5. Import One Stack
-6. Export One Stack
-7. Get Receipt
+4. Deposit One Stack
+5. Withdraw One Stack
+6. Get Receipt
 
 There are also standards for how the transactions will go:
 1. Merchant / Buyer Collaboration
@@ -127,7 +126,7 @@ stack=
 }
 ```
 
-## IMPORT ONE STACK SERVICE
+## DEPOSIT ONE STACK SERVICE
 
 The program must put a stack file in a folder that is accessible via the web to cors on the CloudBank Server. 
 
@@ -310,7 +309,7 @@ Sample Response:
 }
 ```
 
-## EXPORT SERVICE
+## WITHDRAW ONE STACK SERVICE
 
 Sample GET Request:
 
