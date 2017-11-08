@@ -59,14 +59,54 @@ namespace CloudCoinSender
             }else{
                 //tell the client how many coins were uploaded how many counterfeit, etc.
                 var deserialReceipt = JsonConvert.DeserializeObject<Receipt>(rawReceipt);
-                interpretation ="receipt number: " + deserialReceipt.receipt_id + " total authentic: " + deserialReceipt.total_authentic + ", total fracked: " + deserialReceipt.total_fracked + " total counterfeit: " + deserialReceipt.total_counterfeit;
+                int totalNotes = deserialReceipt.total_authentic + deserialReceipt.total_fracked;
+                int totalCoins = 0;
+                for (int i = 0; i < deserialReceipt.rd.Length; i++)
+                    if (deserialReceipt.rd[i].status == "authentic")
+                        totalCoins += getDenomination(deserialReceipt.rd[i].sn);
+                interpretation ="receipt number: " + deserialReceipt.receipt_id + " total authentic notes: " + totalNotes + " total authentic coins: " + totalCoins;
 
 
          }//end if error
             return interpretation;
         }
 
-        }//end Class CloudCoinSender
+        private int getDenomination(int sn)
+        {
+            int nom = 0;
+            if ((sn < 1))
+            {
+                nom = 0;
+            }
+            else if ((sn < 2097153))
+            {
+                nom = 1;
+            }
+            else if ((sn < 4194305))
+            {
+                nom = 5;
+            }
+            else if ((sn < 6291457))
+            {
+                nom = 25;
+            }
+            else if ((sn < 14680065))
+            {
+                nom = 100;
+            }
+            else if ((sn < 16777217))
+            {
+                nom = 250;
+            }
+            else
+            {
+                nom = '0';
+            }
+
+            return nom;
+        }//end get denomination
+
+    }//end Class CloudCoinSender
         
 
     

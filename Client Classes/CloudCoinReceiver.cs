@@ -41,6 +41,7 @@ namespace CloudCoinSender
             {
                 var deserialReceipt = JsonConvert.DeserializeObject<Receipt>(rawReceipt);
                 for (int i = 0; i < deserialReceipt.rd.Length; i++)
+                    if(deserialReceipt.rd[i].status == "authentic")
                     totalCoins += getDenomination(deserialReceipt.rd[i].sn);
                 var result_stack = await cli.GetAsync(cloudBankURL + "/withdraw_one_stack.aspx?amount=" + totalCoins);
                 rawStack = await result_stack.Content.ReadAsStringAsync();
