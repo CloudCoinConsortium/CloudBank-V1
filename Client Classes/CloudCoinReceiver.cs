@@ -5,14 +5,15 @@ using System.Net.Http;
 using System.Text;
 using Founders;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace CloudCoinSender
 {
-    class CloudCoinReceiver
+    public class CloudCoinReceiver
     {
             // Fields /
         string cloudBankURL;
-        string rawStack;
+        public string rawStack;
         string receiptNumber;
         int totalCoins;
         HttpClient cli = new HttpClient();
@@ -28,17 +29,23 @@ namespace CloudCoinSender
         }//end constructor
 
     // METHODS /
-        public async void getStackFromCloudBank(string receiptNumber, int totalCoins)
+        public async Task getStackFromCloudBank()
         {
             var result_receipt = await cli.GetAsync(cloudBankURL + "/get_receipt.aspx?rn=" + receiptNumber);
             string rawReceipt = await result_receipt.Content.ReadAsStringAsync();
-            
-            var deserialReceipt = JsonConvert.DeserializeObject<Receipt>(rawReceipt);
-            
-            totalCoins += getDenomination(deserialReceipt.rd[0].sn);
-            var result_stack = await cli.GetAsync(cloudBankURL + "/withdraw_one_stack.aspx?amount=" + totalCoins);
-            rawStack = await result_stack.Content.ReadAsStringAsync();
-            //rawStack = GET(cloudBankURL, receiptNumber);
+            if (rawReceipt.Contains("Error"))
+            {
+                Console.WriteLine(rawReceipt);
+            }
+            else
+            {
+                var deserialReceipt = JsonConvert.DeserializeObject<Receipt>(rawReceipt);
+                for (int i = 0; i < deserialReceipt.rd.Length; i++)
+                    totalCoins += getDenomination(deserialReceipt.rd[i].sn);
+                var result_stack = await cli.GetAsync(cloudBankURL + "/withdraw_one_stack.aspx?amount=" + totalCoins);
+                rawStack = await result_stack.Content.ReadAsStringAsync();
+                //rawStack = GET(cloudBankURL, receiptNumber);
+            }
         }
 
         private int getDenomination(int sn)
@@ -78,11 +85,11 @@ namespace CloudCoinSender
 
         public void saveStackToFile(string path)
         {
-            File.WriteAllText(path+ getStackName(totalCoins) + ".stack", rawStack);
+            File.WriteAllText(path+ getStackName(), rawStack);
             //WriteFile(path + stackName, rawStack);
         }
 
-        public string getStackName(int totalCoins)
+        public string getStackName()
         {
             return totalCoins + ".cloudcoin." + receiptNumber + ".stack";
         }

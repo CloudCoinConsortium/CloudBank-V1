@@ -35,11 +35,11 @@ namespace CloudCoinSender
             rawStack = File.ReadAllText(filename);
         }
 
-        public async void sendStackToCloudBank( )
+        public async Task sendStackToCloudBank( )
         {
           string CloudBankFeedback = "";
             var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("stack", rawStack) });
-            var result_stack = await cli.PostAsync(cloudBankURL+"/deposite_one_stack.aspx", formContent);
+            var result_stack = await cli.PostAsync(cloudBankURL+"/deposit_one_stack.aspx", formContent);
              CloudBankFeedback = await result_stack.Content.ReadAsStringAsync();
             var cbf = JsonConvert.DeserializeObject<Dictionary<string, string>>(CloudBankFeedback);
             if (cbf["status"] == "importing")
@@ -59,7 +59,7 @@ namespace CloudCoinSender
             }else{
                 //tell the client how many coins were uploaded how many counterfeit, etc.
                 var deserialReceipt = JsonConvert.DeserializeObject<Receipt>(rawReceipt);
-                interpretation = "total authentic: " + deserialReceipt.total_authentic + ", total fracked: " + deserialReceipt.total_fracked + " total counterfeit: " + deserialReceipt.total_counterfeit;
+                interpretation ="receipt number: " + deserialReceipt.receipt_id + " total authentic: " + deserialReceipt.total_authentic + ", total fracked: " + deserialReceipt.total_fracked + " total counterfeit: " + deserialReceipt.total_counterfeit;
 
 
          }//end if error
