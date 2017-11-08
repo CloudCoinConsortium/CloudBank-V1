@@ -39,7 +39,7 @@ namespace CloudCoinSender
         {
           string CloudBankFeedback = "";
             var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("stack", rawStack) });
-            var result_stack = await cli.PostAsync(cloudBankURL+"/import_one_stack.aspx", formContent);
+            var result_stack = await cli.PostAsync(cloudBankURL+"/deposite_one_stack.aspx", formContent);
              CloudBankFeedback = await result_stack.Content.ReadAsStringAsync();
             var cbf = JsonConvert.DeserializeObject<Dictionary<string, string>>(CloudBankFeedback);
             if (cbf["status"] == "importing")
