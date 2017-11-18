@@ -417,7 +417,16 @@ UserAccounID
 
 *CREATE ACCOUNT REQUEST STRING*
 
-Create an account for a new user. This will create a folder names after the account and populate it with the following subfolders:
+This service will do many things:
+
+1. Create an account for a new user including their username, password,  email and folders for the user if none exists.
+2. Change the password (if a new password is provided)
+3. Change the email address (if a new email address is provided)
+4. Semd email to user saying that the account has been created.
+5. Send email to user saying that the password and or email has been changed.
+6. Send username and password if only the email is sent. 
+
+This service also will change the password of an existing account, change the email of a user and send the username and password to the user.  This will create a folder names after the account and populate it with the following subfolders:
 
 * Bank
 * Broke
@@ -445,9 +454,16 @@ Your CloudBank may treat your Account identifiers as either case sensitive or ca
 
 POST:
 https://cloudcoin.global/bank/add_account.php?
+
 uid=e24b3a755916472f8768e4e9992827a0
 
-uid = Unique Identifier
+pw=74307d8442f54763ba6ffab7fdc9b610 (recover password if left off)
+
+npw=fbd9bf492bf149aeac3dc2a5bdcc38b2 (optional)
+
+email=Billy@Hotsplt.com (recover email if left off)
+
+nemail=Billy@Protonmail.com (optional)
 
 
 Note: If the account has already been created the API just says success. 
@@ -456,7 +472,7 @@ Response if success:
 {
 	"server": "www.myBank.com",
 	"status": "added",
-	"message": "Account was created for user e24b3a755916472f8768e4e9992827a0.",
+	"message": "Account was created for user e24b3a755916472f8768e4e9992827a0. Username and Password sent to email provided.",
 	"time": "2016-40-21 10:40:PM"
 }
 ```
