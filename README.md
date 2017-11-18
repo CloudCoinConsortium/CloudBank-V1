@@ -377,45 +377,14 @@ Sample: https://bank.mydomain.com/pay/get_receipt?rn=ea22cbae0394f6c6918691f2e2f
 3. Merchant Deposits CC in CloudBank
 4. Merchant Confirms Purchase with CloudBank.
 
-# END OF CLOUDBANK VERSION 1
 
 
-
-
-# ADVANCED SERVICE THAT ARE PROPOSED
-
-
-
-
-
-# FOLDER STRUCTURE
-
-
-
-
-Folder Structure
-<pre>
-UserAccounID
--Bank
--Broke
--Counterfeit
--Export
--Fracked
--Import
--Imported
--Logs
--Lost
--Suspect
--Templates
--Trash
--Waiting
-</pre>
 
 # ###################
-## Create Account Service
+## Account Service
 # ##################
 
-*CREATE ACCOUNT REQUEST STRING*
+*ACCOUNT REQUEST STRING*
 
 This service will do many things:
 
@@ -453,17 +422,17 @@ Account IDs cannot contain any of the following characters:
 Your CloudBank may treat your Account identifiers as either case sensitive or case insensitive. This depends on if your CloudBank is hosted on a Linux (PHP) or Windows (C#) System. 
 
 POST:
-https://cloudcoin.global/bank/add_account.php?
+https://cloudcoin.global/bank/account.php?
 
-uid=e24b3a755916472f8768e4e9992827a0
+uid=e24b3a755916472f8768e4e9992827a0 (recover uid if left off)
 
 pw=74307d8442f54763ba6ffab7fdc9b610 (recover password if left off)
 
-npw=fbd9bf492bf149aeac3dc2a5bdcc38b2 (optional)
+newpw=fbd9bf492bf149aeac3dc2a5bdcc38b2 (option. Change password if include.)
 
 email=Billy@Hotsplt.com (recover email if left off)
 
-nemail=Billy@Protonmail.com (optional)
+newmail=Billy@Protonmail.com (optional. Change email if included)
 
 
 Note: If the account has already been created the API just says success. 
@@ -487,6 +456,42 @@ Response if fail:
 }
 ```
 
+
+
+
+# END OF CLOUDBANK VERSION 1
+
+
+
+
+# ADVANCED SERVICE THAT ARE PROPOSED
+
+
+
+
+
+# FOLDER STRUCTURE
+
+
+
+
+Folder Structure
+<pre>
+UserAccounID
+-Bank
+-Broke
+-Counterfeit
+-Export
+-Fracked
+-Import
+-Imported
+-Logs
+-Lost
+-Suspect
+-Templates
+-Trash
+-Waiting
+</pre>
 
 
 
