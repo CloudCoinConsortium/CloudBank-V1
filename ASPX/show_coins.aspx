@@ -20,10 +20,16 @@
         public string time;
     }//End Service Response class
 
-    static FileUtils fileUtils = FileUtils.GetInstance(AppDomain.CurrentDomain.BaseDirectory);
+	//Sample usage:
+    // https://myname.cloudcoin.global/show_coins.aspx?k=0DECE3AF-83EC-435B-8C39-E2A5D0EA8676
+	
     
     public void Page_Load(object sender, EventArgs e)
     {
+		string path = Request.QueryString["k"];
+	
+		FileUtils fileUtils = FileUtils.GetInstance(@"H:\Banks\Preston\"+path+@"\");
+	
         ServiceResponse response = new ServiceResponse();
         response.server = WebConfigurationManager.AppSettings["thisServerName"];
         response.status = "coins_shown";
@@ -36,7 +42,6 @@
         response.twentyfives = bankTotals[3] + frackedTotals[3];
         response.hundreds = bankTotals[4] + frackedTotals[4];
         response.twohundredfifties = bankTotals[5] + frackedTotals[5];
-
         var json = new JavaScriptSerializer().Serialize(response);
         Response.Write(json);
         Response.End();
