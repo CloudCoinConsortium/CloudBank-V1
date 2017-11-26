@@ -343,6 +343,65 @@ sample response if good
 	]
 }
 ```
+## BILL PAY SERVICE
+
+This is a task that is called every day. The program checks the Excel spreadsheet to see if bills need to be paid.The Excell spread sheet is a standardized spreadsheet.
+
+FileName: BillPay
+Sheets within: Reocurring, Pending and History
+Column Headers:
+#. Status: Hold, Active, Stop.
+#. To (Pay to the order of): Payee Name
+#. To Address: Payee Email
+#. Amount to be paid.
+#. Date of the month to be paid
+#. To: Account Number to be used
+#. MEMO: Optional note to include to buyer.
+#. Check ID (The user does not pick this. The server will write this down.
+#. Send Date (This is the date that the mone was sent) The user does not write this
+#. Cashed date. This is the date that user got the moneys
+
+Actions:
+#. Checks to see if a bill is to be paid.
+#. IF yes, calls on the check making service to write a check.
+
+
+## WRITE & SEND CHECK SERVICE
+In CloudBank, a Check is a url that point to a stack file that is located in the Check folder.
+
+Example of a check:
+```html
+
+<html>
+<body>
+	<h1>Sean H. Wothington</h1>
+	<address>1445 Heritage Oak Drive, Chico Ca, 95928</address>
+	<email>CloudCoin@Protonmail.com</email>
+	
+	<h2>PAYTO THE ORDER OF: Larry's Landscaping</h2>
+	<h2>AMOUNT: 59 CloudCoins</h2>
+	
+	
+	
+	
+	
+	
+	
+</body>
+<html>
+
+https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232.stack
+```
+#. Gathers CloudCoins into a stack and puts the stack file into the "check" folder.
+#. Emails a link to the check to the payee.
+#. Writes the Check Id (GUID) to the excel spread sheet.
+#. Writes the send date to the excel spread sheet.
+
+## CHECK CASHING SERVICE
+
+
+
+
 
 
 # TRANSACTION METHODS
