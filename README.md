@@ -353,16 +353,34 @@ This is a task that is called every day. The program checks the Excel spreadshee
 FileName: BillPay
 Sheets within: Reocurring, Pending and History
 Column Headers:
-1. Status: Hold, Active, Stop.
-2. To (Pay to the order of): Payee Name
-3. To Address: Payee Email
-4. Amount to be paid.
-5. Date of the month to be paid
-6. To: Account Number to be used
-7. MEMO: Optional note to include to buyer.
-8. Check ID (The user does not pick this. The server will write this down.
-9. Send Date (This is the date that the mone was sent) The user does not write this
-10. Cashed date. This is the date that user got the moneys
+
+### Reoccuring
+1. Status: Active or Deactive.
+2. PAY TO THE ORDER OF ( Payee Name )
+3. SEND TO EMAIL ( Payee Email )
+4. ACCOUNT NUMBER OR MEMO 
+5. DAY OF THE MONTH TO PAY ( Day of the month that checks will be sent out )
+6. AMOUNT (Amount of CloudCoin to be sent )
+7. SIGNED BY ( Who is sending the CloudCoins )
+8. YOUR EMAIL ( Senders Email )
+9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
+
+### Pending
+1. STATUS (Pending, Hold or Cancel)
+2. CHECK GUID
+3. PAY TO THE ORDER OF
+4. SEND TO EMAIL
+5. ACCOUNT NUMBER OR MEMO
+6. DATE PAID
+7. AMOUNT
+
+### Paid
+1. CHECK GUID
+2. PAY TO THE ORDER OF
+3. SEND TO EMAIL
+4. ACCOUNT NUMBER OR MEMO
+5. DATE PAID
+6. AMOUNT
 
 Actions:
 1. Checks to see if a bill is to be paid.
