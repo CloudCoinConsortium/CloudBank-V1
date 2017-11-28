@@ -24,13 +24,16 @@ Note that this fist phaze service uses file-based storage and not a database.
 
 
 
-Four services are available:
+Many ervices are available:
 1. Print Welcome
 2. Echo
 3. Show Coins
 4. Deposit One Stack
 5. Withdraw One Stack
 6. Get Receipt
+7. Bill Pay
+8. Write and Send Check
+9. Cash Check
 
 There are also standards for how the transactions will go:
 1. Merchant / Buyer Collaboration
@@ -350,23 +353,24 @@ This is a task that is called every day. The program checks the Excel spreadshee
 FileName: BillPay
 Sheets within: Reocurring, Pending and History
 Column Headers:
-#. Status: Hold, Active, Stop.
-#. To (Pay to the order of): Payee Name
-#. To Address: Payee Email
-#. Amount to be paid.
-#. Date of the month to be paid
-#. To: Account Number to be used
-#. MEMO: Optional note to include to buyer.
-#. Check ID (The user does not pick this. The server will write this down.
-#. Send Date (This is the date that the mone was sent) The user does not write this
-#. Cashed date. This is the date that user got the moneys
+1. Status: Hold, Active, Stop.
+2. To (Pay to the order of): Payee Name
+3. To Address: Payee Email
+4. Amount to be paid.
+5. Date of the month to be paid
+6. To: Account Number to be used
+7. MEMO: Optional note to include to buyer.
+8. Check ID (The user does not pick this. The server will write this down.
+9. Send Date (This is the date that the mone was sent) The user does not write this
+10. Cashed date. This is the date that user got the moneys
 
 Actions:
-#. Checks to see if a bill is to be paid.
-#. IF yes, calls on the check making service to write a check.
+1. Checks to see if a bill is to be paid.
+2. If yes, calls on the check making service to write a check.
 
 
 ## WRITE & SEND CHECK SERVICE
+1. Make a check: Creates a stack file with a GUID and saves it in the Check folder
 In CloudBank, a Check is a url that point to a stack file that is located in the Check folder.
 
 Example of a check:
@@ -384,21 +388,35 @@ Example of a check:
 	
 	
 	
-	
+	<a href="https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232.stack">Cash Check Now</a>
 	
 	
 </body>
 <html>
 
-https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232.stack
+https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232
 ```
-#. Gathers CloudCoins into a stack and puts the stack file into the "check" folder.
-#. Emails a link to the check to the payee.
-#. Writes the Check Id (GUID) to the excel spread sheet.
-#. Writes the send date to the excel spread sheet.
+Sample link to check:
+```html
+https://Sean.CloudCoin.Global/checks/c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232.html
+```
+Sample link to cash check:
+```html
+hhttps://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232
+```
+1. Gathers CloudCoins into a stack and puts the stack file into the "check" folder.
+2. Emails a link to the check to the payee.
+3. Writes the Check Id (GUID) to the excel spread sheet.
+4. Writes the send date to the excel spread sheet.
+5. Send email:
+Subject: Check for 2440 CloudCoins
+Contains link to check:
 
 ## CHECK CASHING SERVICE
-
+Allows user to download CloudCoins based on a check number. 
+1. Checks to see if the excel spread sheet has the check on hold. 
+2. Gives the stack file that the users wants to the user.
+3. Updates the spreadsheet to show the date cashed. 
 
 
 
