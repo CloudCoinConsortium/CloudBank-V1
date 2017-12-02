@@ -491,6 +491,65 @@ Allows user to download CloudCoins based on a check number.
 2. Gives the stack file that the users wants to the user.
 3. Updates the spreadsheet to show the date cashed. 
 
+The request includes a receive parameter
+receive=email 
+receive=sms
+receive=download
+receive=json
+
+
+Sample GET Request for a raw json stack file that can be imported into a program:
+```
+https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=json
+```
+
+Sample GET Request for a email stack file that can be sent to a person:
+```
+https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=email&email=Billy@gmail.com
+```
+
+Sample GET Request for a json response to be sent to an SMS address:
+```
+https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=sms&sms=5305942578
+```
+Sample GET Request that downloads a file to a harddrive:
+```
+https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=download
+```
+
+Sample Response if Success:
+```
+IF download is used, the browser Will download a stack file. Make sure your web server's mime type for .stack is set to download. 
+
+otherwise: 
+
+{
+ "bank_server":"ccc.CloudCoin.global",
+ "status":"success",
+ "message":"CloudCoin stack file sent via email and has been deleted from this server.",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+Sample Response if on Hold:
+```
+{
+ "bank_server":"ccc.CloudCoin.global",
+ "status":"hold",
+ "message":"The check has been placed on hold status. You will not be able to cash this check until the status has been changed",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+Sample Response if it does not exist in the Pending folder:
+```
+{
+ "bank_server":"ccc.CloudCoin.global",
+ "status":"nonexistent",
+ "message":"The check you requested was not found on the server. It may have been cashed, canceled or you have provided an ind that is incorred. Did you type the write number?",
+ "time":"2016-49-21 7:49:PM"
+}
+```
 
 
 
