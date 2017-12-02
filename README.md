@@ -354,7 +354,20 @@ FileName: BillPay
 Sheets within: Reocurring, Pending and History
 Column Headers:
 
-### Reoccuring
+### Reoccuring (
+Used to mark payments that should be paid automatically each month. These records are not deleted. They will be checked everyday and payments assigned to that day of the month will be made and copied to the Pending folder. 
+1. Status: Active or Deactive.
+2. PAY TO THE ORDER OF ( Payee Name )
+3. SEND TO EMAIL ( Payee Email )
+4. ACCOUNT NUMBER OR MEMO 
+5. DAY OF THE MONTH TO PAY ( Day of the month that checks will be sent out )
+6. AMOUNT (Amount of CloudCoin to be sent )
+7. SIGNED BY ( Who is sending the CloudCoins )
+8. YOUR EMAIL ( Senders Email )
+9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
+
+### PayOnce 
+The system checks this list once each day. The Bill pay will make the payment and send to pending. Then the payment is deleted from this list)
 1. Status: Active or Deactive.
 2. PAY TO THE ORDER OF ( Payee Name )
 3. SEND TO EMAIL ( Payee Email )
@@ -366,6 +379,7 @@ Column Headers:
 9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
 
 ### Pending
+This holds all checks that have been sent but have not been cashed yet. Once they are cashed, they are deleted from pending and moved to  Paid. Payments in pending can be marked Cancel. If they are marked Cancel the money will be put back in the bank. Records will be checked for Cancel once each day. If they are marked as Hold. The check cashing service will not be allowed to give the user money until the status is changed to Pending. 
 1. STATUS (Pending, Hold or Cancel)
 2. CHECK GUID
 3. PAY TO THE ORDER OF
@@ -382,9 +396,22 @@ Column Headers:
 5. DATE PAID
 6. AMOUNT
 
-Actions:
-1. Checks to see if a bill is to be paid.
-2. If yes, calls on the check making service to write a check.
+### Archive Month Year (e.g. Archive December 2017
+Creates a sheet with all the payments from a month and year for historical purposes. 
+1. CHECK GUID
+2. PAY TO THE ORDER OF
+3. SEND TO EMAIL
+4. ACCOUNT NUMBER OR MEMO
+5. DATE PAID
+6. AMOUNT
+
+
+Daily Actions:
+The following actions will take place one or more times each day according to the configuration: 
+1. Bill Pay looks at Reoccuring to see if a bill is to be paid. If yes, calls on the check making service to write a check.
+2. Checks on the PayOnce to see if there is anything there. If yes, calls on the check maaking service and deletes the record from PayOnce.
+3. Bill Pay looks at the Pending to see if and are canceled. PUt the canceled back into bank and deletes from pending. 
+4. Bill Pay checks to see if records in Paid are more than one month old and places them in an Archive folder for the appropriate month. 
 
 
 ## WRITE & SEND CHECK SERVICE
