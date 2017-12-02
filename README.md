@@ -553,6 +553,81 @@ Sample Response if it does not exist in the Pending folder:
 
 
 
+# ##################
+## Change_Maker Service 
+# ##################
+Tells the Bank to break a CloudCoin note into several smaller notes.
+Note that there are many (but a finte) way of making chage for each denomination. Each denomination will have a list (or matrix) of possible breaks with an id for Method for each possible method. 
+ 
+*CHANGE_MAKER REQUEST STRING*
+
+https://cloudcoin.global/bank/make_change.php?nn=1sn=88772322&method=100D
+
+if good:
+
+*CHANGE_MAKER RESPONSE STRING*
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "success",
+	"nn":["1","1","1"],
+	"sn":["5111558","9665542","1569855"],
+	"message": "CloudCoin note was broken into smaller units.",
+	"time": "2016-40-21 10:40:PM"
+}
+```
+if bad:
+```javascript
+{
+	"server": "www.myBank.com",
+	"status": "fail",
+	"nn":["1","1","1"],
+	"sn":["5111558","9665542","1569855"],
+	"message": "CloudCoin note was broken into smaller units.",
+	"time": "2016-40-21 10:40:PM"
+}
+
+```
+
+Make Change
+*CHANGE_MAKER METHODS:*
+
+Denominaton 1
++ 1 (Cannot break)
+
+Denaomination 5
++ Method 5A: 1,1,1,1,1
+
+Denomination 25
++ Method 25A: 5,5,5,5,5 (Min)
++ Method 25B: 5,5,5,5,5A
++ Method 25C: 5,5,5A,5A,5A
++ Method 25D: 5A,5A,5A,5A  (Max)
+
+Denomination 100
++ Method 100A: 25,25,25,25 (min)
++ Method 100B: 25,25,25,25A
++ Method 100C: 25,25,25A,25B
++ Method 100D: 25D,25D,25D,25D (Max)
+
+
+Denomination 250
++ Method 250A: 100,100,25,25 (Min)
++ Method 250B: 100A,100A,25A,25B
++ Method 250C: 100B,100B,25B,25C
++ Method 250D: 100D,100D,25D,25D (Max)
+
+
+# END OF CLOUDBANK VERSION 1
+
+
+
+
+# ADVANCED SERVICE THAT ARE PROPOSED
+
+
+
+
 
 # TRANSACTION METHODS
 
@@ -668,15 +743,6 @@ Response if fail:
 
 
 
-# END OF CLOUDBANK VERSION 1
-
-
-
-
-# ADVANCED SERVICE THAT ARE PROPOSED
-
-
-
 
 
 # FOLDER STRUCTURE
@@ -737,69 +803,6 @@ if fail
 
 
 
-# ##################
-## Change_Maker Service 
-# ##################
-Tells the Bank to break a CloudCoin note into several smaller notes.
-Note that there are many (but a finte) way of making chage for each denomination. Each denomination will have a list (or matrix) of possible breaks with an id for Method for each possible method. 
- 
-*CHANGE_MAKER REQUEST STRING*
-
-https://cloudcoin.global/bank/make_change.php?nn=1sn=88772322&method=100D
-
-if good:
-
-*CHANGE_MAKER RESPONSE STRING*
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "success",
-	"nn":["1","1","1"],
-	"sn":["5111558","9665542","1569855"],
-	"message": "CloudCoin note was broken into smaller units.",
-	"time": "2016-40-21 10:40:PM"
-}
-```
-if bad:
-```javascript
-{
-	"server": "www.myBank.com",
-	"status": "fail",
-	"nn":["1","1","1"],
-	"sn":["5111558","9665542","1569855"],
-	"message": "CloudCoin note was broken into smaller units.",
-	"time": "2016-40-21 10:40:PM"
-}
-
-```
-
-Make Change
-*CHANGE_MAKER METHODS:*
-
-Denominaton 1
-+ 1 (Cannot break)
-
-Denaomination 5
-+ Method 5A: 1,1,1,1,1
-
-Denomination 25
-+ Method 25A: 5,5,5,5,5 (Min)
-+ Method 25B: 5,5,5,5,5A
-+ Method 25C: 5,5,5A,5A,5A
-+ Method 25D: 5A,5A,5A,5A  (Max)
-
-Denomination 100
-+ Method 100A: 25,25,25,25 (min)
-+ Method 100B: 25,25,25,25A
-+ Method 100C: 25,25,25A,25B
-+ Method 100D: 25D,25D,25D,25D (Max)
-
-
-Denomination 250
-+ Method 250A: 100,100,25,25 (Min)
-+ Method 250B: 100A,100A,25A,25B
-+ Method 250C: 100B,100B,25B,25C
-+ Method 250D: 100D,100D,25D,25D (Max)
 
 
 
