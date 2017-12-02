@@ -354,7 +354,7 @@ FileName: BillPay
 Sheets within: Reocurring, Pending and History
 Column Headers:
 
-### Reoccuring (
+### Reoccuring 
 Used to mark payments that should be paid automatically each month. These records are not deleted. They will be checked everyday and payments assigned to that day of the month will be made and copied to the Pending folder. 
 1. Status: Active or Deactive.
 2. PAY TO THE ORDER OF ( Payee Name )
@@ -396,7 +396,7 @@ This holds all checks that have been sent but have not been cashed yet. Once the
 5. DATE PAID
 6. AMOUNT
 
-### Archive Month Year (e.g. Archive December 2017
+### Archive Month Year ( e.g. Archive December 2017 )
 Creates a sheet with all the payments from a month and year for historical purposes. 
 1. CHECK GUID
 2. PAY TO THE ORDER OF
@@ -406,7 +406,7 @@ Creates a sheet with all the payments from a month and year for historical purpo
 6. AMOUNT
 
 
-Daily Actions:
+## Daily Bil Pay Actions:
 The following actions will take place one or more times each day according to the configuration: 
 1. Bill Pay looks at Reoccuring to see if a bill is to be paid. If yes, calls on the check making service to write a check.
 2. Checks on the PayOnce to see if there is anything there. If yes, calls on the check maaking service and deletes the record from PayOnce.
@@ -417,6 +417,34 @@ The following actions will take place one or more times each day according to th
 ## WRITE & SEND CHECK SERVICE
 1. Make a check: Creates a stack file with a GUID and saves it in the Check folder
 In CloudBank, a Check is a url that point to a stack file that is located in the Check folder.
+
+Gets the totals of CloudCoins in the bank
+
+Sample GET Request:
+
+```
+https://ccc.CloudCoin.Global/write_check.aspx?pk=a4b5e66f4b51418e81e8dc93e9db6503&action=email&amount=25&checkid=Billy12450&eamilto=Bill@yardwork.com&payto=Billy Jenkins&from=CC@CloudCoin.global&signby=Sean Worthington&Memo=For Yard Work
+```
+Sample Response if Success:
+```
+{
+ "bank_server":"ccc.CloudCoin.global",
+ "status":"emailed",
+ "message":"Check sent to Bill@yardwork.com for 250 CloudCoins",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+Sample Response if Fail:
+```
+{
+ "bank_server":"ccc.CloudCoin.global",
+ "status":"error",
+ "message":"Not enough funds to write Check for 250 CloudCoins to Bill@yardwork.com",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
 
 Example of a check:
 ```html
