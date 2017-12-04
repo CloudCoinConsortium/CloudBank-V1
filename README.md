@@ -421,6 +421,16 @@ In CloudBank, a Check is a url that point to a stack file that is located in the
 Gets the totals of CloudCoins in the bank
 
 Sample GET Request:
+Parameters:
+pk (private key) The user's secret info to allow the person to make the check
+action How to send the check: email, (sms maybe others to be supported later)
+amount amount of CloudCoins to put in stac file
+checkid (The check's unique identifier
+emailto (recievers contact info)
+payto (Person who is suppose to get the check)
+from (person or organization check is from)
+by (Who signed the check)
+memo (some account info or memo)
 
 ```
 https://ccc.CloudCoin.Global/write_check.aspx?pk=a4b5e66f4b51418e81e8dc93e9db6503&action=email&amount=25&checkid=Billy12450&eamilto=Bill@yardwork.com&payto=Billy Jenkins&from=CC@CloudCoin.global&signby=Sean Worthington&Memo=For Yard Work
