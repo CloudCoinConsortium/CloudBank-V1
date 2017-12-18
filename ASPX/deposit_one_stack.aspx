@@ -1,6 +1,7 @@
 <%@ Page Language="C#" Debug="true"  Async="true"%>
 <%@ Import namespace="System.Web.Configuration" %>
 <%@ Import namespace="System" %>
+<%@ Import namespace="System.IO" %>
 <%@ Import namespace="System.Data.SqlClient" %>
 <%@ Import namespace="System.Web.Configuration" %>
 <%@ Import namespace="Founders" %>
@@ -20,37 +21,46 @@
         public string time;
     }//End Service Response class
 
-    static FileUtils fileUtils = FileUtils.GetInstance(AppDomain.CurrentDomain.BaseDirectory);
+	static string path = WebConfigurationManager.AppSettings["root"];
+	//static string path1 = Directory.GetCurrentDirectory();
+  //  static FileUtils fileUtils = FileUtils.GetInstance(path1+path+@"\");
+    
+	static FileUtils fileUtils = FileUtils.GetInstance(AppDomain.CurrentDomain.BaseDirectory +path+@"\" );
+
 
     public void Page_Load(object sender, EventArgs e)
     {
+	
         string stack = Request.Form["stack"];
         Importer importer = new Importer(fileUtils);
         bool import = false;
         if (stack != null)
             import = importer.importJson(stack);
+
         if (!import)//Moves all CloudCoins from the Import folder into the Suspect folder. 
         {
-            RegisterAsyncTask(new PageAsyncTask(detect));
             ServiceResponse response = new ServiceResponse();
             response.server = WebConfigurationManager.AppSettings["thisServerName"];
-            response.status = "Error";
-            response.message = "The CloudCoin stack was either empty or the JSON was not valid.";
+            response.status = "error";
+        //    response.message = stack;
+			response.message = "The CloudCoin stack was either empty or the JSON was not valid.";
             response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
             response.receipt = "";
             var json = new JavaScriptSerializer().Serialize(response);
             Response.Write(json);
             Response.End();
-
         }
         else
         {
             RegisterAsyncTask(new PageAsyncTask(detect));
-
         }//end if coins to import
 
         
     }//End Page Load
+
+
+
+
 
     private async Task detect()
     {
@@ -59,7 +69,7 @@
         response.server = WebConfigurationManager.AppSettings["thisServerName"];
         response.receipt = receiptFileName;
         response.status = "importing";
-        response.message = "The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your reciept.";
+        response.message = "The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your receipt.";
         response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
         Grader grader = new Grader(fileUtils);
         int[] detectionResults = grader.gradeAll(5000, 2000, receiptFileName);
@@ -68,7 +78,11 @@
         Response.End();
     }
 
-    public static async Task<string> multi_detect() {
+
+
+
+    public static async Task<string> multi_detect() 
+    {
 
         MultiDetect multi_detector = new MultiDetect(fileUtils);
         string receiptFileName;

@@ -37,11 +37,12 @@
         //Response.Write("here");
         ServiceResponse response = new ServiceResponse();
         response.server = WebConfigurationManager.AppSettings["thisServerName"];
-        response.server = "www.mybank.com";
+        //response.server = "www.mybank.com";
         response.status = "welcome";
+        response.version = "1.0";
         response.time = DateTime.Now.ToString("yyyy-mm-dd h:mm:tt");
         response.message = message;
-        response.version = "1.0";
+        
 
         //VALIDATE INPUT VARIABLES
         var json = new JavaScriptSerializer().Serialize(response);
