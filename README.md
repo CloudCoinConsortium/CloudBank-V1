@@ -1,4 +1,4 @@
-# CLOUDCOIN CONSORTIUM'S CLOUDBANK VERSION 10-22-2017 MIT LICENCE
+# CLOUDCOIN CONSORTIUM'S CLOUDBANK VERSION December-18-2017 MIT LICENCE
 
 This Software is provided as is with all faults, defects 
 and errors, and without warranty of any kind.
@@ -55,11 +55,12 @@ For security, the system admin must setup SSL and limit the servers that can con
 ------------------------
 ## PRINT WELCOME SERVICE
 
-Get's the bank's welcome information
+Get's the bank's welcome information. Note that the web server must be configured to use extentionless urls.
 
 Sample request
 ```
-https://cloudcoin.global/bank/print_welcome.php
+https://cloudcoin.global/bank/print_welcome
+
 ```
 Response if success:
 ```
@@ -78,13 +79,13 @@ Response if success:
 
 Sample GET Request:
 ```
-https://CloudCoin.co/bank/echo.aspx
+https://CloudCoin.co/bank/echo
 ```
 
 Echo Response for good
 ```
 {
-    "bank_server":"CloudCoin.co",
+    "bank_server":"bill.CloudCoin.global",
     "status":"ready",
     "message":"The RAIDA is ready for counterfeit detection.",
     "time":"2016-49-21 7:49:PM"
@@ -102,41 +103,15 @@ Echo Response for bad
 ```
 Not enough RAIDA servers can be contacted to import new coins.
 
-## DEPOSIT SERVICE 
 
-The Deposite Service does exactly the same thing as the IMPORT ONE STACK service except it allows the caller to specify the receipt number that is to be used. This requires the POST request to use an rn (receipt number) parameter in the url. The receipt number must be a random GUID. There is an additional error that could happen. The caller could request the use of  a GUID that has already used. 
+## DEPOSIT SERVICE
 
-Sample POST Request:
-```
-https://CloudCoin.co/bank/import_one_stack.aspx?rn=640322f6d30c45328914b441ac0f4e5b
-stack=
-{
-	"cloudcoin": [
-		{ 
-		"nn":"1", 
-		"sn":"1112240", 
-		"an": ["f5a52ee881daaae548c24a8eaff7176c", "415c2375a6fa48c4661f5af8d7c95541", "73e067b7b47c1556deebdca33f9a09fb", "9b90d265d102a565a702813fa2211f54", "e3e191ca987c8010a3adc49c6fc18417",
-			"baa7578e207b7cfaa0b8336d7ed4a4f8", "6d8a5c66a589532fe9e5dc3932650cfa", "1170b354e097f2d90132869631409bd3", "b7bc83e8ee7529ff9f874866b901cf15", "a37f6c4af8fbcfbc4d77880fc29ddfbc",
-			"277668208e9bafd9393aebd36945a2c3", "ef50088c8218afe53ce2ecd655c2c786", "b7bbb01fbe6c3a830a17bd9a842b46c0", "737360e18596d74d784f563ca729aaea", "e054a34f2790fd3353ea26e5d92d9d2f",
-			"7051afef36dc388e65e982bc853be417", "ea22cbae0394f6c6918691f2e2f2e267", "95d1278f54b5daca5898c62f267b6364", "b98560e11b7142d1addf5b9cf32898da", "e325f615f93ed682c7aadf6b2d77c17a",
-			"3e8f9d74290fe31d416b90db3a0d2ab1", "c92d1656ded0a4f68e5171c8331e0aea", "7a9cee66544934965bca0c0cb582ba73", "7a55437fa98c1b10d7f47d84f9accdf0", "c3577cced2d428f205355522bc1119b6"],
-		"ed":"7-2019",
-		"pown":"ppppppppppppppppppppppppp",
-		"aoid": []
-		}
-
-	]
-}
-```
-
-## DEPOSIT ONE STACK SERVICE
-
-The program must put a stack file in a folder that is accessible via the web to cors on the CloudBank Server. 
+The program must put a stack file in a folder that is accessible via the web to cors on the CloudBank Server. The request is a post request but may include the GET parameter "rn" (receipt number). If the rn parameter is included it must be a GUID without hyphends. The service will then use the customer's rn as the receipt number instead of generating its own. 
 
 
 Sample POST Request:
 ```
-https://CloudCoin.co/bank/import_one_stack.aspx?
+https://CloudCoin.co/bank/import_one_stack?rn=640322f6d30c45328914b441ac0f4e5b
 stack=
 {
 	"cloudcoin": [
@@ -185,6 +160,17 @@ Sample Response if nothing attached :
  "bank_server":"CloudCoin.co",
  "status":"error",
  "message":"LoadFile: The stack file was empty.",
+ "reciept":"640322f6d30c45328914b441ac0f4e5b",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+Sample Response if receipt number already in use :
+```
+{
+ "bank_server":"CloudCoin.co",
+ "status":"error",
+ "message":"Duplicate: The receipt number is already in use.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
  "time":"2016-49-21 7:49:PM"
 }
@@ -291,12 +277,12 @@ If powning process is complete:
 ```
 ## SHOW COINS SERVICE 
 
-Gets the totals of CloudCoins in the bank
+Gets the totals of CloudCoins in the bank.
 
 Sample GET Request:
 
 ```
-https://CloudCoin.co/bank/show_coins.aspx
+https://CloudCoin.co/bank/show_coins
 ```
 Sample Response:
 ```
@@ -317,11 +303,15 @@ Sample Response:
 Sample GET Request:
 
 ```
-https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=download
+https://jerry.CloudCoin.co/bank/export_one_stack?tag=PaymentForSample&amount=254&sendby=download
 
-phase 2: https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=email
+phase 2 add email option: 
 
-phase 2: https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=url
+https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=email
+
+phase 2 add url option: 
+
+https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=url
 
 
 ```
@@ -351,10 +341,12 @@ sample response if good
 This is a task that is called every day. The program checks the Excel spreadsheet to see if bills need to be paid.The Excell spread sheet is a standardized spreadsheet.
 
 FileName: BillPay
-Sheets within: Reocurring, Pending and History
+Sheets within: Reoccurring, Onetime, Pending, Complete, Requested and  History (one for each month)
+
+
 Column Headers:
 
-### Reoccuring 
+### Reoccurring 
 Used to mark payments that should be paid automatically each month. These records are not deleted. They will be checked everyday and payments assigned to that day of the month will be made and copied to the Pending folder. 
 1. Status: Active or Deactive.
 2. PAY TO THE ORDER OF ( Payee Name )
@@ -365,8 +357,9 @@ Used to mark payments that should be paid automatically each month. These record
 7. SIGNED BY ( Who is sending the CloudCoins )
 8. YOUR EMAIL ( Senders Email )
 9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
+10. DAYS EXPIRES AFTER (Number of days the check will expire after it is written) 
 
-### PayOnce 
+### Onetime 
 The system checks this list once each day. The Bill pay will make the payment and send to pending. Then the payment is deleted from this list)
 1. Status: Active or Deactive.
 2. PAY TO THE ORDER OF ( Payee Name )
@@ -377,41 +370,64 @@ The system checks this list once each day. The Bill pay will make the payment an
 7. SIGNED BY ( Who is sending the CloudCoins )
 8. YOUR EMAIL ( Senders Email )
 9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
+10. DAYS EXPIRES AFTER (Number of days the check will expire after it is written) 
 
 ### Pending
 This holds all checks that have been sent but have not been cashed yet. Once they are cashed, they are deleted from pending and moved to  Paid. Payments in pending can be marked Cancel. If they are marked Cancel the money will be put back in the bank. Records will be checked for Cancel once each day. If they are marked as Hold. The check cashing service will not be allowed to give the user money until the status is changed to Pending. 
 1. STATUS (Pending, Hold or Cancel)
-2. CHECK GUID
-3. PAY TO THE ORDER OF
-4. SEND TO EMAIL
-5. ACCOUNT NUMBER OR MEMO
-6. DATE PAID
-7. AMOUNT
+2. PAY TO THE ORDER OF ( Payee Name )
+3. SEND TO EMAIL ( Payee Email )
+4. ACCOUNT NUMBER OR MEMO 
+5. DATE MOVED TO PENDING ( Day that the check was moved to pending )
+6. AMOUNT (Amount of CloudCoin to be sent )
+7. SIGNED BY ( Who is sending the CloudCoins )
+8. YOUR EMAIL ( Senders Email )
+9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
+10. DAYS EXPIRES AFTER (Number of days the check will expire after it is written) 
 
-### Paid
-1. CHECK GUID
-2. PAY TO THE ORDER OF
-3. SEND TO EMAIL
-4. ACCOUNT NUMBER OR MEMO
-5. DATE PAID
-6. AMOUNT
+### Completed
+1. STATUS (Paid, Canceled, Expired)
+2. PAY TO THE ORDER OF ( Payee Name )
+3. SEND TO EMAIL ( Payee Email )
+4. ACCOUNT NUMBER OR MEMO 
+5. DATE MOVED TO PENDING ( Day that the check was moved to pending )
+6. AMOUNT (Amount of CloudCoin to be sent )
+7. SIGNED BY ( Who is sending the CloudCoins )
+8. YOUR EMAIL ( Senders Email )
+9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
+10. DATE COMPLETED
 
 ### Archive Month Year ( e.g. Archive December 2017 )
 Creates a sheet with all the payments from a month and year for historical purposes. 
-1. CHECK GUID
-2. PAY TO THE ORDER OF
-3. SEND TO EMAIL
-4. ACCOUNT NUMBER OR MEMO
-5. DATE PAID
-6. AMOUNT
+1. STATUS (Paid, Canceled, Expired)
+2. PAY TO THE ORDER OF ( Payee Name )
+3. SEND TO EMAIL ( Payee Email )
+4. ACCOUNT NUMBER OR MEMO 
+5. DATE MOVED TO PENDING ( Day that the check was moved to pending )
+6. AMOUNT (Amount of CloudCoin to be sent )
+7. SIGNED BY ( Who is sending the CloudCoins )
+8. YOUR EMAIL ( Senders Email )
+9. YOUR OTHER CONTACT INFO ( Other information that can be included to for contact )
+10. DATE COMPLETED
 
 
 ## Daily Bil Pay Actions:
 The following actions will take place one or more times each day according to the configuration: 
-1. Bill Pay looks at Reoccuring to see if a bill is to be paid. If yes, calls on the check making service to write a check.
-2. Checks on the PayOnce to see if there is anything there. If yes, calls on the check maaking service and deletes the record from PayOnce.
-3. Bill Pay looks at the Pending to see if and are canceled. PUt the canceled back into bank and deletes from pending. 
-4. Bill Pay checks to see if records in Paid are more than one month old and places them in an Archive folder for the appropriate month. 
+### Reoccuring:
+1 Reoccurring: Check to see if a bill is to be paid. If yes, calls on the check making service to write a check.
+2 Reoccurring: Creates new check in Pending
+3 Reoccurring standard not finished.
+### Onetime
+1 Checks on the PayOnce to see if there is anything there. If yes, calls on the check making service and deletes the record from Onetime.
+2 Creates new check in Pending
+3 v standard not finished
+### Pending
+1. Bill Pay looks at the Pending to see if and are canceled. Put the canceled stack back into bank and deletes from pending.Writes Canceled to Completed worksheet. 
+2. Do not allow checks to be cashed that are canceled or on hold. 
+Pending protocol not finished
+### Complete
+1. If first of the month, archive all completed from last month into archived sheet with standard naming convention: Archive December 2017
+Complete protocol not finished.  
 
 
 ## WRITE & SEND CHECK SERVICE
@@ -421,15 +437,25 @@ In CloudBank, a Check is a url that point to a stack file that is located in the
 Gets the totals of CloudCoins in the bank
 
 Sample GET Request:
+
 Parameters:
+
 pk (private key) The user's secret info to allow the person to make the check
+
 action How to send the check: email, (sms maybe others to be supported later)
+
 amount amount of CloudCoins to put in stac file
+
 checkid (The check's unique identifier
+
 emailto (recievers contact info)
+
 payto (Person who is suppose to get the check)
+
 from (person or organization check is from)
+
 by (Who signed the check)
+
 memo (some account info or memo)
 
 ```
@@ -458,7 +484,9 @@ Sample Response if Fail:
 
 Example of a check:
 ```html
-
+<!-- use html and css to make a form that looks like a standard check 
+Maybe use background image that is of a check. 
+-->
 <html>
 <body>
 	<h1>Sean H. Wothington</h1>
@@ -468,24 +496,20 @@ Example of a check:
 	<h2>PAYTO THE ORDER OF: Larry's Landscaping</h2>
 	<h2>AMOUNT: 59 CloudCoins</h2>
 	
-	
-	
-	
-	<a href="https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232.stack">Cash Check Now</a>
-	
+	<a href="https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b75ab4d089d2d4a287c1ef232">Cash Check Now</a>
 	
 </body>
 <html>
 
-https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232
+https://Sean.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232
 ```
-Sample link to check:
+Sample link to check graphical representation:
 ```html
-https://Sean.CloudCoin.Global/checks/c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232.html
+https://Sean.CloudCoin.Global/checks/c3c3ab7b75ab4d089d2d4a287c1ef232.html
 ```
 Sample link to cash check:
 ```html
-hhttps://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232
+https://Sean.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232
 ```
 1. Gathers CloudCoins into a stack and puts the stack file into the "check" folder.
 2. Emails a link to the check to the payee.
@@ -510,21 +534,21 @@ receive=json
 
 Sample GET Request for a raw json stack file that can be imported into a program:
 ```
-https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=json
+https://ccc.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232&receive=json
 ```
 
 Sample GET Request for a email stack file that can be sent to a person:
 ```
-https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=email&email=Billy@gmail.com
+https://ccc.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232&receive=email&contact=Billy@gmail.com
 ```
 
 Sample GET Request for a json response to be sent to an SMS address:
 ```
-https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=sms&sms=5305942578
+https://ccc.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232&receive=sms&contact=5305942578
 ```
 Sample GET Request that downloads a file to a harddrive:
 ```
-https://ccc.CloudCoin.Global/checks.aspx?id=c3c3ab7b-75ab-4d08-9d2d-4a287c1ef232&receive=download
+https://ccc.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232&receive=download
 ```
 
 Sample Response if Success:
@@ -553,14 +577,14 @@ Sample Response if on Hold:
 
 Sample Response if it does not exist in the Pending folder:
 ```
+NOTE: This standard is not finished. We may want to tell them it has already been cashed, if it was canceled and relavant info about the date it was canceled or cashed. 
 {
  "bank_server":"ccc.CloudCoin.global",
  "status":"nonexistent",
- "message":"The check you requested was not found on the server. It may have been cashed, canceled or you have provided an ind that is incorred. Did you type the write number?",
+ "message":"The check you requested was not found on the server. It may have been cashed, canceled or you have provided an ind that is incorrect. Did you type the write number?",
  "time":"2016-49-21 7:49:PM"
 }
 ```
-
 
 
 # ##################
@@ -568,10 +592,12 @@ Sample Response if it does not exist in the Pending folder:
 # ##################
 Tells the Bank to break a CloudCoin note into several smaller notes.
 Note that there are many (but a finte) way of making chage for each denomination. Each denomination will have a list (or matrix) of possible breaks with an id for Method for each possible method. 
+
+NOTE: This standard is bad and not finished. We must create a way for them to upload a single note in a stack file and then download a stack file with change. This standard in the current form fails to do this. 
  
 *CHANGE_MAKER REQUEST STRING*
 
-https://cloudcoin.global/bank/make_change.php?nn=1sn=88772322&method=100D
+https://cloudcoin.global/bank/make_change?nn=1sn=88772322&method=100D
 
 if good:
 
@@ -635,6 +661,14 @@ Denomination 250
 
 # ADVANCED SERVICE THAT ARE PROPOSED
 
+# TRANSFER TO OTHER BANK
+Will transfer money from this bank to another. 
+
+# REQUEST PAYMENT SERVICE
+Requests payment from another bank
+
+# ACCEPT REQUEST PAYMENT SERIVCE
+Accepts a request for Payment from another bank
 
 
 
@@ -939,7 +973,10 @@ Note that the 1 after the word Authentic: is the serial number of the unit that 
 ```
 
 
+# Send Secure Message 
+Allows the bank to recieve a secure message like a check payment
 
+# Recieve Secure Message
 
 
 
