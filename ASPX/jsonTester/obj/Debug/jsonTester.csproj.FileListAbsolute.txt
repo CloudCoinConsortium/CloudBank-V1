@@ -1,0 +1,14 @@
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\bin\Debug\jsonTester.exe.config
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\bin\Debug\jsonTester.exe
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\bin\Debug\jsonTester.pdb
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\bin\Debug\Newtonsoft.Json.dll
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\bin\Debug\Newtonsoft.Json.xml
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\obj\Debug\jsonTester.csprojResolveAssemblyReference.cache
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\obj\Debug\jsonTester.Form1.resources
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\obj\Debug\jsonTester.Properties.Resources.resources
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\obj\Debug\jsonTester.csproj.GenerateResource.Cache
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\obj\Debug\jsonTester.csproj.CoreCompileInputs.cache
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\obj\Debug\jsonTester.exe
+C:\Users\CloudCoin\Documents\JoshClevenger\ASPX\jsonTester\obj\Debug\jsonTester.pdb
