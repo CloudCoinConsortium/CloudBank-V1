@@ -95,6 +95,7 @@
         }
         else
         {
+            System.Guid guidout;
             string tag = "";
             //create guid for check id
             using (var rng = RandomNumberGenerator.Create())
@@ -102,6 +103,7 @@
                 byte[] cryptoRandomBuffer = new byte[16];
                 rng.GetBytes(cryptoRandomBuffer);
                 Guid guid = new Guid(cryptoRandomBuffer);
+                guidout = guid;
                 tag += guid.ToString("N");
             }
             //check if the bank holds enough coins
@@ -191,6 +193,11 @@
             var json = new JavaScriptSerializer().Serialize(response);
             Response.Write(json);
             Response.End();
+
+            BankExcelUtils bxu = new BankExcelUtils();
+
+            bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount);
+
         }
 
 
