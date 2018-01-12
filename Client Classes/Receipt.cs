@@ -28,7 +28,7 @@ namespace Founders
         public int total_lost { get; set; }
 
         [JsonProperty("receipt")]
-        public ReceitDetail[] rd { get; set; }
+        public ReceiptDetail[] rd { get; set; }
 
     }
 }
