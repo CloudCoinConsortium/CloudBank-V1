@@ -65,47 +65,47 @@
         switch (receive)
         {
             case "json":
-                
-                string json = "";
-            using (StreamReader sr = File.OpenText(check_path))
-            {
 
-                while (!sr.EndOfStream)
+                string json = "";
+                using (StreamReader sr = File.OpenText(check_path))
                 {
-                    json += sr.ReadLine();
+
+                    while (!sr.EndOfStream)
+                    {
+                        json += sr.ReadLine();
+                    }
                 }
-            }
-            Response.Write(json);
-            Response.End();
+                Response.Write(json);
+                Response.End();
                 break;
             case "sms":
                 response.status = "not yet implemented";
-            response.message="receiving checks by sms not yet implemented";
-            var sjson = new JavaScriptSerializer().Serialize(response);
-            Response.Write(sjson);
-            Response.End();
+                response.message="receiving checks by sms not yet implemented";
+                var sjson = new JavaScriptSerializer().Serialize(response);
+                Response.Write(sjson);
+                Response.End();
                 break;
             case "email":
                 string emailto = CheckParameter("email");
                 string from = CheckParameter("from");
                 SmtpClient cli = new SmtpClient();
-            MailAddress MAfrom = new MailAddress(from);
-            MailAddress to = new MailAddress(emailto);
-            MailMessage message = new MailMessage(MAfrom, to);
-            
-            message.Subject = "CloudCoins Stack sent from Check";
+                MailAddress MAfrom = new MailAddress(from);
+                MailAddress to = new MailAddress(emailto);
+                MailMessage message = new MailMessage(MAfrom, to);
+
+                message.Subject = "CloudCoins Stack sent from Check";
                 ContentType type = new ContentType();
                 type.MediaType = MediaTypeNames.Text.Plain;
                 type.Name = "CloudCoins." + id + ".stack";
                 message.Attachments.Add(new Attachment(check_path, type));
 
-            cli.SendAsync(message, "CloudBank Check");
+                cli.SendAsync(message, "CloudBank Check");
 
                 response.status = "success";
-            response.message="CloudCoin stack file sent via email and has been deleted from this server.";
-            var ejson = new JavaScriptSerializer().Serialize(response);
-            Response.Write(ejson);
-            Response.End();
+                response.message="CloudCoin stack file sent via email and has been deleted from this server.";
+                var ejson = new JavaScriptSerializer().Serialize(response);
+                Response.Write(ejson);
+                Response.End();
                 break;
             default:
             case "download":
@@ -115,6 +115,13 @@
                 Response.End();
                 break;
         }
+
+        BankExcelUtils bxu = new BankExcelUtils();
+
+        int checkRow = 0;
+        checkRow = bxu.FindCheckRow(id);
+        bxu.MarkCheckPaid(checkRow);
+        bxu.DeleteFromPending(checkRow);
 
 
     }
