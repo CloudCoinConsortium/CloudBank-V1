@@ -79,7 +79,7 @@ Response if success:
 
 Sample GET Request:
 ```
-https://bank.cloudcoin.global/service/echo
+https://bank.cloudcoin.global/service/echo?pk=640322f6d30c45328914b441ac0f4e5b
 ```
 
 Echo Response for good
