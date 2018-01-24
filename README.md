@@ -111,7 +111,7 @@ The program must put a stack file in a folder that is accessible via the web to 
 
 Sample POST Request:
 ```
-https://CloudCoin.co/bank/import_one_stack
+https://bank.cloudcoin.global/service/import_one_stack
 stack=
 {
 	"cloudcoin": [
@@ -136,7 +136,7 @@ stack=
 Sample Response if good:
 ```
 {
- "bank_server":"CloudCoin.co",
+ "bank_server":"bank.cloudcoin.global",
  "status":"importing",
  "message":"The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your reciept.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
@@ -147,7 +147,7 @@ Sample Response if good:
 Sample Response if bad file bad:
 ```
 {
- "bank_server":"CloudCoin.co",
+ "bank_server":"bank.cloudcoin.global",
  "status":"error",
  "message":"JSON: Your stack file was corrupted. Please check JSON validation.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
@@ -157,7 +157,7 @@ Sample Response if bad file bad:
 Sample Response if nothing attached :
 ```
 {
- "bank_server":"CloudCoin.co",
+ "bank_server":"bank.cloudcoin.global",
  "status":"error",
  "message":"LoadFile: The stack file was empty.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
@@ -168,7 +168,7 @@ Sample Response if nothing attached :
 Sample Response if receipt number already in use :
 ```
 {
- "bank_server":"CloudCoin.co",
+ "bank_server":"bank.cloudcoin.global",
  "status":"error",
  "message":"Duplicate: The receipt number is already in use.",
  "reciept":"640322f6d30c45328914b441ac0f4e5b",
