@@ -279,15 +279,16 @@ If powning process is complete:
 
 Gets the totals of CloudCoins in the bank.
 
-Sample GET Request:
+Sample POST Request:
 
 ```
-https://CloudCoin.co/bank/show_coins
+https://bank.cloudcoin.global/service/show_coins
+pk=baa7578e207b7cfaa0b8336d7ed4a4f8
 ```
-Sample Response:
+Sample Response if good:
 ```
 {
- "bank_server":"CloudCoin.co",
+ "bank_server":"bank.cloudcoin.global",
  "status":"coins_shown",
  "ones":205,
  "fives":10,
@@ -297,6 +298,17 @@ Sample Response:
  "time":"2016-49-21 7:49:PM"
 }
 ```
+
+Sample Response if fail:
+```
+{
+ "bank_server":"bank.cloudcoin.global",
+ "status":"fail",
+ "message":"Private key incorrect"
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
 
 ## WITHDRAW ONE STACK SERVICE
 
