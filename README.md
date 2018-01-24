@@ -79,13 +79,13 @@ Response if success:
 
 Sample GET Request:
 ```
-https://CloudCoin.co/bank/echo
+https://bank.cloudcoin.global/service/echo
 ```
 
 Echo Response for good
 ```
 {
-    "bank_server":"bill.CloudCoin.global",
+    "bank_server":"bank.CloudCoin.global",
     "status":"ready",
     "message":"The RAIDA is ready for counterfeit detection.",
     "time":"2016-49-21 7:49:PM"
@@ -95,7 +95,7 @@ Echo Response for good
 Echo Response for bad
 ```
 {
-    "bank_server":"CloudCoin.co",
+    "bank_server":"bank.CloudCoin.global",
     "status":"fail",
     "message":"Not enough RAIDA servers can be contacted to import new coins.",
     "time":"2016-49-21 7:49:PM"
