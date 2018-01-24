@@ -59,13 +59,13 @@ Get's the bank's welcome information. Note that the web server must be configure
 
 Sample request
 ```
-https://cloudcoin.global/bank/print_welcome
+https://bank.cloudcoin.global/service/print_welcome
 
 ```
 Response if success:
 ```
 {
-	"bank_server": "www.myBank.com",
+	"bank_server": "https://bank.cloudcoin.global",
 	"status": "welcome",
 	"version":"4.07.17",
 	"message": "CloudCoin Bank. Used to Authenticate, Store and Payout CloudCoins. 
