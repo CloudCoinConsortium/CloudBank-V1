@@ -111,7 +111,7 @@ The program must put a stack file in a folder that is accessible via the web to 
 
 Sample POST Request:
 ```
-https://CloudCoin.co/bank/import_one_stack?rn=640322f6d30c45328914b441ac0f4e5b
+https://CloudCoin.co/bank/import_one_stack
 stack=
 {
 	"cloudcoin": [
