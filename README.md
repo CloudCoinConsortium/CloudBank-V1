@@ -312,19 +312,30 @@ Sample Response if fail:
 
 ## WITHDRAW ONE STACK SERVICE
 
-Sample GET Request:
+Sample POST Request:
 
 ```
-https://jerry.CloudCoin.co/bank/export_one_stack?tag=PaymentForSample&amount=254&sendby=download
+https://jerry.CloudCoin.co/bank/export_one_stack
+tag=PaymentForSample
+amount=254
+sendby=json
+pk=ef50088c8218afe53ce2ecd655c2c786
 
 phase 2 add email option: 
 
-https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=email
+https://CloudCoin.co/bank/export_one_stack.aspx
+tag=PaymentForSample
+amount=254
+sendby=email
+pk=ef50088c8218afe53ce2ecd655c2c786
 
 phase 2 add url option: 
 
-https://CloudCoin.co/bank/export_one_stack.aspx?tag=PaymentForSample&amount=254&sendby=url
-
+https://CloudCoin.co/bank/export_one_stack.aspx
+tag=PaymentForSample
+amount=254
+sendby=url
+pk=ef50088c8218afe53ce2ecd655c2c786
 
 ```
 sample response if good
@@ -348,6 +359,17 @@ sample response if good
 	]
 }
 ```
+
+Sample Response if fail:
+```
+{
+ "bank_server":"bank.cloudcoin.global",
+ "status":"fail",
+ "message":"Private key incorrect"
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
 ## BILL PAY SERVICE
 
 This is a task that is called every day. The program checks the Excel spreadsheet to see if bills need to be paid.The Excell spread sheet is a standardized spreadsheet.
