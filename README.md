@@ -470,7 +470,7 @@ In CloudBank, a Check is a url that point to a stack file that is located in the
 
 Gets the totals of CloudCoins in the bank
 
-Sample GET Request:
+Sample POST Request:
 
 Parameters:
 
@@ -493,12 +493,22 @@ by (Who signed the check)
 memo (some account info or memo)
 
 ```
-https://ccc.CloudCoin.Global/write_check.aspx?pk=a4b5e66f4b51418e81e8dc93e9db6503&action=email&amount=25&checkid=Billy12450&eamilto=Bill@yardwork.com&payto=Billy Jenkins&from=CC@CloudCoin.global&signby=Sean Worthington&Memo=For Yard Work
+https://ccc.CloudCoin.Global/write_check
+pk=a4b5e66f4b51418e81e8dc93e9db6503
+action=email
+amount=25
+checkid=Billy12450
+&eamilto=Bill@yardwork.com
+payto=Billy Jenkins
+from=CC@CloudCoin.global
+signby=Sean Worthington
+Memo=For Yard Work
+
 ```
 Sample Response if Success:
 ```
 {
- "bank_server":"ccc.CloudCoin.global",
+ "bank_server":"bank.cloudcoin.global",
  "status":"emailed",
  "message":"Check sent to Bill@yardwork.com for 250 CloudCoins",
  "time":"2016-49-21 7:49:PM"
@@ -508,7 +518,7 @@ Sample Response if Success:
 Sample Response if Fail:
 ```
 {
- "bank_server":"ccc.CloudCoin.global",
+ "bank_server":"bank.cloudcoin.global",
  "status":"error",
  "message":"Not enough funds to write Check for 250 CloudCoins to Bill@yardwork.com",
  "time":"2016-49-21 7:49:PM"
@@ -535,15 +545,15 @@ Maybe use background image that is of a check.
 </body>
 <html>
 
-https://Sean.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232
+https://bank.cloudcoin.global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232
 ```
 Sample link to check graphical representation:
 ```html
-https://Sean.CloudCoin.Global/checks/c3c3ab7b75ab4d089d2d4a287c1ef232.html
+https://bank.cloudcoin.global/checks/c3c3ab7b75ab4d089d2d4a287c1ef232.html
 ```
 Sample link to cash check:
 ```html
-https://Sean.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232
+https://bank.cloudcoin.global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232
 ```
 1. Gathers CloudCoins into a stack and puts the stack file into the "check" folder.
 2. Emails a link to the check to the payee.
