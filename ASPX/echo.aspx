@@ -36,7 +36,7 @@
 
     public class ServiceResponse
     {
-        public string server;
+        public string bank_server;
         public string status;
         public string version;
         public string message;
@@ -57,7 +57,7 @@
     public async Task echoStatus()
     {
         ServiceResponse response = new ServiceResponse();
-        response.server = WebConfigurationManager.AppSettings["thisServerName"];
+        response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
         response.status = "ready";
         response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
         response.version = "1.0";

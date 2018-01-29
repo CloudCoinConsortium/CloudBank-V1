@@ -14,7 +14,7 @@
 
     public class ServiceResponse
     {
-        public string server;
+        public string bank_server;
         public string status;
         public string receipt;
         public string message;
@@ -40,7 +40,7 @@
         if (!import)//Moves all CloudCoins from the Import folder into the Suspect folder. 
         {
             ServiceResponse response = new ServiceResponse();
-            response.server = WebConfigurationManager.AppSettings["thisServerName"];
+            response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
             response.status = "error";
         //    response.message = stack;
 			response.message = "The CloudCoin stack was either empty or the JSON was not valid.";
@@ -66,7 +66,7 @@
     {
         string receiptFileName = await multi_detect();
         ServiceResponse response = new ServiceResponse();
-        response.server = WebConfigurationManager.AppSettings["thisServerName"];
+        response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
         response.receipt = receiptFileName;
         response.status = "importing";
         response.message = "The stack file has been imported and detection will begin automatically so long as they are not already in bank. Please check your receipt.";

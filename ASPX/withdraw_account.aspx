@@ -13,21 +13,40 @@
 <script language="c#" runat="server">
 
 
+    public class ServiceResponse
+    {
+        public string bank_server;
+        public string status;
+        public string message;
+        public string time;
+    }//E
+
     //static string path = WebConfigurationManager.AppSettings["root"];
     static string pk = "";
     //static FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath + @"\" + path + @"\");
 
     public void Page_Load(object sender, EventArgs e)
     {
+        ServiceResponse serviceResponse = new ServiceResponse();
+
+        serviceResponse.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
+        serviceResponse.status = "fail";
+        serviceResponse.time = DateTime.Now.ToString();
+
+
         pk = Page.Request.Form["pk"];
 
         if (pk == null)
         {
-            Response.Write("Request Error: Private key not specified");
+            //Response.Write("Request Error: Private key not specified");
+            //Response.End();
+            serviceResponse.message = "Request Error: Private key not specified";
+            var json = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(json);
             Response.End();
         }
 
-        FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath + @"\" + path + @"\");
+        FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath + @"\" + pk + @"\");
         int amount = 0;
         int total = 0;
 
@@ -38,19 +57,23 @@
 
         } catch(FormatException ex)
         {
-            Console.Out.WriteLine(ex);
-            Response.Write("Request Error: The Amount isn't a number");
+            serviceResponse.message = "Request Error: The ammount isnt a number";
+            var json = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(json);
             Response.End();
         } catch(ArgumentNullException n)
         {
-            Console.Out.WriteLine(n);
-            Response.Write("Request Error: Amount of CloudCoins not specified");
+            serviceResponse.message = "Request Error: Amount of CloudCoins not specified";
+            var json = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(json);
             Response.End();
         }
 
         if(amount == 0)
         {
-            Response.Write("Request Error: Amount of CloudCoins not specified");
+            serviceResponse.message = "Request Error: Amount of CloudCoins not specified";
+            var json = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(json);
             Response.End();
         }
         else

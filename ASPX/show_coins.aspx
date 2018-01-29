@@ -10,7 +10,7 @@
 <script language="c#" runat="server">
     public class ServiceResponse
     {
-        public string server;
+        public string bank_server;
         public string status;
         public int ones;
         public int fives;
@@ -39,7 +39,7 @@
         //FileUtils fileUtils = FileUtils.GetInstance(@"H:\Banks\Preston\"+path+@"\");
 
         ServiceResponse response = new ServiceResponse();
-        response.server = WebConfigurationManager.AppSettings["thisServerName"];
+        response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
         response.status = "coins_shown";
         response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
         Banker bank = new Banker(fileUtils);
