@@ -33,8 +33,8 @@
 
     public void Page_Load(object sender, EventArgs e)
     {
-        string path = Page.Request.Form["pk"];
-        FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + path + @"\");
+        string pk = Page.Request.Form["pk"];
+        FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + pk + @"\");
 
 
         ServiceResponse response = new ServiceResponse();
