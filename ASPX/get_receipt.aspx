@@ -9,38 +9,57 @@
 
 <script language="c#" runat="server">
 
-	//static string path = WebConfigurationManager.AppSettings["root"];
+    //static string path = WebConfigurationManager.AppSettings["root"];
     //static FileUtils fileUtils = FileUtils.GetInstance( Directory.GetCurrentDirectory()+ path+@"\");
-	
+    public class ServiceResponse
+    {
+        public string bank_server;
+        public string status;
+        public string message;
+        public string time;
+    }
+
+
+
     public void Page_Load(object sender, EventArgs e)
     {
+        ServiceResponse serviceResponse = new ServiceResponse();
+        serviceResponse.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
+        serviceResponse.status = "fail";
+        serviceResponse.time = DateTime.Now.ToString();
+
         string path = Page.Request.Form["pk"];
         if (path == null)
         {
-            Response.Write("Request Error: Private key not specified");
+            serviceResponse.message = "Request Error: Private key not specified";
+            var json = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(json);
             Response.End();
         }
         FileUtils fileUtils = FileUtils.GetInstance( Directory.GetCurrentDirectory()+ path+@"\");
 
         string id = Request["rn"];
-		
-		
+        string FileLocation = AppDomain.CurrentDomain.BaseDirectory + @"\" + path + @"\Receipts\" + id + ".json";
 
+        
 
-
-  if(id == null)
-   {
-            Response.Write("Error: No Receipt Id in Request.");
-            Response.End();
-        }else if(!File.Exists(path))
+        if(id == null)
         {
-            Response.Write("Error: File not Found " + Directory.GetCurrentDirectory() + path+@"\Receipts\"+ id + ".json");
+            serviceResponse.message = "Error: No Receipt Id in Request.";
+            var json = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(json);
+            Response.End();
+        }else if(!File.Exists(FileLocation))
+        {
+            serviceResponse.message = "Error: File not Found " + AppDomain.CurrentDomain.BaseDirectory + @"\" + path+@"\Receipts\"+ id + ".json";
+            var json = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(json);
             Response.End();
         }
         else
         {
             string json = "";
-            using (StreamReader sr = File.OpenText(path))
+            using (StreamReader sr = File.OpenText(FileLocation))
             {
 
                 while (!sr.EndOfStream)
