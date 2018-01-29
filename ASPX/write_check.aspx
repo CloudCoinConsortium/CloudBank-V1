@@ -24,7 +24,7 @@
 
     public class ServiceResponse
     {
-        public string server;
+        public string bank_server;
         public string status;
 
         public string message;
@@ -38,7 +38,7 @@
 
 
         ServiceResponse response = new ServiceResponse();
-        response.server = WebConfigurationManager.AppSettings["thisServerName"];
+        response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
         //response.server = "Preston.CloudCoin.global";
 
         response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");

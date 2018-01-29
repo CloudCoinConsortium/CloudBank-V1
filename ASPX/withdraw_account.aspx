@@ -46,6 +46,16 @@
             Response.End();
         }
 
+        if (pk != WebConfigurationManager.AppSettings["root"])
+        {
+            serviceResponse.status = "fail";
+            serviceResponse.message = "Private key not correct";
+            var serialjson = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(serialjson);
+            Response.End();
+        }
+
+
         FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath + @"\" + pk + @"\");
         int amount = 0;
         int total = 0;

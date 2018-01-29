@@ -36,6 +36,17 @@
             Response.Write(json);
             Response.End();
         }
+
+        if (path != WebConfigurationManager.AppSettings["root"])
+        {
+            serviceResponse.status = "fail";
+            serviceResponse.message = "Private key not correct";
+            var serialjson = new JavaScriptSerializer().Serialize(serviceResponse);
+            Response.Write(serialjson);
+            Response.End();
+        }
+
+
         FileUtils fileUtils = FileUtils.GetInstance( Directory.GetCurrentDirectory()+ path+@"\");
 
         string id = Request["rn"];

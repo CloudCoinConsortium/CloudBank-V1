@@ -12,6 +12,7 @@
     {
         public string bank_server;
         public string status;
+        public string message;
         public int ones;
         public int fives;
         public int twentyfives;
@@ -29,17 +30,31 @@
         //string path = Request.QueryString["k"];
         string path = Request.Form["pk"];
 
+        ServiceResponse response = new ServiceResponse();
+        response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
+
         if (path == null)
         {
-            Response.Write("Request Error: Private key not specified");
+            //Response.Write("Request Error: Private key not specified");
+            response.status = "fail";
+            response.message = "Private key not specified";
+            var serialjson = new JavaScriptSerializer().Serialize(response);
+            Response.Write(serialjson);
+            Response.End();
+        }
+        if (path != WebConfigurationManager.AppSettings["root"])
+        {
+            response.status = "fail";
+            response.message = "Private key not correct";
+            var serialjson = new JavaScriptSerializer().Serialize(response);
+            Response.Write(serialjson);
             Response.End();
         }
 
         FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + path + @"\");
         //FileUtils fileUtils = FileUtils.GetInstance(@"H:\Banks\Preston\"+path+@"\");
 
-        ServiceResponse response = new ServiceResponse();
-        response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
+
         response.status = "coins_shown";
         response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
         Banker bank = new Banker(fileUtils);
