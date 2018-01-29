@@ -20,6 +20,13 @@
     public void Page_Load(object sender, EventArgs e)
     {
         path = Page.Request.Form["pk"];
+
+        if (path == null)
+        {
+            Response.Write("Request Error: Private key not specified");
+            Response.End();
+        }
+
         FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath + @"\" + path + @"\");
         int amount = 0;
         int total = 0;

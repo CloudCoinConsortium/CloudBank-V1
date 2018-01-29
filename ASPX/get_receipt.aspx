@@ -9,11 +9,19 @@
 
 <script language="c#" runat="server">
 
-	static string path = WebConfigurationManager.AppSettings["root"];
-    static FileUtils fileUtils = FileUtils.GetInstance( Directory.GetCurrentDirectory()+ path+@"\");
+	//static string path = WebConfigurationManager.AppSettings["root"];
+    //static FileUtils fileUtils = FileUtils.GetInstance( Directory.GetCurrentDirectory()+ path+@"\");
 	
     public void Page_Load(object sender, EventArgs e)
     {
+        string path = Page.Request.Form["pk"];
+        if (path == null)
+        {
+            Response.Write("Request Error: Private key not specified");
+            Response.End();
+        }
+        FileUtils fileUtils = FileUtils.GetInstance( Directory.GetCurrentDirectory()+ path+@"\");
+
         string id = Request["rn"];
 		
 		
