@@ -16,9 +16,9 @@
 
 
 
-    static string path = WebConfigurationManager.AppSettings["root"];
+    //static string path = WebConfigurationManager.AppSettings["root"];
     //static FileUtils fileUtils = FileUtils.GetInstance(@"H:\Banks\Preston\"+path+@"\");
-    FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + path + @"\");
+    //FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + path + @"\");
 
 
 
@@ -33,6 +33,9 @@
 
     public void Page_Load(object sender, EventArgs e)
     {
+        string path = Page.Request.Form["pk"];
+        FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + path + @"\");
+
 
         ServiceResponse response = new ServiceResponse();
         response.server = WebConfigurationManager.AppSettings["thisServerName"];

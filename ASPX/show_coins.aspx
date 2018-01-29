@@ -26,9 +26,10 @@
 
     public void Page_Load(object sender, EventArgs e)
     {
-        string path = Request.QueryString["k"];
+        //string path = Request.QueryString["k"];
+        string path = Request.Form["pk"];
 
-        if (path == "" || path == null)
+        if (path == null)
         {
             Response.Write("Request Error: Private key not specified");
             Response.End();
