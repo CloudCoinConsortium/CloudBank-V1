@@ -26,7 +26,15 @@ namespace jsonTester
         {
             string CloudBankFeedback = "";
             string rawJson = jsonInputTextBox.Text;
-            var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("stack", rawJson) });
+            //var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("stack", rawJson), new KeyValuePair<string, string>("pk", "0DECE3AF-43EC-435B-8C39-E2A5D0EA8676") });
+
+            //KeyValuePair<string, string> formdata;
+            //var formcontent = new FormUrlEncodedContent()
+
+            StringContent formContent = new StringContent("pk=0DECE3AF-43EC-435B-8C39-E2A5D0EA8676", Encoding.UTF8, "application/x-www-form-urlencoded");
+            //HttpResponseMessage sResponse = await sClient.PostAsync(action.URL, content).ConfigureAwait(false);
+
+
 
             HttpClient cli = new HttpClient();
 

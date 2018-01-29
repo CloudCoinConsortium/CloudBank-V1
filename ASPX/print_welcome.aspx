@@ -18,7 +18,7 @@
 
     public class ServiceResponse
     {
-        public string server;
+        public string bank_server;
         public string status;
         public string version;
         public string message;
@@ -36,7 +36,7 @@
                 "Free from the CloudCoin Consortium.";
         //Response.Write("here");
         ServiceResponse response = new ServiceResponse();
-        response.server = WebConfigurationManager.AppSettings["thisServerName"];
+        response.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
         //response.server = "www.mybank.com";
         response.status = "welcome";
         response.version = "1.0";
