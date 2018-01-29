@@ -25,18 +25,23 @@ public class BankExcelUtils
         MyBook = MyApp.Workbooks.Open("billpay.xlsx");
     }
 
-    public void AddToPendingChecks(System.Guid guid, string payto, string email, string AccountNumberOrMemo, double amount)
+    public void AddToPendingChecks(string payto, string emailto, string memo, double amount, string signedby, string youremail, string othercontactinfo, int daysvalid)
     {
         MySheet = (Excel.Worksheet)MyBook.Sheets[3]; // Explicit cast is not required here
         lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
 
         MySheet.Cells[lastRow, 1] = "Pending";
-        MySheet.Cells[lastRow, 2] = guid;
-        MySheet.Cells[lastRow, 3] = payto;
-        MySheet.Cells[lastRow, 4] = email;
-        MySheet.Cells[lastRow, 5] = AccountNumberOrMemo;
-        MySheet.Cells[lastRow, 6] = DateTime.Now.ToString();
-        MySheet.Cells[lastRow, 7] = amount;
+        MySheet.Cells[lastRow, 2] = payto;
+        MySheet.Cells[lastRow, 3] = emailto;
+        MySheet.Cells[lastRow, 4] = memo;
+        MySheet.Cells[lastRow, 5] = DateTime.Now.ToString();
+        MySheet.Cells[lastRow, 6] = amount;
+        MySheet.Cells[lastRow, 7] = signedby;
+        MySheet.Cells[lastRow, 8] = youremail;
+        MySheet.Cells[lastRow, 9] = othercontactinfo;
+        MySheet.Cells[lastRow, 10] = 180;
+
+
 
         MyBook.Save();
     }

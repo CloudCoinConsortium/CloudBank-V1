@@ -130,6 +130,7 @@
             string from = CheckParameter("from");
             string signby = CheckParameter("signby");
             string memo = CheckParameter("memo");
+            string othercontactinfo = CheckParameter("othercontactinfo");
 
             string link = "https://Preston.Cloudcoin.global/checks/" + tag + ".html";
 
@@ -202,7 +203,8 @@
 
             BankExcelUtils bxu = new BankExcelUtils();
 
-            bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount);
+            //bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount);
+            bxu.AddToPendingChecks(payto, emailto, memo, amount, signby, from, othercontactinfo, 180);
 
         }
 
