@@ -14,14 +14,14 @@
 
 
     //static string path = WebConfigurationManager.AppSettings["root"];
-    static string path = "";
+    static string pk = "";
     //static FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath + @"\" + path + @"\");
 
     public void Page_Load(object sender, EventArgs e)
     {
-        path = Page.Request.Form["pk"];
+        pk = Page.Request.Form["pk"];
 
-        if (path == null)
+        if (pk == null)
         {
             Response.Write("Request Error: Private key not specified");
             Response.End();
