@@ -126,15 +126,35 @@
             }
             //write check body
             string emailto = CheckParameter("emailto");
+
+            if (emailto == "")
+            {
+                response.status = "error";
+                response.message="Email to send check to not specified";
+                var ejson = new JavaScriptSerializer().Serialize(response);
+                Response.Write(ejson);
+                Response.End();
+            }
+
             string payto = CheckParameter("payto");
-            string from = CheckParameter("from");
+            string fromemail = CheckParameter("fromemail");
+
+            if (fromemail == "")
+            {
+                response.status = "error";
+                response.message="Your email address not specified";
+                var ejson = new JavaScriptSerializer().Serialize(response);
+                Response.Write(ejson);
+                Response.End();
+            }
+
             string signby = CheckParameter("signby");
             string memo = CheckParameter("memo");
             string othercontactinfo = CheckParameter("othercontactinfo");
 
             string link = "https://Preston.Cloudcoin.global/checks/" + tag + ".html";
 
-            string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + from + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
+            string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
                 + "<a href='https://Preston.Cloudcoin.global/checks.aspx?id="+tag+"'>Cash Check Now</a></body></html>";
 
             using (StreamWriter sw = File.AppendText(fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar + tag +".html"))
@@ -145,13 +165,14 @@
             }
             //send email
             SmtpClient cli = new SmtpClient();
-            MailAddress MAfrom = new MailAddress(from);
+            MailAddress MAfrom = new MailAddress(fromemail);
             MailAddress to = new MailAddress(emailto);
             MailMessage message = new MailMessage(MAfrom, to);
             message.Body = link;
             message.Subject = "Check for" + amount + " CloudCoins";
 
-            cli.SendAsync(message, "CloudBank Check");
+            //add when smtp host exists
+            //cli.SendAsync(message, "CloudBank Check");
 
             //update spreadsheet
 
@@ -165,7 +186,7 @@
             int exp_25 = 0;
             int exp_100 = 0;
             int exp_250 = 0;
-            if(amount > 250 && bankTotals[5] + frackedTotals[5] > 0)
+            if(amount >= 250 && bankTotals[5] + frackedTotals[5] > 0)
             {
                 exp_250 = ((amount / 250) < (bankTotals[5] + frackedTotals[5] )) ? (amount / 250) : (bankTotals[5] + frackedTotals[5]);
                 amount -= (exp_250 * 250);
@@ -196,16 +217,14 @@
             string check_path = fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar +  "CloudCoins." + tag + ".stack";
             File.Move(path, check_path);
 
+            BankExcelUtils bxu = new BankExcelUtils();
+
+            //bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount);
+            bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount, signby, fromemail, othercontactinfo);
 
             var json = new JavaScriptSerializer().Serialize(response);
             Response.Write(json);
             Response.End();
-
-            BankExcelUtils bxu = new BankExcelUtils();
-
-            //bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount);
-            bxu.AddToPendingChecks(payto, emailto, memo, amount, signby, from, othercontactinfo, 180);
-
         }
 
 

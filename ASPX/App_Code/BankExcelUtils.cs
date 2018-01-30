@@ -22,16 +22,18 @@ public class BankExcelUtils
         {
             Visible = false
         };
-        MyBook = MyApp.Workbooks.Open("billpay.xlsx");
+        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
     }
 
-    public void AddToPendingChecks(string guidout, string payto, string emailto, string memo, double amount, string signedby, string youremail, string othercontactinfo, int daysvalid)
+    public void AddToPendingChecks(Guid guidout, string payto, string emailto, string memo, double amount, string signedby, string youremail, string othercontactinfo)
     {
         MySheet = (Excel.Worksheet)MyBook.Sheets[3]; // Explicit cast is not required here
-        lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
+
+        Excel.Range last = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+        lastRow = last.Row + 1;
 
         MySheet.Cells[lastRow, 1] = "Pending";
-        MySheet.Cells[lastRow, 2] = guidout;
+        MySheet.Cells[lastRow, 2] = guidout.ToString();
         MySheet.Cells[lastRow, 3] = payto;
         MySheet.Cells[lastRow, 4] = emailto;
         MySheet.Cells[lastRow, 5] = memo;
@@ -71,17 +73,24 @@ public class BankExcelUtils
         string email = MySheet.Cells[checkRow, 4].ToString();
         string AccountNumberOrMemo = MySheet.Cells[checkRow, 5].ToString();
         double amount = (double)MySheet.Cells[checkRow, 7];
+        string signedby = MySheet.Cells[checkRow, 8].ToString();
+        string youremail = MySheet.Cells[checkRow, 9].ToString();
+        string othercontactinfo = MySheet.Cells[checkRow, 10].ToString();
 
         MySheet = (Excel.Worksheet)MyBook.Sheets[4];
         lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
 
 
-        MySheet.Cells[lastRow, 1] = guid;
-        MySheet.Cells[lastRow, 2] = payto;
-        MySheet.Cells[lastRow, 3] = email;
-        MySheet.Cells[lastRow, 4] = AccountNumberOrMemo;
-        MySheet.Cells[lastRow, 5] = DateTime.Now.ToString();
+        MySheet.Cells[lastRow, 2] = guid;
+        MySheet.Cells[lastRow, 3] = payto;
+        MySheet.Cells[lastRow, 4] = email;
+        MySheet.Cells[lastRow, 5] = AccountNumberOrMemo;
+        MySheet.Cells[lastRow, 10] = DateTime.Now.ToString();
         MySheet.Cells[lastRow, 6] = amount;
+        MySheet.Cells[lastRow, 7] = signedby;
+        MySheet.Cells[lastRow, 8] = youremail;
+        MySheet.Cells[lastRow, 9] = othercontactinfo;
+
 
         MyBook.Save();
     }
