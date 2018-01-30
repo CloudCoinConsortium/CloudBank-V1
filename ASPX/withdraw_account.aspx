@@ -19,7 +19,7 @@
         public string status;
         public string message;
         public string time;
-    }//E
+    }
 
     //static string path = WebConfigurationManager.AppSettings["root"];
     static string pk = "";
