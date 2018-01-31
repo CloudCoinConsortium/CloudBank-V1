@@ -164,15 +164,30 @@
 
             }
             //send email
-            SmtpClient cli = new SmtpClient();
-            MailAddress MAfrom = new MailAddress(fromemail);
-            MailAddress to = new MailAddress(emailto);
-            MailMessage message = new MailMessage(MAfrom, to);
-            message.Body = link;
-            message.Subject = "Check for" + amount + " CloudCoins";
+            //SmtpClient cli = new SmtpClient();
+            //MailAddress MAfrom = new MailAddress(fromemail);
+            //MailAddress to = new MailAddress(emailto);
+            //MailMessage message = new MailMessage(MAfrom, to);
+            //message.Body = link;
+            //message.Subject = "Check for" + amount + " CloudCoins";
 
             //add when smtp host exists
             //cli.SendAsync(message, "CloudBank Check");
+
+            if (WebConfigurationManager.AppSettings["smtpServer"] != "" && WebConfigurationManager.AppSettings["smtpLogin"] != "" && WebConfigurationManager.AppSettings["smtpPassword"] != "")
+            {
+                MailMessage mail = new MailMessage(fromemail, emailto);
+                SmtpClient client = new SmtpClient();
+                client.Port = 25;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Host = WebConfigurationManager.AppSettings["smtpServer"];
+                client.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["smtpLogin"], WebConfigurationManager.AppSettings["smtpPassword"]);
+                mail.Subject = "Check for" + amount + " CloudCoins";
+                mail.Body = link;
+                client.Send(mail);
+            }
+
 
             //update spreadsheet
 

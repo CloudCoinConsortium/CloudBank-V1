@@ -16,7 +16,7 @@
 
 
     static string path = WebConfigurationManager.AppSettings["root"];
-    static FileUtils fileUtils = FileUtils.GetInstance(@"H:\Banks\Preston\"+path+@"\");
+    static FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + path + @"\");
 
 
 
@@ -33,7 +33,7 @@
     {
 
         ServiceResponse response = new ServiceResponse();
-        response.server = "Preston.CloudCoin.global";
+        response.server = WebConfigurationManager.AppSettings["thisServerName"];
         response.time = DateTime.Now.ToString("yyyy-MM-dd h:mm:tt");
 
         string receive = CheckParameter("receive");

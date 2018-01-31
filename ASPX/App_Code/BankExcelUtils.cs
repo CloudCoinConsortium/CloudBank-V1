@@ -22,11 +22,12 @@ public class BankExcelUtils
         {
             Visible = false
         };
-        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
+        
     }
 
     public void AddToPendingChecks(Guid guidout, string payto, string emailto, string memo, double amount, string signedby, string youremail, string othercontactinfo)
     {
+        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
         MySheet = (Excel.Worksheet)MyBook.Sheets[3]; // Explicit cast is not required here
 
         Excel.Range last = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
@@ -46,10 +47,12 @@ public class BankExcelUtils
 
 
         MyBook.Save();
+        MyBook.Close();
     }
 
     public int FindCheckRow(string guid)
     {
+        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
         MySheet = (Excel.Worksheet)MyBook.Sheets[3]; // Explicit cast is not required here
         lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
         int checkRow = 0;
@@ -62,11 +65,14 @@ public class BankExcelUtils
                 break;
             }
         }
+        
+        MyBook.Close();
         return checkRow;
     }
 
     public void MarkCheckPaid(int checkRow)
     {
+        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
         MySheet = (Excel.Worksheet)MyBook.Sheets[3];
         string guid = MySheet.Cells[checkRow, 2].ToString();
         string payto = MySheet.Cells[checkRow, 3].ToString();
@@ -78,7 +84,8 @@ public class BankExcelUtils
         string othercontactinfo = MySheet.Cells[checkRow, 10].ToString();
 
         MySheet = (Excel.Worksheet)MyBook.Sheets[4];
-        lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
+        Excel.Range last = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+        lastRow = last.Row + 1;
 
 
         MySheet.Cells[lastRow, 2] = guid;
@@ -93,13 +100,17 @@ public class BankExcelUtils
 
 
         MyBook.Save();
+        MyBook.Close();
     }
 
     public void DeleteFromPending(int checkRow)
     {
+        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
         MySheet = (Excel.Worksheet) MyBook.Sheets[3];
 
         ((Excel.Range)MySheet.Rows[checkRow, 0]).Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
+        MyBook.Save();
+        MyBook.Close();
     }
 
 
