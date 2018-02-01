@@ -180,7 +180,7 @@
                 SmtpClient client = new SmtpClient();
                 client.Port = 25;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
+                //client.UseDefaultCredentials = false;
                 client.Host = WebConfigurationManager.AppSettings["smtpServer"];
                 client.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["smtpLogin"], WebConfigurationManager.AppSettings["smtpPassword"]);
                 mail.Subject = "Check for" + amount + " CloudCoins";
@@ -206,22 +206,22 @@
                 exp_250 = ((amount / 250) < (bankTotals[5] + frackedTotals[5] )) ? (amount / 250) : (bankTotals[5] + frackedTotals[5]);
                 amount -= (exp_250 * 250);
             }
-            if(amount > 100 && bankTotals[4] + frackedTotals[4] > 0)
+            if(amount >= 100 && bankTotals[4] + frackedTotals[4] > 0)
             {
                 exp_100 = ((amount / 100) < (bankTotals[4] + frackedTotals[4]) ) ? (amount / 100) : (bankTotals[4] + frackedTotals[4]);
                 amount -= (exp_100 * 100);
             }
-            if(amount > 25 && bankTotals[3] + frackedTotals[3] > 0)
+            if(amount >= 25 && bankTotals[3] + frackedTotals[3] > 0)
             {
                 exp_25 = ((amount / 25) < (bankTotals[3] + frackedTotals[3]) ) ? (amount / 25) : (bankTotals[3] + frackedTotals[3]);
                 amount -= (exp_25 * 25);
             }
-            if(amount > 5 && bankTotals[2] + frackedTotals[2] > 0)
+            if(amount >= 5 && bankTotals[2] + frackedTotals[2] > 0)
             {
                 exp_5 = ((amount / 5) < (bankTotals[2] + frackedTotals[2]) ) ? (amount / 5) : (bankTotals[2] + frackedTotals[2]);
                 amount -= (exp_5 * 5);
             }
-            if(amount > 1 && bankTotals[1] + frackedTotals[1] > 0)
+            if(amount > 0 && bankTotals[1] + frackedTotals[1] > 0)
             {
                 exp_1 = (amount  < (bankTotals[1] + frackedTotals[1]) ) ? amount  : (bankTotals[1] + frackedTotals[1]);
                 amount -= (exp_1);

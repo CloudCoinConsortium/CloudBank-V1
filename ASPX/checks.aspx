@@ -42,7 +42,7 @@
         //
         if(id == "")
         {
-            response.status = "nonexistent";
+            response.status = "fail";
             response.message="Please supply a check ID.";
             var json = new JavaScriptSerializer().Serialize(response);
             Response.Write(json);
@@ -50,8 +50,8 @@
         }
         else if(File.Exists(fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar + "CloudCoins." + id+ ".stack"))
         {
-            response.status = "nonexistent";
-            response.message="The check you requested was not found on the server. It may have been cashed, canceled or you have provided an id that is incorrect. Did you type the right number?";
+            response.status = "fail";
+            response.message="The check you requested was not found on the server. It may have been cashed, canceled or you have provided an id that is incorrect.";
             var json = new JavaScriptSerializer().Serialize(response);
             Response.Write(json);
             Response.End();
@@ -88,18 +88,36 @@
             case "email":
                 string emailto = CheckParameter("email");
                 string from = CheckParameter("from");
-                SmtpClient cli = new SmtpClient();
-                MailAddress MAfrom = new MailAddress(from);
-                MailAddress to = new MailAddress(emailto);
-                MailMessage message = new MailMessage(MAfrom, to);
+                
+                if (WebConfigurationManager.AppSettings["smtpServer"] != "" && WebConfigurationManager.AppSettings["smtpLogin"] != "" && WebConfigurationManager.AppSettings["smtpPassword"] != "")
+                {
+                    MailMessage mail = new MailMessage(from, emailto);
+                    SmtpClient client = new SmtpClient();
+                    client.Port = 25;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    //client.UseDefaultCredentials = false;
+                    client.Host = WebConfigurationManager.AppSettings["smtpServer"];
+                    client.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["smtpLogin"], WebConfigurationManager.AppSettings["smtpPassword"]);
+                    mail.Subject = "CloudCoins Stack sent from Check";
+                    ContentType type = new ContentType();
+                    type.MediaType = MediaTypeNames.Text.Plain;
+                    type.Name = "CloudCoins." + id + ".stack";
+                    mail.Attachments.Add(new Attachment(check_path, type));
+                    client.Send(mail);
+                }
+                
+                //SmtpClient cli = new SmtpClient();
+                //MailAddress MAfrom = new MailAddress(from);
+                //MailAddress to = new MailAddress(emailto);
+                //MailMessage message = new MailMessage(MAfrom, to);
 
-                message.Subject = "CloudCoins Stack sent from Check";
-                ContentType type = new ContentType();
-                type.MediaType = MediaTypeNames.Text.Plain;
-                type.Name = "CloudCoins." + id + ".stack";
-                message.Attachments.Add(new Attachment(check_path, type));
+                //message.Subject = "CloudCoins Stack sent from Check";
+                //ContentType type = new ContentType();
+                //type.MediaType = MediaTypeNames.Text.Plain;
+                //type.Name = "CloudCoins." + id + ".stack";
+                //message.Attachments.Add(new Attachment(check_path, type));
 
-                cli.SendAsync(message, "CloudBank Check");
+                //cli.SendAsync(message, "CloudBank Check");
 
                 response.status = "success";
                 response.message="CloudCoin stack file sent via email and has been deleted from this server.";

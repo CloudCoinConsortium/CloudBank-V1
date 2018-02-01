@@ -87,7 +87,6 @@ public class BankExcelUtils
         Excel.Range last = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
         lastRow = last.Row + 1;
 
-
         MySheet.Cells[lastRow, 2] = guid;
         MySheet.Cells[lastRow, 3] = payto;
         MySheet.Cells[lastRow, 4] = email;
@@ -97,7 +96,6 @@ public class BankExcelUtils
         MySheet.Cells[lastRow, 7] = signedby;
         MySheet.Cells[lastRow, 8] = youremail;
         MySheet.Cells[lastRow, 9] = othercontactinfo;
-
 
         MyBook.Save();
         MyBook.Close();

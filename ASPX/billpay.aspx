@@ -9,42 +9,51 @@
 
 <script language="c#" runat="server">
 
-	static string path = WebConfigurationManager.AppSettings["root"];
-    static FileUtils fileUtils = FileUtils.GetInstance( Directory.GetCurrentDirectory()+ path+@"\");
-	
+    public class ServiceResponse
+    {
+        public string bank_server;
+        public string status;
+        public string message;
+        public string time;
+    }//End Service Response class
+
     public void Page_Load(object sender, EventArgs e)
     {
-        string id = Request["rn"];
-		
-		
+        ServiceResponse ServiceResponse = new ServiceResponse();
+        ServiceResponse.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
+        ServiceResponse.time = DateTime.Now.ToString();
 
 
 
-  if(id == null)
-   {
-            Response.Write("Error: No Receipt Id in Request.");
-            Response.End();
-        }else if(!File.Exists(path))
+
+        string type = CheckParameter("type");
+
+        if (type == "PayOnce")
         {
-            Response.Write("Error: File not Found " + Directory.GetCurrentDirectory() + path+@"\Receipts\"+ id + ".json");
-            Response.End();
+
+        }
+        else if (type == "Reocurring")
+        {
+
         }
         else
         {
-            string json = "";
-            using (StreamReader sr = File.OpenText(path))
-            {
-
-                while (!sr.EndOfStream)
-                {
-                    json += sr.ReadLine();
-                }
-            }
+            ServiceResponse.status = "fail";
+            ServiceResponse.message = "Type not recognized. Type should be PayOnce or Reocurring.";
+            var json = new JavaScriptSerializer().Serialize(ServiceResponse);
             Response.Write(json);
             Response.End();
         }
+
+
     }
 
-
+    string CheckParameter(string param)
+    {
+        if (Request[param] != null)
+            return Request[param];
+        else
+            return "";
+    }
 
 </script>
