@@ -51,8 +51,23 @@ timezone = UTC-7 (use the customer's  timezone)
 
 For security, the system admin must setup SSL and limit the servers that can connect to this web server. 
 ----------------------------------------------------------------
+
+
+## Key file format
+The CloudBank requires a key and will be in the following format
+```
+{
+    "publickey":"bank.CloudCoin.Global",
+    "privatekey":"6e2b96d6204a4212ae57ab84260e747f",
+    "email":"CloudCoin@Protonmail.com"
+}
+```
+
+
 # Services
 ------------------------
+
+
 ## PRINT WELCOME SERVICE
 
 Get's the bank's welcome information. Note that the web server must be configured to use extentionless urls.
