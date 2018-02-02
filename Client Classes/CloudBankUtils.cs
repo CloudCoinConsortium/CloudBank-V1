@@ -176,7 +176,7 @@ namespace CloudBankTester
                         totalCoinsWithdrawn += getDenomination(deserialReceipt.rd[i].sn);
                 var formContent2 = new FormUrlEncodedContent(new[] { new KeyValuePair<string,string>("amount",totalCoinsWithdrawn.ToString()),
                 new KeyValuePair<string, string>("pk", keys.privatekey)});
-                var result_stack = await cli.PostAsync(keys.publickey + "/withdraw_account", formContent2);
+                var result_stack = await cli.PostAsync("https://"+keys.publickey + "/withdraw_account", formContent2);
                 rawStackFromWithdrawal = await result_stack.Content.ReadAsStringAsync();
                 //rawStackFromWithdrawal = GET(cloudBankURL, receiptNumber);
             }
