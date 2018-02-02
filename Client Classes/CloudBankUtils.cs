@@ -5,8 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-using Founders;
-
 namespace CloudBankTester
 {
     class CloudBankUtils
@@ -40,10 +38,11 @@ namespace CloudBankTester
 
         //Methods
         public async Task showCoins() {
-            Console.Out.WriteLine("https://" + keys.publickey + "/show_coins.aspx?k=" + keys.privatekey);
+            Console.Out.WriteLine("https://" + keys.publickey + "/show_coinsk=" + keys.privatekey);
+            var formContent = new FormUrlEncodedContent(new[]{ new KeyValuePair<string, string>("pk", keys.privatekey) });
             string json = "error";
             try {
-                var showCoins = await cli.GetAsync("https://" + keys.publickey + "/show_coins.aspx?k=" + keys.privatekey);
+                var showCoins = await cli.PostAsync("https://" + keys.publickey + "/show_coins", formContent);
                 json = await showCoins.Content.ReadAsStringAsync();
             } catch(HttpRequestException ex)
             {
@@ -80,12 +79,12 @@ namespace CloudBankTester
             string CloudBankFeedback = "";
             var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("stack", rawStackForDeposit) });
 
-            Console.Out.WriteLine("CloudBank request: " + toPublicURL + "/deposit_one_stack.aspx");
+            Console.Out.WriteLine("CloudBank request: " + toPublicURL + "/deposit_one_stack");
             Console.Out.WriteLine("Stack File: " + rawStackForDeposit);
 
             try
             {
-                var result_stack = await cli.PostAsync("https://"+toPublicURL + "/deposit_one_stack.aspx", formContent);
+                var result_stack = await cli.PostAsync("https://"+toPublicURL + "/deposit_one_stack", formContent);
                 CloudBankFeedback = await result_stack.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
@@ -116,7 +115,9 @@ namespace CloudBankTester
         public async Task getStackFromCloudBank( int amountToWithdraw)
         {
             totalCoinsWithdrawn = amountToWithdraw;
-            var result_stack = await cli.GetAsync("https://" + keys.publickey + "/withdraw_account.aspx?amount=" + amountToWithdraw + "&k=" + keys.privatekey);
+            var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string,string>("amount",amountToWithdraw.ToString()),
+                new KeyValuePair<string, string>("pk", keys.privatekey)});
+            var result_stack = await cli.PostAsync("https://" + keys.publickey + "/withdraw_account", formContent);
                 rawStackFromWithdrawal = await result_stack.Content.ReadAsStringAsync();
                 //rawStack = GET(cloudBankURL, receiptNumber);
         }//End get stack from cloudbank
@@ -159,7 +160,9 @@ namespace CloudBankTester
 
         public async Task getReceiptFromCloudBank(string toPublicURL)
         {
-            var result_receipt = await cli.GetAsync("https://" + keys.publickey + "/get_receipt.aspx?rn=" + receiptNumber + "&k=" + keys.privatekey);
+            var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string,string>("rn",receiptNumber),
+                new KeyValuePair<string, string>("pk", keys.privatekey)});
+            var result_receipt = await cli.PostAsync("https://" + keys.publickey + "/get_receipt", formContent);
             string rawReceipt = await result_receipt.Content.ReadAsStringAsync();
             if (rawReceipt.Contains("Error"))
             {
@@ -171,7 +174,9 @@ namespace CloudBankTester
                 for (int i = 0; i < deserialReceipt.rd.Length; i++)
                     if (deserialReceipt.rd[i].status == "authentic")
                         totalCoinsWithdrawn += getDenomination(deserialReceipt.rd[i].sn);
-                var result_stack = await cli.GetAsync(keys.publickey + "/withdraw_one_stack.aspx?amount=" + totalCoinsWithdrawn + "&k=" + keys.privatekey);
+                var formContent2 = new FormUrlEncodedContent(new[] { new KeyValuePair<string,string>("amount",totalCoinsWithdrawn.ToString()),
+                new KeyValuePair<string, string>("pk", keys.privatekey)});
+                var result_stack = await cli.PostAsync(keys.publickey + "/withdraw_account", formContent2);
                 rawStackFromWithdrawal = await result_stack.Content.ReadAsStringAsync();
                 //rawStackFromWithdrawal = GET(cloudBankURL, receiptNumber);
             }
