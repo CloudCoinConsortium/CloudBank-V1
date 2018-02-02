@@ -152,10 +152,14 @@
             string memo = CheckParameter("memo");
             string othercontactinfo = CheckParameter("othercontactinfo");
 
-            string link = "https://Preston.Cloudcoin.global/checks/" + tag + ".html";
+            //string link = "https://Preston.Cloudcoin.global/checks/" + tag + ".html";
+            string link = "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks/" + tag + ".html";
+
+            //string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
+            //    + "<a href='https://Preston.Cloudcoin.global/checks.aspx?id="+tag+"'>Cash Check Now</a></body></html>";
 
             string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
-                + "<a href='https://Preston.Cloudcoin.global/checks.aspx?id="+tag+"'>Cash Check Now</a></body></html>";
+                + "<a href='" + "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks/" + tag + ".html" + "'>Cash Check Now</a></body></html>";
 
             using (StreamWriter sw = File.AppendText(fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar + tag +".html"))
             {
@@ -178,7 +182,7 @@
             {
                 MailMessage mail = new MailMessage(fromemail, emailto);
                 SmtpClient client = new SmtpClient();
-                client.Port = 25;
+                client.Port =  int.Parse(WebConfigurationManager.AppSettings["smtpPort"]);
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 //client.UseDefaultCredentials = false;
                 client.Host = WebConfigurationManager.AppSettings["smtpServer"];

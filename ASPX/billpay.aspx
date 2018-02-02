@@ -23,18 +23,51 @@
         ServiceResponse.bank_server = WebConfigurationManager.AppSettings["thisServerName"];
         ServiceResponse.time = DateTime.Now.ToString();
 
-
-
+        string payto = CheckParameter("payto");
+        string sendtoemail = CheckParameter("sendtoemail");
+        string memo = CheckParameter("memo");
+        string daytopay = CheckParameter("daytopay");
+        double amount = 0;
+        try
+        {
+            amount = double.Parse(CheckParameter("amount"));
+        }
+        catch(Exception ex)
+        {
+            ServiceResponse.status = "fail";
+            ServiceResponse.message = "amount could not be parsed";
+            var json = new JavaScriptSerializer().Serialize(ServiceResponse);
+            Response.Write(json);
+            Response.End();
+        }
+        string signedby = CheckParameter("signedby");
+        string youremail = CheckParameter("fromemail");
+        string contactinfo = CheckParameter("contactinfo");
+        int daysexpiresafter = 0;
+        try
+        {
+            daysexpiresafter = int.Parse(CheckParameter("daysexpiresafter"));
+        }
+        catch(Exception ex)
+        {
+            ServiceResponse.status = "fail";
+            ServiceResponse.message = "days expires after could not be parsed";
+            var json = new JavaScriptSerializer().Serialize(ServiceResponse);
+            Response.Write(json);
+            Response.End();
+        }
 
         string type = CheckParameter("type");
 
+        BankExcelUtils bxu = new BankExcelUtils();
+
         if (type == "PayOnce")
         {
-
+            bxu.AddToPayOnce(payto, sendtoemail, memo, daytopay, amount, signedby, youremail, contactinfo, daysexpiresafter);
         }
         else if (type == "Reocurring")
         {
-
+            bxu.AddToReoccuring(payto, sendtoemail, memo, daytopay, amount, signedby, youremail, contactinfo, daysexpiresafter);
         }
         else
         {
