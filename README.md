@@ -126,7 +126,7 @@ The program must put a stack file in a folder that is accessible via the web to 
 
 Sample POST Request:
 ```
-https://bank.cloudcoin.global/service/import_one_stack
+https://bank.cloudcoin.global/service/deposit_one_stack
 stack=
 {
 	"cloudcoin": [
@@ -330,7 +330,7 @@ Sample Response if fail:
 Sample POST Request:
 
 ```
-https://jerry.CloudCoin.co/bank/export_one_stack
+https://jerry.CloudCoin.co/bank/withdraw_account
 tag=PaymentForSample
 amount=254
 sendby=json
@@ -338,7 +338,7 @@ pk=ef50088c8218afe53ce2ecd655c2c786
 
 phase 2 add email option: 
 
-https://CloudCoin.co/bank/export_one_stack.aspx
+https://CloudCoin.co/bank/withdraw_account.aspx
 tag=PaymentForSample
 amount=254
 sendby=email
@@ -346,7 +346,7 @@ pk=ef50088c8218afe53ce2ecd655c2c786
 
 phase 2 add url option: 
 
-https://CloudCoin.co/bank/export_one_stack.aspx
+https://CloudCoin.co/bank/withdraw_account.aspx
 tag=PaymentForSample
 amount=254
 sendby=url
