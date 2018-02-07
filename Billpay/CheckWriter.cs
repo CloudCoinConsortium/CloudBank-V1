@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Billpay
 {
@@ -26,9 +28,12 @@ namespace Billpay
             FromEmail = bpr.YourEmail;
         }
 
-        public void SendCheck()
+        public async void SendCheck()
         {
-
+            HttpClient cli = new HttpClient();
+            var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("pk", ConfigurationSettings.AppSettings["root"]) });
+            var result = await cli.PostAsync("https://" + ConfigurationSettings.AppSettings["thisServerPath"] + "/write_check.aspx?action=email&amount=" + Amount + "&emailto=" + SendToEmail + "&payto=" + PayTo + "&from=" + FromEmail + "&signby=" + SignedBy, formContent);
+            string response = await result.Content.ReadAsStringAsync();
         }
 
     }
