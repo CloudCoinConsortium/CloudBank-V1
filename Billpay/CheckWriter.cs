@@ -32,7 +32,7 @@ namespace Billpay
         {
             HttpClient cli = new HttpClient();
             var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("pk", ConfigurationSettings.AppSettings["root"]) });
-            var result = await cli.PostAsync("https://" + ConfigurationSettings.AppSettings["thisServerPath"] + "/write_check.aspx?action=email&amount=" + Amount + "&emailto=" + SendToEmail + "&payto=" + PayTo + "&from=" + FromEmail + "&signby=" + SignedBy, formContent);
+            var result = await cli.PostAsync("https://" + ConfigurationSettings.AppSettings["BankServerPath"] + "/write_check.aspx?action=email&amount=" + Amount + "&emailto=" + SendToEmail + "&payto=" + PayTo + "&from=" + FromEmail + "&signby=" + SignedBy, formContent);
             string response = await result.Content.ReadAsStringAsync();
         }
 

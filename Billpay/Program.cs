@@ -36,12 +36,22 @@ namespace Billpay
                     CheckWriter cw = new CheckWriter(bpr);
                     cw.SendCheck();
                 }
-
-
-
             }
 
+            MySheet = (Worksheet)MyBook.Sheets[2];
 
+            Range last2 = MySheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
+            int lastRow2 = last2.Row + 1;
+
+            for (int i = 2; i < lastRow2; i++)
+            {
+                BillPayRow bpr = new BillPayRow(MySheet, i, "Payonce");
+                if (bpr.ActiveAndReady())
+                {
+                    CheckWriter cw = new CheckWriter(bpr);
+                    cw.SendCheck();
+                }
+            }
 
         }
     }

@@ -18,7 +18,7 @@ namespace Billpay
         public string SignedBy { get; set; }
         public string YourEmail { get; set; }
         public string OtherContactInfo { get; set; }
-        public int DaysTillExpires { get; set; }
+        public DateTime DateExpires { get; set; }
         public string Type { get; set; }
 
 
@@ -35,14 +35,14 @@ namespace Billpay
             SignedBy = ws.Cells[row, 7];
             YourEmail = ws.Cells[row, 8];
             OtherContactInfo = ws.Cells[row, 9];
-            DaysTillExpires = ws.Cells[row, 10];
+            DateExpires = ws.Cells[row, 10];
 
             Type = type;
         }
 
         public Boolean ActiveAndReady()
         {
-            if (Status == "Active" && DayOfMonthToPay == DateTime.Now.Day && DaysTillExpires != 0)
+            if (Status == "Active" && DayOfMonthToPay == DateTime.Now.Day && DateTime.Now > DateExpires)
             {
                 return true;
             }
