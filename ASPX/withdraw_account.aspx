@@ -102,6 +102,16 @@
             Banker bank = new Banker(fileUtils);
             int[] bankTotals = bank.countCoins(fileUtils.bankFolder);
             int[] frackedTotals = bank.countCoins(fileUtils.frackedFolder);
+
+            int AvailableCoins = ((bankTotals[5] + frackedTotals[5]) * 250) + ((bankTotals[4] + frackedTotals[4]) * 100) + ((bankTotals[3] + frackedTotals[3]) * 25) + ((bankTotals[2] + frackedTotals[2]) * 5) + ((bankTotals[1] + frackedTotals[1]) * 1);
+            if (amount > AvailableCoins)
+            {
+                serviceResponse.message = "Request Error: Amount of CloudCoins not available ";
+                var json2 = new JavaScriptSerializer().Serialize(serviceResponse);
+                Response.Write(json2);
+                Response.End();
+            }
+
             int exp_1 = 0;
             int exp_5 = 0;
             int exp_25 = 0;
