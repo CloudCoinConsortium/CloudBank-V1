@@ -236,7 +236,7 @@
             string check_path = fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar +  "CloudCoins." + tag + ".stack";
             File.Move(path, check_path);
 
-            BankExcelUtils bxu = new BankExcelUtils();
+            BankXMLUtils bxu = new BankXMLUtils();
 
             //bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount);
             bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount, signby, fromemail, othercontactinfo);
