@@ -111,5 +111,51 @@ public class BankExcelUtils
         MyBook.Close();
     }
 
+    public void AddToPayOnce(string payto, string emailto, string memo, string daytopay, double amount, string signedby, string youremail, string othercontactinfo, int daystillexpires)
+    {
+        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
+        MySheet = (Excel.Worksheet)MyBook.Sheets[2];
+
+        Excel.Range last = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+        lastRow = last.Row + 1;
+
+        MySheet.Cells[lastRow, 1] = "active";
+        MySheet.Cells[lastRow, 2] = payto;
+        MySheet.Cells[lastRow, 3] = emailto;
+        MySheet.Cells[lastRow, 4] = memo;
+        MySheet.Cells[lastRow, 5] = daytopay;
+        MySheet.Cells[lastRow, 6] = amount;
+        MySheet.Cells[lastRow, 7] = signedby;
+        MySheet.Cells[lastRow, 8] = youremail;
+        MySheet.Cells[lastRow, 9] = othercontactinfo;
+        MySheet.Cells[lastRow, 10] = daystillexpires;
+
+        MyBook.Save();
+        MyBook.Close();
+    }
+
+    public void AddToReoccuring(string payto, string emailto, string memo, string daytopay, double amount, string signedby, string youremail, string othercontactinfo, int daystillexpires)
+    {
+        MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
+        MySheet = (Excel.Worksheet)MyBook.Sheets[1];
+
+        Excel.Range last = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+        lastRow = last.Row + 1;
+
+        MySheet.Cells[lastRow, 1] = "active";
+        MySheet.Cells[lastRow, 2] = payto;
+        MySheet.Cells[lastRow, 3] = emailto;
+        MySheet.Cells[lastRow, 4] = memo;
+        MySheet.Cells[lastRow, 5] = daytopay;
+        MySheet.Cells[lastRow, 6] = amount;
+        MySheet.Cells[lastRow, 7] = signedby;
+        MySheet.Cells[lastRow, 8] = youremail;
+        MySheet.Cells[lastRow, 9] = othercontactinfo;
+        MySheet.Cells[lastRow, 10] = daystillexpires;
+
+        MyBook.Save();
+        MyBook.Close();
+    }
+
 
 }
