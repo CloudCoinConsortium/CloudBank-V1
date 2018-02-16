@@ -60,7 +60,12 @@
 
         string check_path = fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar +  "CloudCoins." + id + ".stack";
 
+        BankXMLUtils bxu = new BankXMLUtils();
 
+        int checkRow = 0;
+        checkRow = bxu.FindCheckRow(id);
+        bxu.MarkCheckPaid(checkRow);
+        bxu.DeleteFromPending(checkRow);
 
         switch (receive)
         {
@@ -134,12 +139,7 @@
                 break;
         }
 
-        BankExcelUtils bxu = new BankExcelUtils();
-
-        int checkRow = 0;
-        checkRow = bxu.FindCheckRow(id);
-        bxu.MarkCheckPaid(checkRow);
-        bxu.DeleteFromPending(checkRow);
+        
 
 
     }
