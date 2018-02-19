@@ -5,6 +5,7 @@ using System.Web;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Web.Configuration;
 
 /// <summary>
 /// Summary description for BankXMLUtils
@@ -20,7 +21,7 @@ public class BankXMLUtils
 
     public void AddToPendingChecks(Guid guidout, string payto, string emailto, string memo, double amount, string signedby, string youremail, string othercontactinfo)
     {
-        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx";
+        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\" + WebConfigurationManager.AppSettings["root"] + @"\billpay.xlsx";
 
         //open the excel using openxml sdk  
         using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filepath, true))
@@ -112,9 +113,9 @@ public class BankXMLUtils
         
     }
 
-    public int FindRow(string guid)
+    public int FindCheckRow(string guid)
     {
-        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx";
+        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\" + WebConfigurationManager.AppSettings["root"] + @"\billpay.xlsx";
 
         //open the excel using openxml sdk  
         using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filepath, true))
@@ -159,7 +160,7 @@ public class BankXMLUtils
     {
         int checkIndex = checkRow - 1;
 
-        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx";
+        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\" + WebConfigurationManager.AppSettings["root"] + @"\billpay.xlsx";
 
         //open the excel using openxml sdk  
         using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filepath, true))
@@ -278,7 +279,7 @@ public class BankXMLUtils
 
     public void DeleteFromPending(int checkRow)
     {
-        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx";
+        string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\" + WebConfigurationManager.AppSettings["root"] + @"\billpay.xlsx";
 
         //open the excel using openxml sdk  
         using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filepath, true))
