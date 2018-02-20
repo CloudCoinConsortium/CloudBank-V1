@@ -19,7 +19,7 @@ public class BankXMLUtils
         //
     }
 
-    public void AddToPendingChecks(Guid guidout, string payto, string emailto, string memo, double amount, string signedby, string youremail, string othercontactinfo)
+    public void AddToPendingChecks(string guidout, string payto, string emailto, string memo, double amount, string signedby, string youremail, string othercontactinfo)
     {
         string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\" + WebConfigurationManager.AppSettings["root"] + @"\billpay.xlsx";
 
@@ -56,7 +56,7 @@ public class BankXMLUtils
 
             Cell newCell1 = new Cell();
             currentrow.InsertAt(newCell1, 1);
-            int index1 = InsertSharedStringItem(guidout.ToString(), shareStringPart);
+            int index1 = InsertSharedStringItem(guidout, shareStringPart);
             newCell1.CellValue = new CellValue(index1.ToString());
             newCell1.DataType = new EnumValue<CellValues>(CellValues.SharedString);
 

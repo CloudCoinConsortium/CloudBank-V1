@@ -39,7 +39,7 @@
         string receive = CheckParameter("receive");
         string id = CheckParameter("id");
 
-        //
+        string file = AppDomain.CurrentDomain.BaseDirectory + WebConfigurationManager.AppSettings["root"] + @"\Checks\" + "CloudCoins." + id + ".stack";
         if(id == "")
         {
             response.status = "fail";
@@ -48,7 +48,7 @@
             Response.Write(json);
             Response.End();
         }
-        else if(File.Exists(fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar + "CloudCoins." + id+ ".stack"))
+        else if(!File.Exists(file))
         {
             response.status = "fail";
             response.message="The check you requested was not found on the server. It may have been cashed, canceled or you have provided an id that is incorrect.";
@@ -64,9 +64,11 @@
 
         int checkRow = 0;
         checkRow = bxu.FindCheckRow(id);
-        bxu.MarkCheckPaid(checkRow);
-        bxu.DeleteFromPending(checkRow);
-
+        if (checkRow > 0)
+        {
+            bxu.MarkCheckPaid(checkRow);
+            bxu.DeleteFromPending(checkRow);
+        }
         switch (receive)
         {
             case "json":
@@ -93,7 +95,7 @@
             case "email":
                 string emailto = CheckParameter("email");
                 string from = CheckParameter("from");
-                
+
                 if (WebConfigurationManager.AppSettings["smtpServer"] != "" && WebConfigurationManager.AppSettings["smtpLogin"] != "" && WebConfigurationManager.AppSettings["smtpPassword"] != "")
                 {
                     MailMessage mail = new MailMessage(from, emailto);
@@ -110,7 +112,7 @@
                     mail.Attachments.Add(new Attachment(check_path, type));
                     client.Send(mail);
                 }
-                
+
                 //SmtpClient cli = new SmtpClient();
                 //MailAddress MAfrom = new MailAddress(from);
                 //MailAddress to = new MailAddress(emailto);
@@ -139,7 +141,7 @@
                 break;
         }
 
-        
+
 
 
     }

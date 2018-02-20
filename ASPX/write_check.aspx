@@ -46,7 +46,7 @@
         int total = 0;
         string action = "";
 
-        if(Request["pk"] != WebConfigurationManager.AppSettings["root"])
+        if(pk != WebConfigurationManager.AppSettings["root"])
         {
             response.status = "error";
             response.message="Request Error: Private Key is Wrong";
@@ -126,79 +126,90 @@
             }
             //write check body
             string emailto = CheckParameter("emailto");
-
-            if (emailto == "")
-            {
-                response.status = "error";
-                response.message="Email to send check to not specified";
-                var ejson = new JavaScriptSerializer().Serialize(response);
-                Response.Write(ejson);
-                Response.End();
-            }
-
             string payto = CheckParameter("payto");
             string fromemail = CheckParameter("fromemail");
-
-            if (fromemail == "")
-            {
-                response.status = "error";
-                response.message="Your email address not specified";
-                var ejson = new JavaScriptSerializer().Serialize(response);
-                Response.Write(ejson);
-                Response.End();
-            }
-
             string signby = CheckParameter("signby");
             string memo = CheckParameter("memo");
             string othercontactinfo = CheckParameter("othercontactinfo");
 
-            //string link = "https://Preston.Cloudcoin.global/checks/" + tag + ".html";
             string link = "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks/" + tag + ".html";
 
-            //string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
-            //    + "<a href='https://Preston.Cloudcoin.global/checks.aspx?id="+tag+"'>Cash Check Now</a></body></html>";
-
             string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
-                + "<a href='" + "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks/" + tag + ".html" + "'>Cash Check Now</a></body></html>";
+                    + "<a href='" + "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks/" + tag + ".html" + "'>Cash Check Now</a></body></html>";
 
-            using (StreamWriter sw = File.AppendText(fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar + tag +".html"))
+            using (StreamWriter sw = File.AppendText(fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar + tag + ".html"))
             {
 
-                sw.WriteLine(CheckHtml);
+                    sw.WriteLine(CheckHtml);
 
             }
-            //send email
-            //SmtpClient cli = new SmtpClient();
-            //MailAddress MAfrom = new MailAddress(fromemail);
-            //MailAddress to = new MailAddress(emailto);
-            //MailMessage message = new MailMessage(MAfrom, to);
-            //message.Body = link;
-            //message.Subject = "Check for" + amount + " CloudCoins";
 
-            //add when smtp host exists
-            //cli.SendAsync(message, "CloudBank Check");
-
-            if (WebConfigurationManager.AppSettings["smtpServer"] != "" && WebConfigurationManager.AppSettings["smtpLogin"] != "" && WebConfigurationManager.AppSettings["smtpPassword"] != "")
+            if (CheckParameter("type") == "email")
             {
-                MailMessage mail = new MailMessage(fromemail, emailto);
-                SmtpClient client = new SmtpClient();
-                client.Port =  int.Parse(WebConfigurationManager.AppSettings["smtpPort"]);
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                //client.UseDefaultCredentials = false;
-                client.Host = WebConfigurationManager.AppSettings["smtpServer"];
-                client.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["smtpLogin"], WebConfigurationManager.AppSettings["smtpPassword"]);
-                mail.Subject = "Check for" + amount + " CloudCoins";
-                mail.Body = link;
-                client.Send(mail);
+
+                if (emailto == "")
+                {
+                    response.status = "error";
+                    response.message = "Email to send check to not specified";
+                    var ejson = new JavaScriptSerializer().Serialize(response);
+                    Response.Write(ejson);
+                    Response.End();
+                }
+
+                if (fromemail == "")
+                {
+                    response.status = "error";
+                    response.message = "Your email address not specified";
+                    var ejson = new JavaScriptSerializer().Serialize(response);
+                    Response.Write(ejson);
+                    Response.End();
+                }
+
+
+
+                //string link = "https://Preston.Cloudcoin.global/checks/" + tag + ".html";
+                
+
+                //string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
+                //    + "<a href='https://Preston.Cloudcoin.global/checks.aspx?id="+tag+"'>Cash Check Now</a></body></html>";
+
+                //send email
+                //SmtpClient cli = new SmtpClient();
+                //MailAddress MAfrom = new MailAddress(fromemail);
+                //MailAddress to = new MailAddress(emailto);
+                //MailMessage message = new MailMessage(MAfrom, to);
+                //message.Body = link;
+                //message.Subject = "Check for" + amount + " CloudCoins";
+
+                //add when smtp host exists
+                //cli.SendAsync(message, "CloudBank Check");
+
+                if (WebConfigurationManager.AppSettings["smtpServer"] != "" && WebConfigurationManager.AppSettings["smtpLogin"] != "" && WebConfigurationManager.AppSettings["smtpPassword"] != "")
+                {
+                    MailMessage mail = new MailMessage(fromemail, emailto);
+                    SmtpClient client = new SmtpClient();
+                    client.Port = int.Parse(WebConfigurationManager.AppSettings["smtpPort"]);
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    //client.UseDefaultCredentials = false;
+                    client.Host = WebConfigurationManager.AppSettings["smtpServer"];
+                    client.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["smtpLogin"], WebConfigurationManager.AppSettings["smtpPassword"]);
+                    mail.Subject = "Check for" + amount + " CloudCoins";
+                    mail.Body = link;
+                    client.Send(mail);
+                }
+
+
+                //update spreadsheet
+
+
+                response.status = "emailed";
+                response.message = "Check sent to " + emailto + " for " + amount + " CloudCoins";
             }
-
-
-            //update spreadsheet
-
-
-            response.status = "emailed";
-            response.message="Check sent to "+emailto+" for "+amount+" CloudCoins";
-
+            else
+            {
+                response.message = "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks.aspx?id=" + tag + "&receive=json";
+                response.status = "url";
+            }
             //create check's stack file
             int exp_1 = 0;
             int exp_5 = 0;
@@ -239,9 +250,10 @@
             BankXMLUtils bxu = new BankXMLUtils();
 
             //bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount);
-            bxu.AddToPendingChecks(guidout, payto, emailto, memo, amount, signby, fromemail, othercontactinfo);
+            bxu.AddToPendingChecks(guidout.ToString().Replace("-", ""), payto, emailto, memo, amount, signby, fromemail, othercontactinfo);
 
             var json = new JavaScriptSerializer().Serialize(response);
+            json = json.Replace(@"\u0026", "&");
             Response.Write(json);
             Response.End();
         }
