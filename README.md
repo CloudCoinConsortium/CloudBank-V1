@@ -491,7 +491,7 @@ Parameters:
 
 pk (private key) The user's secret info to allow the person to make the check
 
-action How to send the check: email, (sms maybe others to be supported later)
+action How to send the check: email, url (just show the url), sms (maybe others to be supported later)
 
 amount amount of CloudCoins to put in stac file
 
@@ -520,7 +520,22 @@ signby=Sean Worthington
 Memo=For Yard Work
 
 ```
-Sample Response if Success:
+Sample Request for URL
+```
+https://ccc.CloudCoin.Global/write_check
+pk=a4b5e66f4b51418e81e8dc93e9db6503
+action=url
+amount=25
+checkid=Billy12450
+&eamilto=Bill@yardwork.com
+payto=Billy Jenkins
+from=CC@CloudCoin.global
+signby=Sean Worthington
+Memo=For Yard Work
+
+```
+
+Sample Response if Success for email action:
 ```
 {
  "bank_server":"bank.cloudcoin.global",
@@ -529,6 +544,17 @@ Sample Response if Success:
  "time":"2016-49-21 7:49:PM"
 }
 ```
+
+Sample Response if Success for url action:
+```
+{
+ "bank_server":"bank.cloudcoin.global",
+ "status":"url",
+ "message":"https://bank.CloudCoin.Global/checks.aspx?id=c3c3ab7b75ab4d089d2d4a287c1ef232",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
 
 Sample Response if Fail:
 ```
