@@ -550,7 +550,7 @@ Sample Response if Success for url action:
 {
  "bank_server":"bank.cloudcoin.global",
  "status":"url",
- "message":"https://bank.CloudCoin.Global/checks.aspx?id=c3c3ab7b75ab4d089d2d4a287c1ef232",
+ "message":"https://bank.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232",
  "time":"2016-49-21 7:49:PM"
 }
 ```
@@ -581,7 +581,7 @@ Maybe use background image that is of a check.
 	<h2>PAYTO THE ORDER OF: Larry's Landscaping</h2>
 	<h2>AMOUNT: 59 CloudCoins</h2>
 	
-	<a href="https://Sean.CloudCoin.Global/checks.aspx?id=c3c3ab7b75ab4d089d2d4a287c1ef232">Cash Check Now</a>
+	<a href="https://Sean.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232">Cash Check Now</a>
 	
 </body>
 <html>
