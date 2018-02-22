@@ -4,52 +4,62 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
+using DocumentFormat.OpenXml.Packaging;
+using System.Web.Configuration;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Billpay
 {
     class Program
     {
-        private static Workbook MyBook = null;
-        private static Application MyApp = null;
-        private static Worksheet MySheet = null;
-
-
+        
         static void Main(string[] args)
         {
 
-            MyApp = new Application
+            string filepath = AppDomain.CurrentDomain.BaseDirectory + @"\" + WebConfigurationManager.AppSettings["root"] + @"\billpay.xlsx";
+
+            //open the excel using openxml sdk  
+            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filepath, true))
             {
-                Visible = false
-            };
+                WorkbookPart wbPart = doc.WorkbookPart;
+                int worksheetcount = doc.WorkbookPart.Workbook.Sheets.Count();
+                Sheet MySheet = (Sheet)doc.WorkbookPart.Workbook.Sheets.ChildElements.GetItem(0);
+                WorksheetPart WorkSheetP = (WorksheetPart)wbPart.GetPartById(MySheet.Id);
+                DocumentFormat.OpenXml.Spreadsheet.Worksheet Worksheet = WorkSheetP.Worksheet;
 
-            MyBook = MyApp.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\billpay.xlsx");
-            MySheet = (Worksheet)MyBook.Sheets[1];
+                int wkschildno = 4;
+                SheetData Rows = (SheetData)Worksheet.ChildElements.GetItem(wkschildno);
 
-            Range last = MySheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
-            int lastRow = last.Row + 1;
+                Row lastRow = Rows.Elements<Row>().LastOrDefault();
+            
+            
 
-            for (int i = 2;i < lastRow;i++)
-            {
-                BillPayRow bpr = new BillPayRow(MySheet, i, "Reoccurring");
-                if (bpr.ActiveAndReady())
+                for (int i = 2;i < Rows.Count();i++)
                 {
-                    CheckWriter cw = new CheckWriter(bpr);
-                    cw.SendCheck();
+                    BillPayRow bpr = new BillPayRow(MySheet, i, "Reoccurring");
+                    if (bpr.ActiveAndReady())
+                    {
+                        CheckWriter cw = new CheckWriter(bpr);
+                        cw.SendCheck();
+                    }
                 }
-            }
 
-            MySheet = (Worksheet)MyBook.Sheets[2];
+                Sheet MySheet2 = (Sheet)doc.WorkbookPart.Workbook.Sheets.ChildElements.GetItem(1);
+                WorksheetPart WorkSheetP2 = (WorksheetPart)wbPart.GetPartById(MySheet2.Id);
+                DocumentFormat.OpenXml.Spreadsheet.Worksheet Worksheet2 = WorkSheetP2.Worksheet;
 
-            Range last2 = MySheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
-            int lastRow2 = last2.Row + 1;
+                SheetData Rows2 = (SheetData)Worksheet.ChildElements.GetItem(wkschildno);
 
-            for (int i = 2; i < lastRow2; i++)
-            {
-                BillPayRow bpr = new BillPayRow(MySheet, i, "Payonce");
-                if (bpr.ActiveAndReady())
+                Row lastRow2 = Rows2.Elements<Row>().LastOrDefault();
+
+                for (int i = 2; i < Rows.Count(); i++)
                 {
-                    CheckWriter cw = new CheckWriter(bpr);
-                    cw.SendCheck();
+                    BillPayRow bpr = new BillPayRow(MySheet, i, "Payonce");
+                    if (bpr.ActiveAndReady())
+                    {
+                        CheckWriter cw = new CheckWriter(bpr);
+                        cw.SendCheck();
+                    }
                 }
             }
 
