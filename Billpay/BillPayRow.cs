@@ -28,7 +28,16 @@ namespace Billpay
         public BillPayRow(WorkbookPart wbp, int row, string type)
         {
             int worksheetcount = wbp.Workbook.Sheets.Count();
-            Sheet mysheet = (Sheet)wbp.Workbook.Sheets.ChildElements.GetItem(2);
+            Sheet mysheet;
+
+            if (type == "Payonce")
+            {
+                mysheet = (Sheet)wbp.Workbook.Sheets.ChildElements.GetItem(1);
+            }
+            else
+            {
+                mysheet = (Sheet)wbp.Workbook.Sheets.ChildElements.GetItem(1);
+            }
             WorksheetPart WorkSheetP = (WorksheetPart)wbp.GetPartById(mysheet.Id);
             DocumentFormat.OpenXml.Spreadsheet.Worksheet Worksheet = WorkSheetP.Worksheet;
 

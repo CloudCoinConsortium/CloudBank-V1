@@ -36,7 +36,7 @@ namespace Billpay
 
                 for (int i = 2;i < Rows.Count();i++)
                 {
-                    BillPayRow bpr = new BillPayRow(MySheet, i, "Reoccurring");
+                    BillPayRow bpr = new BillPayRow(wbPart, i, "Reoccurring");
                     if (bpr.ActiveAndReady())
                     {
                         CheckWriter cw = new CheckWriter(bpr);
@@ -54,7 +54,7 @@ namespace Billpay
 
                 for (int i = 2; i < Rows.Count(); i++)
                 {
-                    BillPayRow bpr = new BillPayRow(MySheet, i, "Payonce");
+                    BillPayRow bpr = new BillPayRow(wbPart, i, "Payonce");
                     if (bpr.ActiveAndReady())
                     {
                         CheckWriter cw = new CheckWriter(bpr);
