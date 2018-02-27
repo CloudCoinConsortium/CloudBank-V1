@@ -30,10 +30,27 @@ namespace Billpay
 
         public async void SendCheck()
         {
+            //HttpClient cli = new HttpClient();
+            //var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("pk", ConfigurationManager.AppSettings["root"]) });
+            //var result = await cli.PostAsync("https://" + ConfigurationManager.AppSettings["BankServerPath"] + "write_check.aspx?action=email&amount=" + Amount + "&emailto=" + SendToEmail + "&payto=" + PayTo + "&from=" + FromEmail + "&signby=" + SignedBy, formContent);
+            //string response = await result.Content.ReadAsStringAsync();
+            //Console.Out.WriteLine(response);
+            //Console.ReadLine();
+
+            var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("pk", "0DECE3AF-43EC-435B-8C39-E2A5D0EA8676") });
+
+
             HttpClient cli = new HttpClient();
-            var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("pk", ConfigurationSettings.AppSettings["root"]) });
-            var result = await cli.PostAsync("https://" + ConfigurationSettings.AppSettings["BankServerPath"] + "/write_check.aspx?action=email&amount=" + Amount + "&emailto=" + SendToEmail + "&payto=" + PayTo + "&from=" + FromEmail + "&signby=" + SignedBy, formContent);
-            string response = await result.Content.ReadAsStringAsync();
+            try
+            {
+                var result_stack = await cli.PostAsync("https://" + ConfigurationManager.AppSettings["BankServerPath"] + "write_check.aspx?action=email&amount=" + Amount + "&emailto=" + SendToEmail + "&payto=" + PayTo + "&from=" + FromEmail + "&signby=" + SignedBy, formContent);
+                var response = await result_stack.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.Out.WriteLine(ex.Message);
+            }
+
         }
 
     }
