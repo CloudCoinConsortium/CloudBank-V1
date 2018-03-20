@@ -9,8 +9,7 @@
 <%@ Import Namespace="System.Security.Cryptography" %>
 
 <%@ Import Namespace="System.Net.Mail" %>
-
-
+<%@ Import Namespace="System.Net.Http" %>
 
 <script language="c#" runat="server">
 
@@ -31,7 +30,7 @@
         public string time;
     }//End Service Response class
 
-    public void Page_Load(object sender, EventArgs e)
+    public async void Page_Load(object sender, EventArgs e)
     {
         string pk = Page.Request.Form["pk"];
         FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + pk + @"\");
@@ -132,7 +131,7 @@
             string memo = CheckParameter("memo");
             string othercontactinfo = CheckParameter("othercontactinfo");
 
-            string link = "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks/" + tag + ".html";
+            string link = "https://" + WebConfigurationManager.AppSettings["thisServerPath"] + @"/checks/" + tag + ".html";
 
             string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
                     + "<a href='" + "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks/" + tag + ".html" + "'>Cash Check Now</a></body></html>";
@@ -140,11 +139,11 @@
             using (StreamWriter sw = File.AppendText(fileUtils.rootFolder + Path.DirectorySeparatorChar + "Checks" + Path.DirectorySeparatorChar + tag + ".html"))
             {
 
-                    sw.WriteLine(CheckHtml);
+                sw.WriteLine(CheckHtml);
 
             }
 
-            if (CheckParameter("type") == "email")
+            if (CheckParameter("action") == "email")
             {
 
                 if (emailto == "")
@@ -168,7 +167,7 @@
 
 
                 //string link = "https://Preston.Cloudcoin.global/checks/" + tag + ".html";
-                
+
 
                 //string CheckHtml = "<html><body><h1>" + signby + "</h1><email>" + fromemail + "</email><h2>PAYTO THE ORDER OF: " + payto + "</h2><h2>AMOUNT: " + amount + " CloudCoins</h2>"
                 //    + "<a href='https://Preston.Cloudcoin.global/checks.aspx?id="+tag+"'>Cash Check Now</a></body></html>";
@@ -184,30 +183,33 @@
                 //add when smtp host exists
                 //cli.SendAsync(message, "CloudBank Check");
 
-                if (WebConfigurationManager.AppSettings["smtpServer"] != "" && WebConfigurationManager.AppSettings["smtpLogin"] != "" && WebConfigurationManager.AppSettings["smtpPassword"] != "")
-                {
-                    MailMessage mail = new MailMessage(fromemail, emailto);
-                    SmtpClient client = new SmtpClient();
-                    client.Port = int.Parse(WebConfigurationManager.AppSettings["smtpPort"]);
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    //client.UseDefaultCredentials = false;
-                    client.Host = WebConfigurationManager.AppSettings["smtpServer"];
-                    client.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["smtpLogin"], WebConfigurationManager.AppSettings["smtpPassword"]);
-                    mail.Subject = "Check for" + amount + " CloudCoins";
-                    mail.Body = link;
-                    client.Send(mail);
-                }
+                //if (WebConfigurationManager.AppSettings["smtpServer"] != "" && WebConfigurationManager.AppSettings["smtpLogin"] != "" && WebConfigurationManager.AppSettings["smtpPassword"] != "")
+                //{
+                //    MailMessage mail = new MailMessage(fromemail, emailto);
+                //    SmtpClient client = new SmtpClient();
+                //    client.Port = int.Parse(WebConfigurationManager.AppSettings["smtpPort"]);
+                //    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //client.UseDefaultCredentials = false;
+                //    client.Host = WebConfigurationManager.AppSettings["smtpServer"];
+                //    client.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["smtpLogin"], WebConfigurationManager.AppSettings["smtpPassword"]);
+                //    mail.Subject = "Check for" + amount + " CloudCoins";
+                //    mail.Body = link;
+                //    client.Send(mail);
+                //}
 
 
-                //update spreadsheet
+                var formContent = new System.Net.Http.FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("email", emailto), new KeyValuePair<string, string>("checkURL", link) });
+                HttpClient cli = new HttpClient();
+                var result_stack = await cli.PostAsync("https://cloudcoinconsortium.com/greenPayEmail.php", formContent);
 
-
-                response.status = "emailed";
-                response.message = "Check sent to " + emailto + " for " + amount + " CloudCoins";
+                response.message = "Check Emailed to " + emailto + " in the amount of " + amount.ToString() + " CloudCoins.";
+                response.status = "Email sent";
             }
+
+
             else
             {
-                response.message = "https://" + WebConfigurationManager.AppSettings["thisServerName"] + @"/checks.aspx?id=" + tag + "&receive=json";
+                response.message = "https://" + WebConfigurationManager.AppSettings["thisServerPath"] + @"/checks.aspx?id=" + tag + "&receive=json";
                 response.status = "url";
             }
             //create check's stack file
