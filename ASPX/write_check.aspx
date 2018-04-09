@@ -32,7 +32,7 @@
 
     public void Page_Load(object sender, EventArgs e)
     {
-        string pk = Page.Request.Form["pk"];
+        string pk = Page.Request["pk"];
         FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + pk + @"\");
 
 
@@ -198,7 +198,8 @@
                 //}
 
                 System.Web.Mail.MailMessage msg = new System.Web.Mail.MailMessage();
-                msg.Body = "Body";
+                msg.Body = "A Cloud Coin Check has been issued to you from " + signby + " in the amount of " + amount.ToString() + " CloudCoins " + " To cash your check and receive your coins click the following link: " + 
+                    "https://" + WebConfigurationManager.AppSettings["thisServerPath"] + @"/checks.aspx?id=" + tag;
 
                 string smtpServer =  WebConfigurationManager.AppSettings["smtpServer"];
                 string userName = WebConfigurationManager.AppSettings["smtpLogin"];
