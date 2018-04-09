@@ -30,7 +30,7 @@
         public string time;
     }//End Service Response class
 
-    public async void Page_Load(object sender, EventArgs e)
+    public void Page_Load(object sender, EventArgs e)
     {
         string pk = Page.Request.Form["pk"];
         FileUtils fileUtils = FileUtils.GetInstance(HttpRuntime.AppDomainAppPath.ToString() + @"\" + pk + @"\");
@@ -197,10 +197,34 @@
                 //    client.Send(mail);
                 //}
 
+                System.Web.Mail.MailMessage msg = new System.Web.Mail.MailMessage();
+                msg.Body = "Body";
 
-                var formContent = new System.Net.Http.FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("email", emailto), new KeyValuePair<string, string>("checkURL", link) });
-                HttpClient cli = new HttpClient();
-                var result_stack = await cli.PostAsync("https://cloudcoinconsortium.com/greenPayEmail.php", formContent);
+                string smtpServer =  WebConfigurationManager.AppSettings["smtpServer"];
+                string userName = WebConfigurationManager.AppSettings["smtpLogin"];
+                string password = WebConfigurationManager.AppSettings["smtpPassword"];
+                int cdoBasic = 1;
+                int cdoSendUsingPort = 2;
+                if (userName.Length > 0)
+                {
+                    msg.Fields.Add("http://schemas.microsoft.com/cdo/configuration/smtpserver", smtpServer);
+                    msg.Fields.Add("http://schemas.microsoft.com/cdo/configuration/smtpserverport", int.Parse(WebConfigurationManager.AppSettings["smtpPort"]));
+                    msg.Fields.Add("http://schemas.microsoft.com/cdo/configuration/sendusing", cdoSendUsingPort);
+                    msg.Fields.Add("http://schemas.microsoft.com/cdo/configuration/smtpauthenticate", cdoBasic);
+                    msg.Fields.Add("http://schemas.microsoft.com/cdo/configuration/sendusername", userName);
+                    msg.Fields.Add("http://schemas.microsoft.com/cdo/configuration/sendpassword", password);
+                }
+                msg.To = emailto;
+                msg.From = fromemail;
+                msg.Subject = "Check for" + amount + " CloudCoins";
+                msg.BodyEncoding = System.Text.Encoding.UTF8;
+                System.Web.Mail.SmtpMail.SmtpServer = smtpServer;
+                System.Web.Mail.SmtpMail.Send(msg);
+
+
+                //var formContent = new System.Net.Http.FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("email", emailto), new KeyValuePair<string, string>("checkURL", link) });
+                //HttpClient cli = new HttpClient();
+                //var result_stack = await cli.PostAsync("https://cloudcoinconsortium.com/greenPayEmail.php", formContent);
 
                 response.message = "Check Emailed to " + emailto + " in the amount of " + amount.ToString() + " CloudCoins.";
                 response.status = "Email sent";
