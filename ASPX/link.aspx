@@ -238,11 +238,11 @@
 
 
         HttpClient Cli = new HttpClient();
-       
-        
+
+        System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
         var r = Cli.GetAsync("https://raida0.CloudCoin.global/service/get_ticket?nn=" + "1" + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + RequestedDenomination).Result;
         string getResponse = await r.Content.ReadAsStringAsync();
-        
+
 
         TicketServiceResponse tsr = JsonConvert.DeserializeObject<TicketServiceResponse>(getResponse);
 
@@ -255,13 +255,15 @@
             Response.End();
         }
 
-        var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("nn", "1"),
-                                                            new KeyValuePair<string, string>("sn", sn),
-                                                            new KeyValuePair<string, string>("c_id",CollectibleID),
-                                                            new KeyValuePair<string, string>("password", RAIDAPassword),
-                                                            new KeyValuePair<string, string>("message1", tsr.message)});
+        //var formContent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("nn", "1"),
+            //                                                new KeyValuePair<string, string>("sn", sn),
+            //                                                new KeyValuePair<string, string>("c_id",CollectibleID),
+            //                                                new KeyValuePair<string, string>("password", RAIDAPassword),
+            //                                                new KeyValuePair<string, string>("message1", tsr.message),
+            //                                                new KeyValuePair<string, string>("fromserver1", "0")});
 
-        var pr = Cli.PostAsync("https://raida.tech/link_template.php", formContent).Result;
+        //var pr = Cli.PostAsync("https://raida.tech/link_template.php", formContent).Result;
+        var pr = Cli.GetAsync("https://raida.tech/link_template.php?nn=" + "1" + "&sn=" + sn + "&c_id=" + CollectibleID + "&password=" + RAIDAPassword + "&message1=" + tsr.message + "&fromserver1=0").Result;
         string postResponse = await pr.Content.ReadAsStringAsync();
 
         LinkServicesResponse lsr = JsonConvert.DeserializeObject<LinkServicesResponse>(postResponse);
