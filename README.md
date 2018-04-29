@@ -448,6 +448,80 @@ Sample Response if fail:
 }
 ```
 
+## Place Order With Green.money ACH
+
+This allows an order to be placed using the Green.money ACH payment system. Note that you will need an account with Green.money. You will need a web form that posts specific into and a default Green Pay button. 
+
+Sample POST Request:
+
+```
+https://bank.cloudcoin.global/service/place_order_with_green_money?
+GreenButton_id=11087
+Amount=11.43
+ItemName=Cloud Ed Pack se
+TransactionID=2018.3.28.23.20.b0b7dc
+Affiliate=Bill Jenkins
+
+```
+
+Sample Response if good:
+```
+{
+ "exchange_server":"bank.cloudcoin.global",
+ "status":"success",
+ "message":"Green Payment Accepted. Check the URL to collect your CloudCoins",
+ "green_pay_status_url":"https://bank.cloudcoin.global/service/green_pay_status?id=2018.3.28.23.20.b0b7dc",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+Sample Response if fail:
+NOTE: The programmer should add the error that caused the fail instead of the "Error detail here" text. 
+```
+{
+ "exchange_server":"bank.cloudcoin.global",
+ "status":"fail",
+ "message":"Invalid Request - Error detail here.",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+## Green Pay Status
+Allows the user to get a check from the CloudBank if the Green Pay status is paid. The user can click on this over and over until they get a check
+
+
+Sample POST Request:
+
+```
+https://bank.cloudcoin.global/service/green_pay_status?id=2018.3.28.23.20.b0b7dc
+
+```
+
+Sample Response if good: 
+NOTE: This is the same response as the Write Check service.
+
+```
+{
+ "bank_server":"bank.cloudcoin.global",
+ "status":"url",
+ "message":"https://bank.CloudCoin.Global/checks?id=c3c3ab7b75ab4d089d2d4a287c1ef232",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+
+Sample Response if fail:
+NOTE: The programmer should add the exact reason the customer was not able to recieve a check
+```
+{
+ "exchange_server":"bank.cloudcoin.global",
+ "status":"fail",
+ "message":"Your Check has not cleared yet. Please try this URL later.",
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+
 
 # BILL PAY SERVICE
 
