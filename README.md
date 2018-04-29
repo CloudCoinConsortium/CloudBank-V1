@@ -4,7 +4,16 @@ This Software is provided as is with all faults, defects
 and errors, and without warranty of any kind.
 Free from the CloudCoin Consortium.
                                                  
+CloudBank offers many services:
 
+1. Banking Services
+2. Exchange Services
+3. Bill Pay
+4. Application Support
+
+
+
+# Banking Services
 The purpose is to allow software to pown coins. 
 Some examples of use:
 
@@ -24,7 +33,7 @@ Note that this fist phaze service uses file-based storage and not a database.
 
 
 
-Many ervices are available:
+Many services are available:
 1. Print Welcome
 2. Echo
 3. Show Coins
@@ -64,7 +73,7 @@ The CloudBank requires a key and will be in the following format
 ```
 
 
-# Services
+ Services
 ------------------------
 
 
@@ -385,7 +394,62 @@ Sample Response if fail:
 }
 ```
 
-## BILL PAY SERVICE
+# Exchange Services
+
+These services allow you to exchange your CloudCoins for other money or even goods and services. Exchange services include:
+
+* Show Coins For Sale
+* Place Order using Green.money ach
+* Check Green Money order
+* Place order using PayPal and Fulfill
+* Place order using Stripe and Fulfill
+* Fulfil Order with custom text
+* Advertsie on Exchange
+
+
+
+
+
+
+## Show Coins For Sale
+Gets the totals of CloudCoins in the bank.The price in different currencies, the payment methods that are accepted.
+
+Sample GET Request:
+
+```
+https://bank.cloudcoin.global/service/show_coins_for_sale
+
+```
+
+Sample Response if good:
+```
+{
+ "exchange_server":"bank.cloudcoin.global",
+ "status":"coins_for_sale",
+ "currencies":["dollars","bitcoin"],
+ "prices":[.03,.0098],
+ "methods":["green.money","stripe","paypal"]
+ "ones":205,
+ "fives":10,
+ "twentyfives":105,
+ "hundreds":1050,
+ "twohundredfifties":98,
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+Sample Response if fail:
+```
+{
+ "exchange_server":"bank.cloudcoin.global",
+ "status":"fail",
+ "message":"No coins for sale"
+ "time":"2016-49-21 7:49:PM"
+}
+```
+
+
+# BILL PAY SERVICE
 
 This is a task that is called every day. The program checks the Excel spreadsheet to see if bills need to be paid.The Excell spread sheet is a standardized spreadsheet.
 
