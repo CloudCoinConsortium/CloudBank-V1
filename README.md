@@ -820,19 +820,101 @@ NOTE: This standard is bad and not finished. We must create a way for them to up
  
 *CHANGE_MAKER REQUEST STRING*
 
-https://cloudcoin.global/bank/make_change?nn=1sn=88772322&method=100D
+
+https://bank.cloudcoin.global/service/make_change?
+method=100D
+stack=
+{
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"1112240", 
+		"an": ["f5a52ee881daaae548c24a8eaff7176c", "415c2375a6fa48c4661f5af8d7c95541", "73e067b7b47c1556deebdca33f9a09fb", "9b90d265d102a565a702813fa2211f54", "e3e191ca987c8010a3adc49c6fc18417",
+			"baa7578e207b7cfaa0b8336d7ed4a4f8", "6d8a5c66a589532fe9e5dc3932650cfa", "1170b354e097f2d90132869631409bd3", "b7bc83e8ee7529ff9f874866b901cf15", "a37f6c4af8fbcfbc4d77880fc29ddfbc",
+			"277668208e9bafd9393aebd36945a2c3", "ef50088c8218afe53ce2ecd655c2c786", "b7bbb01fbe6c3a830a17bd9a842b46c0", "737360e18596d74d784f563ca729aaea", "e054a34f2790fd3353ea26e5d92d9d2f",
+			"7051afef36dc388e65e982bc853be417", "ea22cbae0394f6c6918691f2e2f2e267", "95d1278f54b5daca5898c62f267b6364", "b98560e11b7142d1addf5b9cf32898da", "e325f615f93ed682c7aadf6b2d77c17a",
+			"3e8f9d74290fe31d416b90db3a0d2ab1", "c92d1656ded0a4f68e5171c8331e0aea", "7a9cee66544934965bca0c0cb582ba73", "7a55437fa98c1b10d7f47d84f9accdf0", "c3577cced2d428f205355522bc1119b6"],
+		"ed":"7-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+}
+
 
 if good:
 
 *CHANGE_MAKER RESPONSE STRING*
 ```javascript
 {
-	"server": "www.myBank.com",
-	"status": "success",
-	"nn":["1","1","1"],
-	"sn":["5111558","9665542","1569855"],
-	"message": "CloudCoin note was broken into smaller units.",
-	"time": "2016-40-21 10:40:PM"
+	"cloudcoin": 
+	[
+		{ 
+		"nn":"1", 
+		"sn":"1373099", 
+		"an": ["c24010825f39c279596743a857fe11ca", "56531ce8de5fde250befd2739708e283", "a5960366fcd76396dffd95841922dc67", "4c7cacfee1fdad425e61eb3b82b8e3ae", "e1109e47ede4f0c0d6072ff94dede9fe",
+			"ba54a6228b01c1b6ced4737439ab7928", "ff81207f096946d3f1068cd8e00035a5", "8960c63234da374b9eeccdc93c6335cd", "d7c0171807a1b430ebd1b8ea6fa002de", "78c4244ba2506a74ac08a5e18791db23",
+			"159e963d210a457f43e108ae029f723b", "63032ed515bfdcc6ca9c3add62cb6024", "1ee4eae111f2b822eff492ba32af6048", "9cb6ed1da3db7ea296da40fa59825763", "79daa7da1a2c934e00816dcf9dec32a7",
+			"920010c6b5490d0a46105c7a88af7e45", "dfed96dd6bfdf66f8d022b011d6e3607", "d4339f821c9b5aae9374225f6a825d0f", "6584be529ac36f399a608c1d3753a885", "7e579263a36d5b77ed07be48a07f7abc",
+			"13877c03fad969896b7915cfc85a86dd", "4bbe4db9f557832368d2405b8d8e67a0", "12f0116251be8c261259f1ff4eec257e", "188c5bd2a01f3bad73978f904038c8f3", "50cd028d714a8b4cab9b30fa6e97a502"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+,
+		{ 
+		"nn":"1", 
+		"sn":"1373100", 
+		"an": ["547907111f717da1b0c6069ce1fd4041", "e760ab538476344a29ba27cc345a2b3f", "ca2343891a20d05b35bf6d706b60b1ca", "8697127a6f2635e58da9051384d3cce5", "db24d970f26df109efa77f86a2a1fc91",
+			"40ca4a165e3547fbff456d252534e4e5", "1dcdf80eacffc2059b5e6d9847c16245", "c53a4db06024b5369b56ba7d8574f0f9", "d3d31338158b2680cff747ca4a6ab360", "733214c079648dcc6e117a4f34b63167",
+			"b89473121a4b1becfc1b7e9613920305", "8f1db113fed1501c05ae504d02a94703", "f9ae3005bb692b54d02f22598e98a228", "f371acef262599d243f9d1c507b2cc14", "539e499edd226942712b36be26b8bf3d",
+			"d1f396e09194d5b4b5e9b6bb6e80d75a", "22f532f4ef54cbc569e4182b9de433f1", "295979d1680b41f86003e462e810112d", "b57fc449acec879482d2add0e1e9076b", "3fa566f4581239d99b8be80f242f33aa",
+			"a7f6b60533bc5be9864aac8dd7d4ac9a", "22c37a78a7bcfb362e23d1243e126b8a", "35880ee199bf9c3f34daef52ba49c3f0", "70001f929717a3aea13b775fed3b9dfa", "bbf600f0e2eccabfe13a0779888c97c6"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+,
+		{ 
+		"nn":"1", 
+		"sn":"1373101", 
+		"an": ["629f05f6d54b3b63ed0e9dd28f725735", "1ccf6ab3283a44ada4f6f1c562314e9c", "aabd78818f6eabe812529119d22c0150", "67575dcb350f228115f071d93ef34f44", "d0e75ab70387b5f9190ad2fcb4b9201e",
+			"4740f6a6aff8376202c119e3bd9abb9b", "e2fa9e4fe4384c58bed9fe2be94eab43", "e8c5c364bc6e7962892352dab2cb59dc", "fa248a74ccd58078178a9d81915e4d61", "a117bc357d521b59e1518ff642ef6c8a",
+			"877f86a4ac3c477dc47cd15c5ed6f890", "65e69d5eb8cbe4ec1b44f9081ffb2e9c", "09d6d01bbcae34588103deacb0e3cd4e", "6eaf4904cbcebace6655b04d5e8c7510", "70a78fb2121baad1adab7110ab90a603",
+			"7ab99a31ba7dd1b90e5b62dafb58b0fb", "095ae42f6f529a3b24b287f2e7603aba", "ef1fef9c44b8527f731480b8ff4242de", "6da51c02df0b4799b2902925b06273a3", "f80b13f8956d775880e4adc41ba6c0b9",
+			"f65d63c5147338932db00c3d06ba6710", "7775bbb934f5b4d76163c95aca4e9b8d", "ab9881583a1e8d5fd7cd701e089b9201", "2a05a81165c04829cac11cb9331fc289", "65dcddd78a8566208dbb2ce386b5629a"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+,
+		{ 
+		"nn":"1", 
+		"sn":"1373102", 
+		"an": ["d38cfc99716fe74e8ac55b5baabde67a", "37efb9c2cea8fae0c83f1d556cabf10c", "248776d1e9e1f6d9fdf8a1d748baaf68", "b76342abbbc28673b3de3a4506c4aaa1", "2b43f87c9b1a94c5e5d6917f489a37ef",
+			"8e4fb64562a067a81d9dbb21c7111822", "f2a76ab1d51bf9716c09be39aef92d25", "fb96fe546ab1731c111d03a1a0c6612c", "451ee5cfb1a29183e3ba8d203813229c", "0388cf348dcae17347ecd7f035a1a2a8",
+			"73113babe70369ce8bc2d17e2c919045", "6d823990f4131478105ad97d0810e7d2", "7f2969c5a62e68d20ed8f4625ed64ee0", "edfb4c1d960721b1ed5daeadbe71dd49", "15b652fbc7dba0a7936aaa2a5d19abe4",
+			"305eddcf75ea5baaea41cd92765e24a3", "29b4c604435f6d2e49f9f4a52b03d23e", "b904d664b1b1836d571ac9502c99de69", "da483c78247b9e360fcf7c617cab39b7", "3060849eca4c2b8a7a596c76ea590238",
+			"b60da375b030609631c778572e6d4ffc", "b1db6e2a1fb1abc38584160c995a50b0", "c8bc597964034d76b7f298a02d4f14fe", "2ec7596c382ecd693fa595ed371b8921", "e41b286504c76d6f8d9179a818a568c6"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+,
+		{ 
+		"nn":"1", 
+		"sn":"1373103", 
+		"an": ["d513fff400c24a3c9cb54aa75b1e4097", "47d8bff528f036b5484d8e3338024c32", "e8c2991b2fd4390a5366decd8eb1e50a", "3736613d473e797650b944adad4c8ecf", "ba07b460088ad282eb981b9059b8b488",
+			"a4bc03bb2120bb6550bf17722583d101", "9bdcfe9181f05120d36d1e5829aed61d", "ccdb59e0dcfdd63a3f2ab124ba19388b", "bc774f62625a38cf6f629a9953fd886e", "fd2b87d841536cec85cb1b3ee490f76b",
+			"c4dde8714b297df584ff1cb57bdd6063", "4b728d06c44438f6fc05596dd34a8cbc", "c635e4b698f2160a95fbd19148c4499f", "571b753f8f3a5686fc8cb9f76f02bdba", "2c2e1f1cf33d90b2ffa29398898dd81a",
+			"7a9c8c09e671c44ae584a6152ad1c228", "2ab9416ce8ecd604d82283efe57b1bfe", "dea9bd54249b9aac37aaae11f5461a78", "323693b8b72f7b13a9454ff5f712e22b", "b9ba65c66cede3ca34846cba6ab475fb",
+			"b96f00ecc33cb4082a54b3722e0a3759", "17a1da5874e69e1cc9be6cd59e80b3f3", "c1c402488b8b8d9f3047ee083fb3fa6a", "56d2cf33b824d723888af8a9362244b2", "1d83a153dd5c2055fe9564410a9de088"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+	] 
 }
 ```
 if bad:
@@ -840,9 +922,9 @@ if bad:
 {
 	"server": "www.myBank.com",
 	"status": "fail",
-	"nn":["1","1","1"],
-	"sn":["5111558","9665542","1569855"],
-	"message": "CloudCoin note was broken into smaller units.",
+	"nn":"1",
+	"sn":"5111558",
+	"message": "CloudCoin note was not broken into smaller units. Coin was counterfeit",
 	"time": "2016-40-21 10:40:PM"
 }
 
