@@ -820,7 +820,7 @@ NOTE: This standard is bad and not finished. We must create a way for them to up
  
 *CHANGE_MAKER REQUEST STRING*
 
-
+```javascript
 https://bank.cloudcoin.global/service/make_change?
 method=100D
 stack=
@@ -841,7 +841,7 @@ stack=
 
 	]
 }
-
+```
 
 if good:
 
