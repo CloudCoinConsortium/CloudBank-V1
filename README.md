@@ -1026,9 +1026,11 @@ iso8601: This is the time in Coordinated Universal Time (UTC). The "T" seperates
 https://www.w3schools.com/TAgs/ref_language_codes.asp
 
 
-Data Sent to Trusted Transfer Over Websockets:
 
-Trusted Transfer with Change Service
+
+# Trusted Transfer with Change Service
+
+Unlike most services, data is Sent to Trusted Transfer Over Websockets.
 
 Trusted transfer is designed to be a connection-orientated way to send CloudCoins from receiver to sender and allowing a trusted third-party server to authenticate the coins in between. 
 
