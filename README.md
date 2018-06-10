@@ -959,6 +959,363 @@ Denomination 250
 + Method 250D: 100D,100D,25D,25D (Max)
 
 
+# Shared secret Service:
+
+Shared secret service allows an application to generate a secret that can be shared amount senders and receivers. This just saves the user from having to think about it. It also allows the application to make a suggestion. 
+
+Sample Requests: 
+```html
+https://raida.tech/service/get_shared?type=string&complexity=1&lang=en-us
+https://raida.tech/service/get_shared?type=string&complexity=2&lang=ru
+https://raida.tech/service/get_shared?type=number&complexity=4
+https://raida.tech/service/get_shared?type=string&complexity=20&lang=en-uk
+https://raida.tech/service/get_shared?type=guid&complexity=3
+
+```
+GET Variables supplied:
+
+type 
+
+The data type. Either String, number or guid (more may be added later)
+Strings are picked from lists of words, Numbers and guids are generated randomly. 
+
+Complexity
+
+For strings, this is the grade level of the word. K-12 or up to all words (20)
+For numbers this is the number of numberals to be included. 4 will return a number like 3984. 6 will return a number like 381092
+For Guids, this will return hexadecimal numbers up to the amount. 3 will return a number like: 4A7. 5 will return a number like 8FF24. Note that GUIDs are not case sensitive. 
+
+lang 
+
+Used only for strings. Can be any language using a two character code using the HTML ISO Country codes. First two are language and second two are country seperated by a hyphen. 
+
+Sample Response if successful:
+```javascript
+{
+"secret":"ball",
+"iso8601":"2018-06-09T14:45:15Z"
+}
+
+{
+"secret":"splendour",
+"iso8601":"2018-06-09T14:45:15Z"
+}
+
+{
+"secret":"4562",
+"iso8601":"2018-06-09T14:45:15Z"
+}
+
+{
+"secret":"сказать",
+"iso8601":"2007-03-01T13:00:00Z"
+}
+
+{
+"secret":"4AF",
+"iso8601":"2018-06-09T14:45:15Z"
+}
+```
+Secret
+
+This will always be returned as a string. You may need to convert it to a number, or hex if that is what you want.
+
+iso8601: This is the time in Coordinated Universal Time (UTC). The "T" seperates the date from the time. The "Z" is always at the end to show that it is universal. Z is the time designator for zero also called   (zulu). 
+
+
+https://www.w3schools.com/TAgs/ref_language_codes.asp
+
+
+Data Sent to Trusted Transfer Over Websockets:
+
+Trusted Transfer with Change Service
+
+Trusted transfer is designed to be a connection-orientated way to send CloudCoins from receiver to sender and allowing a trusted third-party server to authenticate the coins in between. 
+
+Internal modes of operation
+
+The transfer can operate under four modes:
+
+1. Both parties Anonymous. No one is logged in. (N) N for No trust. (Shared secret must be generated)
+2. Sender is logged into server, receiver not trusted by Sender. (S) (Receiver can send a request for payment to the sender) 
+3. Receiver logged in, Sender not trusted by Reciever.  (R) (Receiver gives sender the public address)
+4. Both parties logged in.  (B) (Receiver can send request for payment with address of sender. No shared secret required because sender can send to public address)
+
+The sender and receiver will need a  
+
+```javascript
+{
+	"shared_secret":"magic",
+	"trust_model":"n",
+	"amount": 138,
+	"payto":"Billy Jenkins",
+	"sentby"="Sean Worthington",
+	"fromaccountid":"c3c3ab7b75ab4d089d2d4a287c1ef232",
+	"toaccountid":"daa1d6676f0ad818589138b6709cefae",
+	"Memo"="For Yard Work",
+	"iso8601":"2018-06-09T14:45:15Z",
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"14865168", 
+		"an": ["39c054098b135bc31c1fc77c0f8b76bc", "6f3709e7533f9290a370ea53d57d1859", "e308b7bf5f12cb75b5f5bca7e5d2f5c4", "983b364ea602bd2be483664d0a83ba64", "ed510ce2b93980cf701a9514be5403da",
+			"00e36769f732be5304c09c560b751d30", "f0479dd7e21248c976ac5bdfe489ae4f", "020d3f0a72647f021bbde13c0aeff55c", "054d806b15ea0c002fc07b2d019b9ab6", "4823f53b50b44c52cfba5dafb81db1fb",
+			"cbe1bdf6971f78d333f828d593adae07", "007ee6f4e390b4551d2bc4bff3358c80", "43d091959de81a73edec5eb897095a16", "396f9f072689357254a91f0c17fd8f45", "ff46b0ed3ca3bb9679214164e035efe6",
+			"86283df34c4d46ca8b16c456c63f2739", "278aa3025d9c464e99f718cadf3ce3a2", "f05618fe527b0eedc31547361cd0fdbb", "7ff63a99ff813d370dac6742b71342f8", "592ce3e049f651f2763d9b85b95c8a23",
+			"5c1759904c63aceaf3b4023d494885f4", "264bf535577be1116bd14a7dce5dc3ea", "605ece6240c8892b638ecf50804e368f", "af718e6748598d321cbd276646b1b797", "3909c57b173f545566df124a22789294"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppepppppp",
+		"aoid": []
+		},
+		{ 
+		"nn":"1", 
+		"sn":"12787478", 
+		"an": ["818042c3595aa6f43c3dfe0242c378d7", "968fbd69c68fb07e663bdf8fcd56fef0", "8a9801667a8f5dce2c04800579c7e374", "4a0a60268c590378652435952c69cd86", "cb060d07e0bb6b249b78235b202ac742",
+			"da2821f57dd59b779b851723c7e3495e", "daa1d6676f0ad818589138b6709cefae", "57e7a0b946c98879a0bc20a3d7f5db8e", "c3a9599496ed2ccfeecc21f2e12dd259", "7093c88e8c0a8a986a7a575e00933218",
+			"5db00d5dbb5a1d6f2abc3bcf67e01515", "f0595cd3b62df316d70a17cf3cd96f1b", "bcc497a38df7574a31c48117668bb7f6", "de8c189bab949c9f0d7e77f4c0d090c6", "f5637e15e4a35dfc15d2462155a37dda",
+			"1697658f59a6d6cd26d19b2a65897e4b", "a2265d79d3499012d1848d807c0a9ed3", "14e300371b7123bbe9400f65930c8806", "65f08b3b571b74685158840e768f7f40", "81c2c15923d0608b02742c37060a1f74",
+			"18ac8cf467e483ff84ac76cd18f99a29", "d2d5abb8d03749a97d4eb19dbbbd2394", "5cf6112588aff427a95cb8ff9286b635", "ccbefaf705d223eb610eb6f59a7b9c8d", "1ed42144c91178330fc17fa0858609c3"],
+		"ed":"11-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+}	  
+```
+Message sent from Trusted Transfer Service to Receiver over websockets
+
+If Authentication is good. Note that the only difference is an added "status"
+
+```javascript
+{
+	"shared_secret":"magic",
+	"status":"good",
+	"trust_model":"n",
+	"amount": 138,
+	"payto":"Billy Jenkins",
+	"sentby"="Sean Worthington",
+	"fromaccountid":"c3c3ab7b75ab4d089d2d4a287c1ef232",
+	"toaccountid":"daa1d6676f0ad818589138b6709cefae",
+	"Memo"="For Yard Work",
+	"iso8601":"2018-06-09T14:45:15Z",
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"14865168", 
+		"an": ["39c054098b135bc31c1fc77c0f8b76bc", "6f3709e7533f9290a370ea53d57d1859", "e308b7bf5f12cb75b5f5bca7e5d2f5c4", "983b364ea602bd2be483664d0a83ba64", "ed510ce2b93980cf701a9514be5403da",
+			"00e36769f732be5304c09c560b751d30", "f0479dd7e21248c976ac5bdfe489ae4f", "020d3f0a72647f021bbde13c0aeff55c", "054d806b15ea0c002fc07b2d019b9ab6", "4823f53b50b44c52cfba5dafb81db1fb",
+			"cbe1bdf6971f78d333f828d593adae07", "007ee6f4e390b4551d2bc4bff3358c80", "43d091959de81a73edec5eb897095a16", "396f9f072689357254a91f0c17fd8f45", "ff46b0ed3ca3bb9679214164e035efe6",
+			"86283df34c4d46ca8b16c456c63f2739", "278aa3025d9c464e99f718cadf3ce3a2", "f05618fe527b0eedc31547361cd0fdbb", "7ff63a99ff813d370dac6742b71342f8", "592ce3e049f651f2763d9b85b95c8a23",
+			"5c1759904c63aceaf3b4023d494885f4", "264bf535577be1116bd14a7dce5dc3ea", "605ece6240c8892b638ecf50804e368f", "af718e6748598d321cbd276646b1b797", "3909c57b173f545566df124a22789294"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppepppppp",
+		"aoid": []
+		},
+		{ 
+		"nn":"1", 
+		"sn":"12787478", 
+		"an": ["818042c3595aa6f43c3dfe0242c378d7", "968fbd69c68fb07e663bdf8fcd56fef0", "8a9801667a8f5dce2c04800579c7e374", "4a0a60268c590378652435952c69cd86", "cb060d07e0bb6b249b78235b202ac742",
+			"da2821f57dd59b779b851723c7e3495e", "daa1d6676f0ad818589138b6709cefae", "57e7a0b946c98879a0bc20a3d7f5db8e", "c3a9599496ed2ccfeecc21f2e12dd259", "7093c88e8c0a8a986a7a575e00933218",
+			"5db00d5dbb5a1d6f2abc3bcf67e01515", "f0595cd3b62df316d70a17cf3cd96f1b", "bcc497a38df7574a31c48117668bb7f6", "de8c189bab949c9f0d7e77f4c0d090c6", "f5637e15e4a35dfc15d2462155a37dda",
+			"1697658f59a6d6cd26d19b2a65897e4b", "a2265d79d3499012d1848d807c0a9ed3", "14e300371b7123bbe9400f65930c8806", "65f08b3b571b74685158840e768f7f40", "81c2c15923d0608b02742c37060a1f74",
+			"18ac8cf467e483ff84ac76cd18f99a29", "d2d5abb8d03749a97d4eb19dbbbd2394", "5cf6112588aff427a95cb8ff9286b635", "ccbefaf705d223eb610eb6f59a7b9c8d", "1ed42144c91178330fc17fa0858609c3"],
+		"ed":"11-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+}	 
+```
+if counterfeit coins were sent or some other problem:
+
+```javascript
+{
+	"shared_secret":"magic",
+	"status":"fail",
+	"trust_model":"n",
+	"amount": 138,
+	"payto":"Billy Jenkins",
+	"sentby"="Sean Worthington",
+	"fromaccountid":"c3c3ab7b75ab4d089d2d4a287c1ef232",
+	"toaccountid":"daa1d6676f0ad818589138b6709cefae",
+	"Memo"="For Yard Work",
+	"iso8601":"2018-06-09T14:45:15Z",
+	"cloudcoin": []
+}	 
+```
+
+Message sent sender if the payment was sent successfully. Note that an array of CloudCoins may be attached assuming there is change due to the sender.
+
+```javascript
+{
+	"receipt_id": "e054a34f2790fd3353ea26e5d92d9d2f",
+	"shared_secret":"magic",
+	"status":"success",
+	"trust_model":"n",
+	"amount": 138,
+	"payto":"Billy Jenkins",
+	"sentby"="Sean Worthington",
+	"fromaccountid":"c3c3ab7b75ab4d089d2d4a287c1ef232",
+	"toaccountid":"daa1d6676f0ad818589138b6709cefae",
+	"Memo"="For Yard Work",
+	"iso8601":"2018-06-09T14:45:15Z",
+	"bank_server": "bank.CloudCoin.Global",
+	"total_authentic": 5,
+	"total_fracked": 7,
+	"total_counterfeit": 1,
+	"total_lost": 0,
+	"receipt_detail": [{
+			"nn.sn": "1.16777216",
+			"status": "authentic",
+			"pown": "ppppppppepppppppppppeppp",
+			"note": "Moved to Bank"
+		},
+		{
+			"nn.sn": "1:1425632",
+			"status": "counterfeit",
+			"pown": "fffffffffpfffffffffffffff",
+			"note": "Sent to trash"
+		},
+		{
+			"nn.sn": "1.956258",
+			"status": "authentic",
+			"pown": "ppppppppppppppppppppppppf",
+			"note": "Moved to Fracked"
+		},
+		{
+			"nn.sn": "1.15666214",
+			"status": "lost",
+			"pown": "pfpfpfpfpfpfpfpfpfpfpfpfp",
+			"note": "Moved to Lost"
+		},
+		{
+			"nn.sn": "1.15265894",
+			"status": "lost",
+			"pown": "ppppffpeepfpppfpfffpfffpf",
+			"note": "STRINGS ATTACHED!"
+		}
+
+	]
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"14865168", 
+		"an": ["39c054098b135bc31c1fc77c0f8b76bc", "6f3709e7533f9290a370ea53d57d1859", "e308b7bf5f12cb75b5f5bca7e5d2f5c4", "983b364ea602bd2be483664d0a83ba64", "ed510ce2b93980cf701a9514be5403da",
+			"00e36769f732be5304c09c560b751d30", "f0479dd7e21248c976ac5bdfe489ae4f", "020d3f0a72647f021bbde13c0aeff55c", "054d806b15ea0c002fc07b2d019b9ab6", "4823f53b50b44c52cfba5dafb81db1fb",
+			"cbe1bdf6971f78d333f828d593adae07", "007ee6f4e390b4551d2bc4bff3358c80", "43d091959de81a73edec5eb897095a16", "396f9f072689357254a91f0c17fd8f45", "ff46b0ed3ca3bb9679214164e035efe6",
+			"86283df34c4d46ca8b16c456c63f2739", "278aa3025d9c464e99f718cadf3ce3a2", "f05618fe527b0eedc31547361cd0fdbb", "7ff63a99ff813d370dac6742b71342f8", "592ce3e049f651f2763d9b85b95c8a23",
+			"5c1759904c63aceaf3b4023d494885f4", "264bf535577be1116bd14a7dce5dc3ea", "605ece6240c8892b638ecf50804e368f", "af718e6748598d321cbd276646b1b797", "3909c57b173f545566df124a22789294"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppepppppp",
+		"aoid": []
+		},
+		{ 
+		"nn":"1", 
+		"sn":"12787478", 
+		"an": ["818042c3595aa6f43c3dfe0242c378d7", "968fbd69c68fb07e663bdf8fcd56fef0", "8a9801667a8f5dce2c04800579c7e374", "4a0a60268c590378652435952c69cd86", "cb060d07e0bb6b249b78235b202ac742",
+			"da2821f57dd59b779b851723c7e3495e", "daa1d6676f0ad818589138b6709cefae", "57e7a0b946c98879a0bc20a3d7f5db8e", "c3a9599496ed2ccfeecc21f2e12dd259", "7093c88e8c0a8a986a7a575e00933218",
+			"5db00d5dbb5a1d6f2abc3bcf67e01515", "f0595cd3b62df316d70a17cf3cd96f1b", "bcc497a38df7574a31c48117668bb7f6", "de8c189bab949c9f0d7e77f4c0d090c6", "f5637e15e4a35dfc15d2462155a37dda",
+			"1697658f59a6d6cd26d19b2a65897e4b", "a2265d79d3499012d1848d807c0a9ed3", "14e300371b7123bbe9400f65930c8806", "65f08b3b571b74685158840e768f7f40", "81c2c15923d0608b02742c37060a1f74",
+			"18ac8cf467e483ff84ac76cd18f99a29", "d2d5abb8d03749a97d4eb19dbbbd2394", "5cf6112588aff427a95cb8ff9286b635", "ccbefaf705d223eb610eb6f59a7b9c8d", "1ed42144c91178330fc17fa0858609c3"],
+		"ed":"11-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+
+}
+```
+
+If the payment failed because of:
+1. Not enough authentic CloudCoins were included.
+2. Not enough RAIDA were contacted to complete the transaction
+3. Receiver did not connect or lost contact. 
+Note that there still may be some change or CloudCoins that were not sent to the receiver being returned. 
+
+```javascript
+{
+	"receipt_id": "e054a34f2790fd3353ea26e5d92d9d2f",
+	"shared_secret":"magic",
+	"status":"fail",
+	"message":"Not enough authentic CloudCoins were included.",
+	"trust_model":"n",
+	"amount": 138,
+	"payto":"Billy Jenkins",
+	"sentby"="Sean Worthington",
+	"fromaccountid":"c3c3ab7b75ab4d089d2d4a287c1ef232",
+	"toaccountid":"daa1d6676f0ad818589138b6709cefae",
+	"Memo"="For Yard Work",
+	"iso8601":"2018-06-09T14:45:15Z",
+	"bank_server": "bank.CloudCoin.Global",
+	"total_authentic": 5,
+	"total_fracked": 7,
+	"total_counterfeit": 1,
+	"total_lost": 0,
+	"receipt_detail": [{
+			"nn.sn": "1.16777216",
+			"status": "authentic",
+			"pown": "ppppppppepppppppppppeppp",
+			"note": "Moved to Bank"
+		},
+		{
+			"nn.sn": "1:1425632",
+			"status": "counterfeit",
+			"pown": "fffffffffpfffffffffffffff",
+			"note": "Sent to trash"
+		},
+		{
+			"nn.sn": "1.956258",
+			"status": "authentic",
+			"pown": "ppppppppppppppppppppppppf",
+			"note": "Moved to Fracked"
+		},
+		{
+			"nn.sn": "1.15666214",
+			"status": "lost",
+			"pown": "pfpfpfpfpfpfpfpfpfpfpfpfp",
+			"note": "Moved to Lost"
+		},
+		{
+			"nn.sn": "1.15265894",
+			"status": "lost",
+			"pown": "ppppffpeepfpppfpfffpfffpf",
+			"note": "STRINGS ATTACHED!"
+		}
+
+	]
+	"cloudcoin": [
+		{ 
+		"nn":"1", 
+		"sn":"14865168", 
+		"an": ["39c054098b135bc31c1fc77c0f8b76bc", "6f3709e7533f9290a370ea53d57d1859", "e308b7bf5f12cb75b5f5bca7e5d2f5c4", "983b364ea602bd2be483664d0a83ba64", "ed510ce2b93980cf701a9514be5403da",
+			"00e36769f732be5304c09c560b751d30", "f0479dd7e21248c976ac5bdfe489ae4f", "020d3f0a72647f021bbde13c0aeff55c", "054d806b15ea0c002fc07b2d019b9ab6", "4823f53b50b44c52cfba5dafb81db1fb",
+			"cbe1bdf6971f78d333f828d593adae07", "007ee6f4e390b4551d2bc4bff3358c80", "43d091959de81a73edec5eb897095a16", "396f9f072689357254a91f0c17fd8f45", "ff46b0ed3ca3bb9679214164e035efe6",
+			"86283df34c4d46ca8b16c456c63f2739", "278aa3025d9c464e99f718cadf3ce3a2", "f05618fe527b0eedc31547361cd0fdbb", "7ff63a99ff813d370dac6742b71342f8", "592ce3e049f651f2763d9b85b95c8a23",
+			"5c1759904c63aceaf3b4023d494885f4", "264bf535577be1116bd14a7dce5dc3ea", "605ece6240c8892b638ecf50804e368f", "af718e6748598d321cbd276646b1b797", "3909c57b173f545566df124a22789294"],
+		"ed":"6-2020",
+		"pown":"ppppppppppppppppppepppppp",
+		"aoid": []
+		},
+		{ 
+		"nn":"1", 
+		"sn":"12787478", 
+		"an": ["818042c3595aa6f43c3dfe0242c378d7", "968fbd69c68fb07e663bdf8fcd56fef0", "8a9801667a8f5dce2c04800579c7e374", "4a0a60268c590378652435952c69cd86", "cb060d07e0bb6b249b78235b202ac742",
+			"da2821f57dd59b779b851723c7e3495e", "daa1d6676f0ad818589138b6709cefae", "57e7a0b946c98879a0bc20a3d7f5db8e", "c3a9599496ed2ccfeecc21f2e12dd259", "7093c88e8c0a8a986a7a575e00933218",
+			"5db00d5dbb5a1d6f2abc3bcf67e01515", "f0595cd3b62df316d70a17cf3cd96f1b", "bcc497a38df7574a31c48117668bb7f6", "de8c189bab949c9f0d7e77f4c0d090c6", "f5637e15e4a35dfc15d2462155a37dda",
+			"1697658f59a6d6cd26d19b2a65897e4b", "a2265d79d3499012d1848d807c0a9ed3", "14e300371b7123bbe9400f65930c8806", "65f08b3b571b74685158840e768f7f40", "81c2c15923d0608b02742c37060a1f74",
+			"18ac8cf467e483ff84ac76cd18f99a29", "d2d5abb8d03749a97d4eb19dbbbd2394", "5cf6112588aff427a95cb8ff9286b635", "ccbefaf705d223eb610eb6f59a7b9c8d", "1ed42144c91178330fc17fa0858609c3"],
+		"ed":"11-2019",
+		"pown":"ppppppppppppppppppppppppp",
+		"aoid": []
+		}
+
+	]
+
+}
+```
 # END OF CLOUDBANK VERSION 1
 
 
