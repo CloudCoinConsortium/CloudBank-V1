@@ -204,6 +204,10 @@ Sample Response if receipt number already in use :
 
 The get receipt service returns a receipt based on the receipt id. 
 
+```
+https://bitshares.CloudCoin.global/bank/get_receipt.aspx?recipt=ef50088c8218afe53ce2ecd655c2c786
+
+```
 
 ### Sample Reciepts
 If powning process has not been started
