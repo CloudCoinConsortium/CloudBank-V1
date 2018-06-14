@@ -1038,6 +1038,12 @@ Unlike most services, data is Sent to Trusted Transfer Over Websockets.
 
 Trusted transfer is designed to be a connection-orientated way to send CloudCoins from receiver to sender and allowing a trusted third-party server to authenticate the coins in between. 
 
+
+Type:
+1. authenticate_and_forward. Checks the coins to see if they are authentic and then sends them to the reciever.
+2. just_change. Breaks the notes into smaller denominatoins. 
+3. scramble. Exchanges a note for another note of the same denomination (just different serial number)
+
 Internal modes of operation
 
 The transfer can operate under four modes:
@@ -1051,6 +1057,7 @@ The sender and receiver will need a
 
 ```javascript
 {
+	"type":"authenticate_and_forward"
 	"shared_secret":"magic",
 	"trust_model":"n",
 	"amount": 138,
